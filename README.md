@@ -1,77 +1,94 @@
 # m2-raylib
-Modula-2 bindings for [raylib](http://www.raylib.com/), a simple and easy-to-use library to enjoy videogames programming.
+GNU Modula-2 bindings for [raylib](http://www.raylib.com/), a simple and easy-to-use library to enjoy videogames programming.
 
 This is a low-level, *thin* bindings, i.e. the module definition just directly maps C API to Modula-2, with all of the names
-and meanings intact.
+and meanings left intact to mimic the original API.
 
 # Status
-This project is a **work-in-progress**.
-Currently, all of the Raylib public functions and datastructures are (somehow) interfaced, with numerical constants (enums) underway.
-Some pointer/array arguments of the C functions are passed as `SYSTEM.ADDRESS` for now. Patches are welcomed.
+The bindings are considered to be (almost) complete, with virtually every `raylib` entity being interfaced somehow.
+Testing is especially requested for stuff other than that used for a simple 2D-drawing.
 
 # Versions
-The library version used in making of the bindings is `raylib-5.1-dev`. 
-Tested with `GNU Modula-2 (12.2.0)`.
+The library version used in making of the bindings is `raylib-5.1-dev` (the C header file is bundled). 
+Tested with `GCC 14.0.1`, ISO Modula-2.
 
 # TODO
-- bind enumerations and other non-procedure stuff
-- decide how to really interface functions with complex arrays/pointers arguments
-- check bound datatypes' integrity on/after calling the C API
 - excessive testing
+- custom raylib color palette constants
 
 # Usage
-Compile with something like:
+Use entities from the provided definition module `rl`. Functions, datastructures and constants are bound one-to-one, 
+so old knowledge holds. The [Raylib cheatsheet](https://www.raylib.com/cheatsheet/raylib_cheatsheet_v4.5.pdf) helps). 
+
+Compile a program module with something like that:
 ``` sh
-gm2 -fiso -o Driver1 Driver1.mod libraylib.so
+gm2-14 -fsoft-check-all -fiso -g -O2 -Wall SampleUsage.mod ./libraylib.so.4.5.0
 ```
-Please see `Makefile` for my attempt at a more general workflow.
+or just
+``` sh
+gm2-14 -fsoft-check-all -fiso -g -O2 -Wall SampleUsage.mod -lraylib
+```
+if the linker can find the library on your system.
+
+Please see the provided `Makefile` for my attempt at a more general workflow with *modules* and *driver programs*.
 
 # Sample code
-Functions, data, etc. are bound one-to-one (the [Raylib cheatsheet](https://www.raylib.com/cheatsheet/raylib_cheatsheet_v4.5.pdf) helps). This is what client code can look like:
+This is what a client code looks like:
 
 ``` modula-2
-MODULE Driver1;
+MODULE SampleUsage;
 
-FROM raylib IMPORT InitWindow, BeginDrawing, ...; (* import needed stuff *)
+IMPORT rl;
 
+PROCEDURE TestRaylib;
 CONST
-   imgPath = "/home/nbrk/brain.png";
+  imgPath = "assets/brain.png";
 VAR
-   pos : Vector2;
-   img : Image;
-   texImg, texFile : Texture2D;
+  pos : rl.Vector2;
+  img : rl.Image;
+  texImg, texFile : rl.Texture2D;
+  fnt : rl.Font;
 BEGIN
-   InitWindow(800, 600, "Modula-2 + Raylib");
+  rl.InitWindow(800, 600, "Modula-2 + Raylib");
 
-   img := GenImageCellular(800, 600, 20);
-   texImg := LoadTextureFromImage(img);
-   UnloadImage(img);
-   img := LoadImage(imgPath);
-   texFile := LoadTextureFromImage(img);
-   UnloadImage(img);
+  img := rl.GenImageCellular(800, 600, 20);
+  texImg := rl.LoadTextureFromImage(img);
+  rl.UnloadImage(img);
+  img := rl.LoadImage(imgPath);
+  texFile := rl.LoadTextureFromImage(img);
+  rl.UnloadImage(img);
 
-   ToggleFullscreen;
+  fnt := rl.LoadFont("assets/dejavu.fnt");
 
-   LOOP
-      BeginDrawing;
-      ClearBackground(Color{0,0,0, 0});
-        pos := GetMousePosition();
-        DrawTexture(texImg, 0, 0, Color{255,255,255,255});
-        DrawTexture(texFile, 100, 100, Color{255,255,255,255});
-        DrawLine(0, 0, GetScreenWidth(), GetScreenHeight(), Color{0, 255, 0, 255});
-        DrawLineEx(Vector2{800.0, 0.0}, Vector2{0.0, 600.0}, 5.0, Color{0, 0, 255, 255});
-        DrawText("Hello, from Modula-2!", 320, 240, 20, Color{150, 20, 100,255});
-        DrawText("MOUSE", INT(pos.x), INT(pos.y), 14, Color{255,0,0,255});
-      EndDrawing;
+(*   rl.ToggleFullscreen; *)
 
-      IF WindowShouldClose OR IsKeyPressed(256) THEN
-         EXIT;
-      END;
+  WHILE NOT rl.WindowShouldClose() OR rl.IsKeyPressed(rl.KEY_SPACE) DO
+    rl.BeginDrawing;
+    rl.ClearBackground(rl.Color{0,0,0, 0});
 
-      WaitTime(1.0 / 60.0);
-   END (* loop *);
+    pos := rl.GetMousePosition();
+    rl.DrawTexture(texImg, 0, 0, rl.Color{255,255,255,255});
+    rl.DrawTexture(texFile, 100, 100, rl.Color{255,255,255,255});
+    rl.DrawLine(0, 0, rl.GetScreenWidth(), rl.GetScreenHeight(),
+        rl.Color{0, 255, 0, 255});
+    rl.DrawLineEx(rl.Vector2{800.0, 0.0}, rl.Vector2{0.0, 600.0}, 5.0,
+        rl.Color{0, 0, 255, 255});
+    rl.DrawText("Hello, from Modula-2!", 320, 240, 20,
+        rl.Color{150, 20, 100,255});
+    rl.DrawTextEx(fnt, "MOUSE", pos, 18.0, 6.0, rl.Color{255,255,0,255});
+    rl.DrawTextEx(fnt, "Привет, Мир!",
+        rl.Vector2{300.0, 260.0}, 40.0, 1.0, rl.Color{255, 255, 255, 100});
 
-END Driver1.
+    rl.EndDrawing;
+    rl.WaitTime(1.0 / 60.0);
+  END;
+END TestRaylib;
+
+BEGIN
+   TestRaylib;
+
+END SampleUsage.
+
 ```
 
 # Screenshot
