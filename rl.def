@@ -1,0 +1,4422 @@
+(*
+    Title:     Modula-2 direct bindings to the excellent Raylib.
+    Created:   Mon Feb 12 19:19:31 2024
+    Author:    Nikolay A. Burkov <nbrk@linklevel.net>
+ *)
+DEFINITION MODULE FOR "C" rl;
+
+IMPORT SYSTEM;
+
+EXPORT UNQUALIFIED
+  (* constants *)
+  RAYLIB_VERSION_MAJOR,
+  RAYLIB_VERSION_MINOR,
+  RAYLIB_VERSION_PATCH,
+  RAYLIB_VERSION,
+  PI,
+  DEG2RAD,
+  RAD2DEG,
+  FLAG_VSYNC_HINT,
+  FLAG_FULLSCREEN_MODE,
+  FLAG_WINDOW_RESIZABLE,
+  FLAG_WINDOW_UNDECORATED,
+  FLAG_WINDOW_HIDDEN,
+  FLAG_WINDOW_MINIMIZED,
+  FLAG_WINDOW_MAXIMIZED,
+  FLAG_WINDOW_UNFOCUSED,
+  FLAG_WINDOW_TOPMOST,
+  FLAG_WINDOW_ALWAYS_RUN,
+  FLAG_WINDOW_TRANSPARENT,
+  FLAG_WINDOW_HIGHDPI,
+  FLAG_WINDOW_MOUSE_PASSTHROUGH,
+  FLAG_BORDERLESS_WINDOWED_MODE,
+  FLAG_MSAA_4X_HINT,
+  FLAG_INTERLACED_HINT,
+  LOG_ALL,
+  LOG_TRACE,
+  LOG_DEBUG,
+  LOG_INFO,
+  LOG_WARNING,
+  LOG_ERROR,
+  LOG_FATAL,
+  LOG_NONE,
+  KEY_NULL,
+  KEY_APOSTROPHE,
+  KEY_COMMA,
+  KEY_MINUS,
+  KEY_PERIOD,
+  KEY_SLASH,
+  KEY_ZERO,
+  KEY_ONE,
+  KEY_TWO,
+  KEY_THREE,
+  KEY_FOUR,
+  KEY_FIVE,
+  KEY_SIX,
+  KEY_SEVEN,
+  KEY_EIGHT,
+  KEY_NINE,
+  KEY_SEMICOLON,
+  KEY_EQUAL,
+  KEY_A,
+  KEY_B,
+  KEY_C,
+  KEY_D,
+  KEY_E,
+  KEY_F,
+  KEY_G,
+  KEY_H,
+  KEY_I,
+  KEY_J,
+  KEY_K,
+  KEY_L,
+  KEY_M,
+  KEY_N,
+  KEY_O,
+  KEY_P,
+  KEY_Q,
+  KEY_R,
+  KEY_S,
+  KEY_T,
+  KEY_U,
+  KEY_V,
+  KEY_W,
+  KEY_X,
+  KEY_Y,
+  KEY_Z,
+  KEY_LEFT_BRACKET,
+  KEY_BACKSLASH,
+  KEY_RIGHT_BRACKET,
+  KEY_GRAVE,
+  KEY_SPACE,
+  KEY_ESCAPE,
+  KEY_ENTER,
+  KEY_TAB,
+  KEY_BACKSPACE,
+  KEY_INSERT,
+  KEY_DELETE,
+  KEY_RIGHT,
+  KEY_LEFT,
+  KEY_DOWN,
+  KEY_UP,
+  KEY_PAGE_UP,
+  KEY_PAGE_DOWN,
+  KEY_HOME,
+  KEY_END,
+  KEY_CAPS_LOCK,
+  KEY_SCROLL_LOCK,
+  KEY_NUM_LOCK,
+  KEY_PRINT_SCREEN,
+  KEY_PAUSE,
+  KEY_F1,
+  KEY_F2,
+  KEY_F3,
+  KEY_F4,
+  KEY_F5,
+  KEY_F6,
+  KEY_F7,
+  KEY_F8,
+  KEY_F9,
+  KEY_F10,
+  KEY_F11,
+  KEY_F12,
+  KEY_LEFT_SHIFT,
+  KEY_LEFT_CONTROL,
+  KEY_LEFT_ALT,
+  KEY_LEFT_SUPER,
+  KEY_RIGHT_SHIFT,
+  KEY_RIGHT_CONTROL,
+  KEY_RIGHT_ALT,
+  KEY_RIGHT_SUPER,
+  KEY_KB_MENU,
+  KEY_KP_0,
+  KEY_KP_1,
+  KEY_KP_2,
+  KEY_KP_3,
+  KEY_KP_4,
+  KEY_KP_5,
+  KEY_KP_6,
+  KEY_KP_7,
+  KEY_KP_8,
+  KEY_KP_9,
+  KEY_KP_DECIMAL,
+  KEY_KP_DIVIDE,
+  KEY_KP_MULTIPLY,
+  KEY_KP_SUBTRACT,
+  KEY_KP_ADD,
+  KEY_KP_ENTER,
+  KEY_KP_EQUAL,
+  KEY_BACK,
+  KEY_MENU,
+  KEY_VOLUME_UP,
+  KEY_VOLUME_DOWN,
+  MOUSE_BUTTON_LEFT,
+  MOUSE_BUTTON_RIGHT,
+  MOUSE_BUTTON_MIDDLE,
+  MOUSE_BUTTON_SIDE,
+  MOUSE_BUTTON_EXTRA,
+  MOUSE_BUTTON_FORWARD,
+  MOUSE_BUTTON_BACK,
+  MOUSE_CURSOR_DEFAULT,
+  MOUSE_CURSOR_ARROW,
+  MOUSE_CURSOR_IBEAM,
+  MOUSE_CURSOR_CROSSHAIR,
+  MOUSE_CURSOR_POINTING_HAND,
+  MOUSE_CURSOR_RESIZE_EW,
+  MOUSE_CURSOR_RESIZE_NS,
+  MOUSE_CURSOR_RESIZE_NWSE,
+  MOUSE_CURSOR_RESIZE_NESW,
+  MOUSE_CURSOR_RESIZE_ALL,
+  MOUSE_CURSOR_NOT_ALLOWED,
+  GAMEPAD_BUTTON_UNKNOWN,
+  GAMEPAD_BUTTON_LEFT_FACE_UP,
+  GAMEPAD_BUTTON_LEFT_FACE_RIGHT,
+  GAMEPAD_BUTTON_LEFT_FACE_DOWN,
+  GAMEPAD_BUTTON_LEFT_FACE_LEFT,
+  GAMEPAD_BUTTON_RIGHT_FACE_UP,
+  GAMEPAD_BUTTON_RIGHT_FACE_RIGHT,
+  GAMEPAD_BUTTON_RIGHT_FACE_DOWN,
+  GAMEPAD_BUTTON_RIGHT_FACE_LEFT,
+  GAMEPAD_BUTTON_LEFT_TRIGGER_1,
+  GAMEPAD_BUTTON_LEFT_TRIGGER_2,
+  GAMEPAD_BUTTON_RIGHT_TRIGGER_1,
+  GAMEPAD_BUTTON_RIGHT_TRIGGER_2,
+  GAMEPAD_BUTTON_MIDDLE_LEFT,
+  GAMEPAD_BUTTON_MIDDLE,
+  GAMEPAD_BUTTON_MIDDLE_RIGHT,
+  GAMEPAD_BUTTON_LEFT_THUMB,
+  GAMEPAD_BUTTON_RIGHT_THUMB,
+  GAMEPAD_AXIS_LEFT_X,
+  GAMEPAD_AXIS_LEFT_Y,
+  GAMEPAD_AXIS_RIGHT_X,
+  GAMEPAD_AXIS_RIGHT_Y,
+  GAMEPAD_AXIS_LEFT_TRIGGER,
+  GAMEPAD_AXIS_RIGHT_TRIGGER,
+  MATERIAL_MAP_ALBEDO,
+  MATERIAL_MAP_METALNESS,
+  MATERIAL_MAP_NORMAL,
+  MATERIAL_MAP_ROUGHNESS,
+  MATERIAL_MAP_OCCLUSION,
+  MATERIAL_MAP_EMISSION,
+  MATERIAL_MAP_HEIGHT,
+  MATERIAL_MAP_CUBEMAP,
+  MATERIAL_MAP_IRRADIANCE,
+  MATERIAL_MAP_PREFILTER,
+  MATERIAL_MAP_BRDF,
+  SHADER_LOC_VERTEX_POSITION,
+  SHADER_LOC_VERTEX_TEXCOORD01,
+  SHADER_LOC_VERTEX_TEXCOORD02,
+  SHADER_LOC_VERTEX_NORMAL,
+  SHADER_LOC_VERTEX_TANGENT,
+  SHADER_LOC_VERTEX_COLOR,
+  SHADER_LOC_MATRIX_MVP,
+  SHADER_LOC_MATRIX_VIEW,
+  SHADER_LOC_MATRIX_PROJECTION,
+  SHADER_LOC_MATRIX_MODEL,
+  SHADER_LOC_MATRIX_NORMAL,
+  SHADER_LOC_VECTOR_VIEW,
+  SHADER_LOC_COLOR_DIFFUSE,
+  SHADER_LOC_COLOR_SPECULAR,
+  SHADER_LOC_COLOR_AMBIENT,
+  SHADER_LOC_MAP_ALBEDO,
+  SHADER_LOC_MAP_METALNESS,
+  SHADER_LOC_MAP_NORMAL,
+  SHADER_LOC_MAP_ROUGHNESS,
+  SHADER_LOC_MAP_OCCLUSION,
+  SHADER_LOC_MAP_EMISSION,
+  SHADER_LOC_MAP_HEIGHT,
+  SHADER_LOC_MAP_CUBEMAP,
+  SHADER_LOC_MAP_IRRADIANCE,
+  SHADER_LOC_MAP_PREFILTER,
+  SHADER_LOC_MAP_BRDF,
+  SHADER_UNIFORM_FLOAT,
+  SHADER_UNIFORM_VEC2,
+  SHADER_UNIFORM_VEC3,
+  SHADER_UNIFORM_VEC4,
+  SHADER_UNIFORM_INT,
+  SHADER_UNIFORM_IVEC2,
+  SHADER_UNIFORM_IVEC3,
+  SHADER_UNIFORM_IVEC4,
+  SHADER_UNIFORM_SAMPLER2D,
+  SHADER_ATTRIB_FLOAT,
+  SHADER_ATTRIB_VEC2,
+  SHADER_ATTRIB_VEC3,
+  SHADER_ATTRIB_VEC4,
+  PIXELFORMAT_UNCOMPRESSED_GRAYSCALE,
+  PIXELFORMAT_UNCOMPRESSED_GRAY_ALPHA,
+  PIXELFORMAT_UNCOMPRESSED_R5G6B5,
+  PIXELFORMAT_UNCOMPRESSED_R8G8B8,
+  PIXELFORMAT_UNCOMPRESSED_R5G5B5A1,
+  PIXELFORMAT_UNCOMPRESSED_R4G4B4A4,
+  PIXELFORMAT_UNCOMPRESSED_R8G8B8A8,
+  PIXELFORMAT_UNCOMPRESSED_R32,
+  PIXELFORMAT_UNCOMPRESSED_R32G32B32,
+  PIXELFORMAT_UNCOMPRESSED_R32G32B32A32,
+  PIXELFORMAT_UNCOMPRESSED_R16,
+  PIXELFORMAT_UNCOMPRESSED_R16G16B16,
+  PIXELFORMAT_UNCOMPRESSED_R16G16B16A16,
+  PIXELFORMAT_COMPRESSED_DXT1_RGB,
+  PIXELFORMAT_COMPRESSED_DXT1_RGBA,
+  PIXELFORMAT_COMPRESSED_DXT3_RGBA,
+  PIXELFORMAT_COMPRESSED_DXT5_RGBA,
+  PIXELFORMAT_COMPRESSED_ETC1_RGB,
+  PIXELFORMAT_COMPRESSED_ETC2_RGB,
+  PIXELFORMAT_COMPRESSED_ETC2_EAC_RGBA,
+  PIXELFORMAT_COMPRESSED_PVRT_RGB,
+  PIXELFORMAT_COMPRESSED_PVRT_RGBA,
+  PIXELFORMAT_COMPRESSED_ASTC_4x4_RGBA,
+  PIXELFORMAT_COMPRESSED_ASTC_8x8_RGBA,
+  TEXTURE_FILTER_POINT,
+  TEXTURE_FILTER_BILINEAR,
+  TEXTURE_FILTER_TRILINEAR,
+  TEXTURE_FILTER_ANISOTROPIC_4X,
+  TEXTURE_FILTER_ANISOTROPIC_8X,
+  TEXTURE_FILTER_ANISOTROPIC_16X,
+  TEXTURE_WRAP_REPEAT,
+  TEXTURE_WRAP_CLAMP,
+  TEXTURE_WRAP_MIRROR_REPEAT,
+  TEXTURE_WRAP_MIRROR_CLAMP,
+  CUBEMAP_LAYOUT_AUTO_DETECT,
+  CUBEMAP_LAYOUT_LINE_VERTICAL,
+  CUBEMAP_LAYOUT_LINE_HORIZONTAL,
+  CUBEMAP_LAYOUT_CROSS_THREE_BY_FOUR,
+  CUBEMAP_LAYOUT_CROSS_FOUR_BY_THREE,
+  CUBEMAP_LAYOUT_PANORAMA,
+  FONT_DEFAULT,
+  FONT_BITMAP,
+  FONT_SDF,
+  BLEND_ALPHA,
+  BLEND_ADDITIVE,
+  BLEND_MULTIPLIED,
+  BLEND_ADD_COLORS,
+  BLEND_SUBTRACT_COLORS,
+  BLEND_ALPHA_PREMULTIPLY,
+  BLEND_CUSTOM,
+  BLEND_CUSTOM_SEPARATE,
+  GESTURE_NONE,
+  GESTURE_TAP,
+  GESTURE_DOUBLETAP,
+  GESTURE_HOLD,
+  GESTURE_DRAG,
+  GESTURE_SWIPE_RIGHT,
+  GESTURE_SWIPE_LEFT,
+  GESTURE_SWIPE_UP,
+  GESTURE_SWIPE_DOWN,
+  GESTURE_PINCH_IN,
+  GESTURE_PINCH_OUT,
+  CAMERA_CUSTOM,
+  CAMERA_FREE,
+  CAMERA_ORBITAL,
+  CAMERA_FIRST_PERSON,
+  CAMERA_THIRD_PERSON,
+  CAMERA_PERSPECTIVE,
+  CAMERA_ORTHOGRAPHIC,
+  NPATCH_NINE_PATCH,
+  NPATCH_THREE_PATCH_VERTICAL,
+  NPATCH_THREE_PATCH_HORIZONTAL,
+  MATERIAL_MAP_DIFFUSE,
+  MATERIAL_MAP_SPECULAR,
+  MOUSE_LEFT_BUTTON,
+  MOUSE_MIDDLE_BUTTON,
+  MOUSE_RIGHT_BUTTON,
+  SHADER_LOC_MAP_DIFFUSE,
+  SHADER_LOC_MAP_SPECULAR,
+
+  (* types *)
+  voidptr,
+  int,
+  uint,
+  ushort,
+  char,
+  uchar,
+  float,
+  double,
+  long,
+  Vector2,
+  Vector3,
+  Vector4,
+  Quaternion,
+  Matrix,
+  Color,
+  Rectangle,
+  Image,
+  Texture,
+  Texture2D,
+  TextureCubemap,
+  RenderTexture,
+  RenderTexture2D,
+  GlyphInfo,
+  RectanglePtr,
+  GlyphInfoPtr,
+  Font,
+  Camera3D,
+  Camera,
+  Camera2D,
+  Mesh,
+  Shader,
+  MaterialMap,
+  MaterialMapPtr,
+  Material,
+  Transform,
+  BoneInfo,
+  MeshPtr,
+  MaterialPtr,
+  BoneInfoPtr,
+  TransformPtr,
+  Model,
+  TransformPtrPtr,
+  ModelAnimation,
+  Ray,
+  RayCollision,
+  BoundingBox,
+  Wave,
+  AudioStream,
+  Sound,
+  Music,
+  VrDeviceInfo,
+  VrStereoConfig,
+  FilePathList,
+  AutomationEvent,
+  AutomationEventPtr,
+  AutomationEventList,
+  ConfigFlags,
+  TraceLogLevel,
+  KeyboardKey,
+  MouseButton,
+  MouseCursor,
+  GamepadButton,
+  GamepadAxis,
+  MaterialMapIndex,
+  ShaderLocationIndex,
+  ShaderUniformDataType,
+  ShaderAttributeDataType,
+  PixelFormat,
+  TextureFilter,
+  TextureWrap,
+  CubemapLayout,
+  FontType,
+  BlendMode,
+  Gesture,
+  CameraMode,
+  CameraProjection,
+  LoadFileDataCallback,
+  SaveFileDataCallback,
+  LoadFileTextCallback,
+  SaveFileTextCallback,
+  ImagePtr,
+  AutomationEventPtrList,
+  CameraPtr,
+  Vector2Ptr,
+  ColorPtr,
+  Texture2DPtr,
+  RectanglePtrPtr,
+  Vector3Ptr,
+  MatrixPtr,
+  ModelPtr,
+  ModelAnimationPtr,
+  AudioCallback,
+  WavePtr,
+
+  (* procedures *)
+  InitWindow,
+  CloseWindow,
+  WindowShouldClose,
+  IsWindowReady,
+  IsWindowFullscreen,
+  IsWindowHidden,
+  IsWindowMinimized,
+  IsWindowMaximized,
+  IsWindowFocused,
+  IsWindowResized,
+  IsWindowState,
+  SetWindowState,
+  ClearWindowState,
+  ToggleFullscreen,
+  ToggleBorderlessWindowed,
+  MaximizeWindow,
+  MinimizeWindow,
+  RestoreWindow,
+  SetWindowIcon,
+  SetWindowIcons,
+  SetWindowTitle,
+  SetWindowPosition,
+  SetWindowMonitor,
+  SetWindowMinSize,
+  SetWindowMaxSize,
+  SetWindowSize,
+  SetWindowOpacity,
+  SetWindowFocused,
+  GetWindowHandle,
+  GetScreenWidth,
+  GetScreenHeight,
+  GetRenderWidth,
+  GetRenderHeight,
+  GetMonitorCount,
+  GetCurrentMonitor,
+  GetMonitorPosition,
+  GetMonitorWidth,
+  GetMonitorHeight,
+  GetMonitorPhysicalWidth,
+  GetMonitorPhysicalHeight,
+  GetMonitorRefreshRate,
+  GetWindowPosition,
+  GetWindowScaleDPI,
+  GetMonitorName,
+  SetClipboardText,
+  GetClipboardText,
+  EnableEventWaiting,
+  DisableEventWaiting,
+  ShowCursor,
+  HideCursor,
+  IsCursorHidden,
+  EnableCursor,
+  DisableCursor,
+  IsCursorOnScreen,
+  ClearBackground,
+  BeginDrawing,
+  EndDrawing,
+  BeginMode2D,
+  EndMode2D,
+  BeginMode3D,
+  EndMode3D,
+  BeginTextureMode,
+  EndTextureMode,
+  BeginShaderMode,
+  EndShaderMode,
+  BeginBlendMode,
+  EndBlendMode,
+  BeginScissorMode,
+  EndScissorMode,
+  BeginVrStereoMode,
+  EndVrStereoMode,
+  LoadVrStereoConfig,
+  UnloadVrStereoConfig,
+  LoadShader,
+  LoadShaderFromMemory,
+  IsShaderReady,
+  GetShaderLocation,
+  GetShaderLocationAttrib,
+  SetShaderValue,
+  SetShaderValueV,
+  SetShaderValueMatrix,
+  SetShaderValueTexture,
+  UnloadShader,
+  GetMouseRay,
+  GetCameraMatrix,
+  GetCameraMatrix2D,
+  GetWorldToScreen,
+  GetScreenToWorld2D,
+  GetWorldToScreenEx,
+  GetWorldToScreen2D,
+  SetTargetFPS,
+  GetFrameTime,
+  GetTime,
+  GetFPS,
+  SwapScreenBuffer,
+  PollInputEvents,
+  WaitTime,
+  SetRandomSeed,
+  GetRandomValue,
+  LoadRandomSequence,
+  UnloadRandomSequence,
+  TakeScreenshot,
+  SetConfigFlags,
+  OpenURL,
+  TraceLog,
+  SetTraceLogLevel,
+  MemAlloc,
+  MemRealloc,
+  MemFree,
+  SetLoadFileDataCallback,
+  SetSaveFileDataCallback,
+  SetLoadFileTextCallback,
+  SetSaveFileTextCallback,
+  LoadFileData,
+  UnloadFileData,
+  SaveFileData,
+  ExportDataAsCode,
+  LoadFileText,
+  UnloadFileText,
+  SaveFileText,
+  FileExists,
+  DirectoryExists,
+  IsFileExtension,
+  GetFileLength,
+  GetFileExtension,
+  GetFileName,
+  GetFileNameWithoutExt,
+  GetDirectoryPath,
+  GetPrevDirectoryPath,
+  GetWorkingDirectory,
+  GetApplicationDirectory,
+  ChangeDirectory,
+  IsPathFile,
+  LoadDirectoryFiles,
+  LoadDirectoryFilesEx,
+  UnloadDirectoryFiles,
+  IsFileDropped,
+  LoadDroppedFiles,
+  UnloadDroppedFiles,
+  GetFileModTime,
+  CompressData,
+  DecompressData,
+  EncodeDataBase64,
+  DecodeDataBase64,
+  LoadAutomationEventList,
+  UnloadAutomationEventList,
+  ExportAutomationEventList,
+  SetAutomationEventList,
+  SetAutomationEventBaseFrame,
+  StartAutomationEventRecording,
+  StopAutomationEventRecording,
+  PlayAutomationEvent,
+  IsKeyPressed,
+  IsKeyPressedRepeat,
+  IsKeyDown,
+  IsKeyReleased,
+  IsKeyUp,
+  GetKeyPressed,
+  GetCharPressed,
+  SetExitKey,
+  IsGamepadAvailable,
+  GetGamepadName,
+  IsGamepadButtonPressed,
+  IsGamepadButtonDown,
+  IsGamepadButtonReleased,
+  IsGamepadButtonUp,
+  GetGamepadButtonPressed,
+  GetGamepadAxisCount,
+  GetGamepadAxisMovement,
+  SetGamepadMappings,
+  IsMouseButtonPressed,
+  IsMouseButtonDown,
+  IsMouseButtonReleased,
+  IsMouseButtonUp,
+  GetMouseX,
+  GetMouseY,
+  GetMousePosition,
+  GetMouseDelta,
+  SetMousePosition,
+  SetMouseOffset,
+  SetMouseScale,
+  GetMouseWheelMove,
+  GetMouseWheelMoveV,
+  SetMouseCursor,
+  GetTouchX,
+  GetTouchY,
+  GetTouchPosition,
+  GetTouchPointId,
+  GetTouchPointCount,
+  SetGesturesEnabled,
+  IsGestureDetected,
+  GetGestureDetected,
+  GetGestureHoldDuration,
+  GetGestureDragVector,
+  GetGestureDragAngle,
+  GetGesturePinchVector,
+  GetGesturePinchAngle,
+  UpdateCamera,
+  UpdateCameraPro,
+  SetShapesTexture,
+  DrawPixel,
+  DrawPixelV,
+  DrawLine,
+  DrawLineV,
+  DrawLineEx,
+  DrawLineBezier,
+  DrawLineBezierQuad,
+  DrawLineBezierCubic,
+  DrawLineBSpline,
+  DrawLineCatmullRom,
+  DrawLineStrip,
+  DrawCircle,
+  DrawCircleSector,
+  DrawCircleSectorLines,
+  DrawCircleGradient,
+  DrawCircleV,
+  DrawCircleLines,
+  DrawCircleLinesV,
+  DrawEllipse,
+  DrawEllipseLines,
+  DrawRing,
+  DrawRingLines,
+  DrawRectangle,
+  DrawRectangleV,
+  DrawRectangleRec,
+  DrawRectanglePro,
+  DrawRectangleGradientV,
+  DrawRectangleGradientH,
+  DrawRectangleGradientEx,
+  DrawRectangleLines,
+  DrawRectangleLinesEx,
+  DrawRectangleRounded,
+  DrawRectangleRoundedLines,
+  DrawTriangle,
+  DrawTriangleLines,
+  DrawTriangleFan,
+  DrawTriangleStrip,
+  DrawPoly,
+  DrawPolyLines,
+  DrawPolyLinesEx,
+  CheckCollisionRecs,
+  CheckCollisionCircles,
+  CheckCollisionCircleRec,
+  CheckCollisionPointRec,
+  CheckCollisionPointCircle,
+  CheckCollisionPointTriangle,
+  CheckCollisionPointPoly,
+  CheckCollisionLines,
+  CheckCollisionPointLine,
+  GetCollisionRec,
+  LoadImage,
+  LoadImageRaw,
+  LoadImageSvg,
+  LoadImageAnim,
+  LoadImageFromMemory,
+  LoadImageFromTexture,
+  LoadImageFromScreen,
+  IsImageReady,
+  UnloadImage,
+  ExportImage,
+  ExportImageToMemory,
+  ExportImageAsCode,
+  GenImageColor,
+  GenImageGradientLinear,
+  GenImageGradientRadial,
+  GenImageGradientSquare,
+  GenImageChecked,
+  GenImageWhiteNoise,
+  GenImagePerlinNoise,
+  GenImageCellular,
+  GenImageText,
+  ImageCopy,
+  ImageFromImage,
+  ImageText,
+  ImageTextEx,
+  ImageFormat,
+  ImageToPOT,
+  ImageCrop,
+  ImageAlphaCrop,
+  ImageAlphaClear,
+  ImageAlphaMask,
+  ImageAlphaPremultiply,
+  ImageBlurGaussian,
+  ImageResize,
+  ImageResizeNN,
+  ImageResizeCanvas,
+  ImageMipmaps,
+  ImageDither,
+  ImageFlipVertical,
+  ImageFlipHorizontal,
+  ImageRotate,
+  ImageRotateCW,
+  ImageRotateCCW,
+  ImageColorTint,
+  ImageColorInvert,
+  ImageColorGrayscale,
+  ImageColorContrast,
+  ImageColorBrightness,
+  ImageColorReplace,
+  LoadImageColors,
+  LoadImagePalette,
+  UnloadImageColors,
+  UnloadImagePalette,
+  GetImageAlphaBorder,
+  GetImageColor,
+  ImageClearBackground,
+  ImageDrawPixel,
+  ImageDrawPixelV,
+  ImageDrawLine,
+  ImageDrawLineV,
+  ImageDrawCircle,
+  ImageDrawCircleV,
+  ImageDrawCircleLines,
+  ImageDrawCircleLinesV,
+  ImageDrawRectangle,
+  ImageDrawRectangleV,
+  ImageDrawRectangleRec,
+  ImageDrawRectangleLines,
+  ImageDraw,
+  ImageDrawText,
+  ImageDrawTextEx,
+  LoadTexture,
+  LoadTextureFromImage,
+  LoadTextureCubemap,
+  LoadRenderTexture,
+  IsTextureReady,
+  UnloadTexture,
+  IsRenderTextureReady,
+  UnloadRenderTexture,
+  UpdateTexture,
+  UpdateTextureRec,
+  GenTextureMipmaps,
+  SetTextureFilter,
+  SetTextureWrap,
+  DrawTexture,
+  DrawTextureV,
+  DrawTextureEx,
+  DrawTextureRec,
+  DrawTexturePro,
+  DrawTextureNPatch,
+  Fade,
+  ColorToInt,
+  ColorNormalize,
+  ColorFromNormalized,
+  ColorToHSV,
+  ColorFromHSV,
+  ColorTint,
+  ColorBrightness,
+  ColorContrast,
+  ColorAlpha,
+  ColorAlphaBlend,
+  GetColor,
+  GetPixelColor,
+  SetPixelColor,
+  GetPixelDataSize,
+  GetFontDefault,
+  LoadFont,
+  LoadFontEx,
+  LoadFontFromImage,
+  LoadFontFromMemory,
+  IsFontReady,
+  LoadFontData,
+  GenImageFontAtlas,
+  UnloadFontData,
+  UnloadFont,
+  ExportFontAsCode,
+  DrawFPS,
+  DrawText,
+  DrawTextEx,
+  DrawTextPro,
+  DrawTextCodepoint,
+  DrawTextCodepoints,
+  SetTextLineSpacing,
+  MeasureText,
+  MeasureTextEx,
+  GetGlyphIndex,
+  GetGlyphInfo,
+  GetGlyphAtlasRec,
+  LoadUTF8,
+  UnloadUTF8,
+  LoadCodepoints,
+  UnloadCodepoints,
+  GetCodepointCount,
+  GetCodepoint,
+  GetCodepointNext,
+  GetCodepointPrevious,
+  CodepointToUTF8,
+  TextCopy,
+  TextIsEqual,
+  TextLength,
+  TextFormat,
+  TextSubtext,
+  TextReplace,
+  TextInsert,
+  TextJoin,
+  TextSplit,
+  TextAppend,
+  TextFindIndex,
+  TextToUpper,
+  TextToLower,
+  TextToPascal,
+  TextToInteger,
+  DrawLine3D,
+  DrawPoint3D,
+  DrawCircle3D,
+  DrawTriangle3D,
+  DrawTriangleStrip3D,
+  DrawCube,
+  DrawCubeV,
+  DrawCubeWires,
+  DrawCubeWiresV,
+  DrawSphere,
+  DrawSphereEx,
+  DrawSphereWires,
+  DrawCylinder,
+  DrawCylinderEx,
+  DrawCylinderWires,
+  DrawCylinderWiresEx,
+  DrawCapsule,
+  DrawCapsuleWires,
+  DrawPlane,
+  DrawRay,
+  DrawGrid,
+  LoadModel,
+  LoadModelFromMesh,
+  IsModelReady,
+  UnloadModel,
+  GetModelBoundingBox,
+  DrawModel,
+  DrawModelEx,
+  DrawModelWires,
+  DrawModelWiresEx,
+  DrawBoundingBox,
+  DrawBillboard,
+  DrawBillboardRec,
+  DrawBillboardPro,
+  UploadMesh,
+  UpdateMeshBuffer,
+  UnloadMesh,
+  DrawMesh,
+  DrawMeshInstanced,
+  ExportMesh,
+  GetMeshBoundingBox,
+  GenMeshTangents,
+  GenMeshPoly,
+  GenMeshPlane,
+  GenMeshCube,
+  GenMeshSphere,
+  GenMeshHemiSphere,
+  GenMeshCylinder,
+  GenMeshCone,
+  GenMeshTorus,
+  GenMeshKnot,
+  GenMeshHeightmap,
+  GenMeshCubicmap,
+  LoadMaterials,
+  LoadMaterialDefault,
+  IsMaterialReady,
+  UnloadMaterial,
+  SetMaterialTexture,
+  SetModelMeshMaterial,
+  LoadModelAnimations,
+  UpdateModelAnimation,
+  UnloadModelAnimation,
+  UnloadModelAnimations,
+  IsModelAnimationValid,
+  CheckCollisionSpheres,
+  CheckCollisionBoxes,
+  CheckCollisionBoxSphere,
+  GetRayCollisionSphere,
+  GetRayCollisionBox,
+  GetRayCollisionMesh,
+  GetRayCollisionTriangle,
+  GetRayCollisionQuad,
+  InitAudioDevice,
+  CloseAudioDevice,
+  IsAudioDeviceReady,
+  SetMasterVolume,
+  GetMasterVolume,
+  LoadWave,
+  LoadWaveFromMemory,
+  IsWaveReady,
+  LoadSound,
+  LoadSoundFromWave,
+  LoadSoundAlias,
+  IsSoundReady,
+  UpdateSound,
+  UnloadWave,
+  UnloadSound,
+  UnloadSoundAlias,
+  ExportWave,
+  ExportWaveAsCode,
+  PlaySound,
+  StopSound,
+  PauseSound,
+  ResumeSound,
+  IsSoundPlaying,
+  SetSoundVolume,
+  SetSoundPitch,
+  SetSoundPan,
+  WaveCopy,
+  WaveCrop,
+  WaveFormat,
+  LoadWaveSamples,
+  UnloadWaveSamples,
+  LoadMusicStream,
+  LoadMusicStreamFromMemory,
+  IsMusicReady,
+  UnloadMusicStream,
+  PlayMusicStream,
+  IsMusicStreamPlaying,
+  UpdateMusicStream,
+  StopMusicStream,
+  PauseMusicStream,
+  ResumeMusicStream,
+  SeekMusicStream,
+  SetMusicVolume,
+  SetMusicPitch,
+  SetMusicPan,
+  GetMusicTimeLength,
+  GetMusicTimePlayed,
+  LoadAudioStream,
+  IsAudioStreamReady,
+  UnloadAudioStream,
+  UpdateAudioStream,
+  IsAudioStreamProcessed,
+  PlayAudioStream,
+  PauseAudioStream,
+  ResumeAudioStream,
+  IsAudioStreamPlaying,
+  StopAudioStream,
+  SetAudioStreamVolume,
+  SetAudioStreamPitch,
+  SetAudioStreamPan,
+  SetAudioStreamBufferSizeDefault,
+  SetAudioStreamCallback,
+  AttachAudioStreamProcessor,
+  DetachAudioStreamProcessor,
+  AttachAudioMixedProcessor,
+  DetachAudioMixedProcessor;
+
+
+
+
+CONST 
+  RAYLIB_VERSION_MAJOR = 5;
+  RAYLIB_VERSION_MINOR = 0;
+  RAYLIB_VERSION_PATCH = 0;
+  RAYLIB_VERSION = '5.0';
+
+  PI = 3.141592653589800000000000000000;
+  DEG2RAD = PI/180.0000000000000000000000000000;
+  RAD2DEG = 180.0000000000000000000000000000/PI;
+
+TYPE
+  voidptr = SYSTEM.ADDRESS;
+  int = SYSTEM.INTEGER32;
+  uint = SYSTEM.CARDINAL32;
+  ushort = SYSTEM.CARDINAL16;
+  char = SYSTEM.INTEGER8;
+  uchar = SYSTEM.BYTE;
+  float = SYSTEM.REAL32;
+  double = SYSTEM.REAL64;
+  long = SYSTEM.INTEGER64;
+
+(*  Vector2, 2 components *)
+
+  Vector2 = RECORD
+    x: float;          (*  Vector x component *)
+    y: float;          (*  Vector y component *)
+  END;
+
+(*  Vector3, 3 components *)
+
+  Vector3 = RECORD
+    x: float;          (*  Vector x component *)
+    y: float;          (*  Vector y component *)
+    z: float;          (*  Vector z component *)
+  END;
+
+(*  Vector4, 4 components *)
+
+  Vector4 = RECORD
+    x: float;          (*  Vector x component *)
+    y: float;          (*  Vector y component *)
+    z: float;          (*  Vector z component *)
+    w: float;          (*  Vector w component *)
+  END;
+
+(*  Quaternion, 4 components (Vector4 alias) *)
+
+  Quaternion = Vector4;
+
+(*  Matrix, 4x4 components, column major, OpenGL style, right-handed *)
+
+  Matrix = RECORD
+    m0 : float;
+    m4 : float;
+    m8 : float;
+    m12: float;       (*  Matrix first row (4 components) *)
+    m1 : float;
+    m5 : float;
+    m9 : float;
+    m13: float;       (*  Matrix second row (4 components) *)
+    m2 : float;
+    m6 : float;
+    m10: float;
+    m14: float;       (*  Matrix third row (4 components) *)
+    m3 : float;
+    m7 : float;
+    m11: float;
+    m15: float;       (*  Matrix fourth row (4 components) *)
+  END;
+
+(*  Color, 4 components, R8G8B8A8 (32bit) *)
+
+  Color = RECORD
+    r: uchar;   (*  Color red value *)
+    g: uchar;   (*  Color green value *)
+    b: uchar;   (*  Color blue value *)
+    a: uchar;   (*  Color alpha value *)
+  END;
+
+(*  Rectangle, 4 components *)
+
+  Rectangle = Vector4;
+
+(*  Image, pixel data stored in CPU memory (RAM) *)
+
+  Image = RECORD
+    data   : voidptr;  (*  Image raw data *)
+    width  : int;      (*  Image base width *)
+    height : int;      (*  Image base height *)
+    mipmaps: int;      (*  Mipmap levels, 1 by default *)
+    format : int;      (*  Data format (PixelFormat type) *)
+  END;
+
+(*  Texture, tex data stored in GPU memory (VRAM) *)
+
+  Texture = RECORD
+    id     : uint;  (*  OpenGL texture id *)
+    width  : int;       (*  Texture base width *)
+    height : int;       (*  Texture base height *)
+    mipmaps: int;       (*  Mipmap levels, 1 by default *)
+    format : int;       (*  Data format (PixelFormat type) *)
+  END;
+
+(*  Texture2D, same as Texture *)
+
+  Texture2D = Texture;
+
+(*  TextureCubemap, same as Texture *)
+
+  TextureCubemap = Texture;
+
+(*  RenderTexture, fbo for texture rendering *)
+
+  RenderTexture = RECORD
+    id     : uint;  (*  OpenGL framebuffer object id *)
+    texture: Texture;          (*  Color buffer attachment texture *)
+    depth  : Texture;          (*  Depth buffer attachment texture *)
+  END;
+
+(*  RenderTexture2D, same as RenderTexture *)
+
+  RenderTexture2D = RenderTexture;
+
+(*  NPatchInfo, n-patch layout info *)
+
+  NPatchInfo = RECORD
+    source: Rectangle;   (*  Texture source rectangle *)
+    left  : int;  (*  Left border offset *)
+    top   : int;  (*  Top border offset *)
+    right : int;  (*  Right border offset *)
+    bottom: int;  (*  Bottom border offset *)
+    layout: int;  (*  Layout of the n-patch: 3x3, 1x3 or 3x1 *)
+  END;
+
+(*  GlyphInfo, font characters glyphs info *)
+
+  GlyphInfo = RECORD
+    value   : int;  (*  Character value (Unicode) *)
+    offsetX : int;  (*  Character offset X when drawing *)
+    offsetY : int;  (*  Character offset Y when drawing *)
+    advanceX: int;  (*  Character advance position X *)
+    image   : Image;       (*  Character image data *)
+  END;
+
+(*  Font, font texture and GlyphInfo array data *)
+
+  RectanglePtr = POINTER TO Rectangle;
+
+  GlyphInfoPtr = POINTER TO GlyphInfo;
+
+  Font = RECORD
+    baseSize    : int;        (*  Base size (default chars height) *)
+    glyphCount  : int;        (*  Number of glyph characters *)
+    glyphPadding: int;        (*  Padding around the glyph characters *)
+    texture     : Texture2D;         (*  Texture atlas containing the glyphs *)
+    recs        : RectanglePtr;  (*  Rectangles in texture for the glyphs *)
+    glyphs      : GlyphInfoPtr;  (*  Glyphs info data *)
+  END;
+
+(*  Camera, defines position/orientation in 3d space *)
+
+  Camera3D = RECORD
+    position  : Vector3;     (*  Camera position *)
+    target    : Vector3;     (*  Camera target it looks-at *)
+    up        : Vector3;     (*  Camera up vector (rotation over its axis) *)
+    fovy      : float;        (*  Camera field-of-view aperture in Y (degrees) in perspective, used as near plane width in orthographic *)
+    projection: int;  (*  Camera projection: CAMERA_PERSPECTIVE or CAMERA_ORTHOGRAPHIC *)
+  END;
+
+  Camera = Camera3D;   (*  Camera type fallback, defaults to Camera3D *)
+
+(*  Camera2D, defines position/orientation in 2d space *)
+
+  Camera2D = RECORD
+    offset  : Vector2;  (*  Camera offset (displacement from target) *)
+    target  : Vector2;  (*  Camera target (rotation and zoom origin) *)
+    rotation: float;     (*  Camera rotation in degrees *)
+    zoom    : float;     (*  Camera zoom (scaling), should be 1.0f by default *)
+  END;
+
+(*  Mesh, vertex data and vao/vbo *)
+
+  floatptr = POINTER TO float;
+
+  ucharptr = POINTER TO uchar;
+
+  ushortptr = POINTER TO ushort;
+
+  uintptr = POINTER TO uint;
+
+  Mesh = RECORD
+    vertexCount  : int;       (*  Number of vertices stored in arrays *)
+    triangleCount: int;       (*  Number of triangles stored (indexed or not) *)
+    (*  Vertex attributes data *)
+    vertices     : floatptr;     (*  Vertex position (XYZ - 3 components per vertex) (shader-location = 0) *)
+    texcoords    : floatptr;     (*  Vertex texture coordinates (UV - 2 components per vertex) (shader-location = 1) *)
+    texcoords2   : floatptr;     (*  Vertex texture second coordinates (UV - 2 components per vertex) (shader-location = 5) *)
+    normals      : floatptr;     (*  Vertex normals (XYZ - 3 components per vertex) (shader-location = 2) *)
+    tangents     : floatptr;     (*  Vertex tangents (XYZW - 4 components per vertex) (shader-location = 4) *)
+    colors       : ucharptr;     (*  Vertex colors (RGBA - 4 components per vertex) (shader-location = 3) *)
+    indices      : ushortptr;    (*  Vertex indices (in case vertex data comes indexed) *)
+    (*  Animation vertex data *)
+    animVertices : floatptr;     (*  Animated vertex positions (after bones transformations) *)
+    animNormals  : floatptr;     (*  Animated normals (after bones transformations) *)
+    boneIds      : ucharptr;     (*  Vertex bone ids, max 255 bone ids, up to 4 bones influence by vertex (skinning) *)
+    boneWeights  : floatptr;     (*  Vertex bone weight, up to 4 bones influence by vertex (skinning) *)
+    (*  OpenGL identifiers *)
+    vaoId        : uint;  (*  OpenGL Vertex Array Object id *)
+    vboId        : uintptr;      (*  OpenGL Vertex Buffer Objects id (default vertex data) *)
+  END;
+
+(*  Shader *)
+
+  intptr = POINTER TO int;
+
+  Shader = RECORD
+    id  : uint;  (*  Shader program id *)
+    locs: intptr;      (*  Shader locations array (RL_MAX_SHADER_LOCATIONS) *)
+  END;
+
+(*  MaterialMap *)
+
+  MaterialMap = RECORD
+    texture: Texture2D;   (*  Material map texture *)
+    color  : Color;       (*  Material map color *)
+    value  : float;        (*  Material map value *)
+  END;
+
+(*  Material, includes shader and maps *)
+
+  MaterialMapPtr = POINTER TO MaterialMap;
+
+  Material = RECORD
+    shader: Shader;                  (*  Material shader *)
+    maps  : MaterialMapPtr;      (*  Material maps array (MAX_MATERIAL_MAPS) *)
+    params: ARRAY [0..4-1] OF float;  (*  Material generic parameters (if required) *)
+  END;
+
+(*  Transform, vertex transformation data *)
+
+  Transform = RECORD
+    translation: Vector3;     (*  Translation *)
+    rotation   : Quaternion;  (*  Rotation *)
+    scale      : Vector3;     (*  Scale *)
+  END;
+
+(*  Bone, skeletal animation bone *)
+
+  BoneInfo = RECORD
+    name  : ARRAY [0..32-1] OF CHAR;  (*  Bone name *)
+    parent: int;               (*  Bone parent *)
+  END;
+
+(*  Model, meshes, materials and animation data *)
+
+  MeshPtr = POINTER TO Mesh;
+
+  MaterialPtr = POINTER TO Material;
+
+  BoneInfoPtr = POINTER TO BoneInfo;
+
+  TransformPtr = POINTER TO Transform;
+
+  Model = RECORD
+    transform    : Matrix;            (*  Local transform matrix *)
+    meshCount    : int;        (*  Number of meshes *)
+    materialCount: int;        (*  Number of materials *)
+    meshes       : MeshPtr;       (*  Meshes array *)
+    materials    : MaterialPtr;   (*  Materials array *)
+    meshMaterial : intptr;       (*  Mesh material number *)
+    (*  Animation data *)
+    boneCount    : int;        (*  Number of bones *)
+    bones        : BoneInfoPtr;   (*  Bones information (skeleton) *)
+    bindPose     : TransformPtr;  (*  Bones base transformation (pose) *)
+  END;
+
+(*  ModelAnimation *)
+
+  TransformPtrPtr = POINTER TO TransformPtr;
+
+  ModelAnimation = RECORD
+    boneCount : int;               (*  Number of bones *)
+    frameCount: int;               (*  Number of animation frames *)
+    bones     : BoneInfoPtr;          (*  Bones information (skeleton) *)
+    framePoses: TransformPtrPtr;      (*  Poses array by frame *)
+    name      : ARRAY [0..32-1] OF CHAR;  (*  Animation name *)
+  END;
+
+(*  Ray, ray for raycasting *)
+
+  Ray = RECORD
+    position : Vector3;  (*  Ray position (origin) *)
+    direction: Vector3;  (*  Ray direction *)
+  END;
+
+(*  RayCollision, ray hit information *)
+
+  RayCollision = RECORD
+    hit     :BOOLEAN;        (*  Did the ray hit something? *)
+    distance: float;        (*  Distance to the nearest hit *)
+    point   : Vector3;     (*  Point of the nearest hit *)
+    normal  : Vector3;     (*  Surface normal of hit *)
+  END;
+
+(*  BoundingBox *)
+
+  BoundingBox = RECORD
+    min: Vector3;         (*  Minimum vertex box-corner *)
+    max: Vector3;         (*  Maximum vertex box-corner *)
+  END;
+
+(*  Wave, audio wave data *)
+
+  Wave = RECORD
+    frameCount: uint;  (*  Total number of frames (considering channels) *)
+    sampleRate: uint;  (*  Frequency (samples per second) *)
+    sampleSize: uint;  (*  Bit depth (bits per sample): 8, 16, 32 (24 not supported) *)
+    channels  : uint;  (*  Number of channels (1-mono, 2-stereo, ...) *)
+    data      : voidptr;   (*  Buffer data pointer *)
+  END;
+
+(*  Opaque structs declaration *)
+(*  NOTE: Actual structs are defined internally in raudio module *)
+
+  rAudioBuffer = RECORD
+    (* Declaration without definition *)
+  END;
+
+  rAudioProcessor = rAudioBuffer;
+
+(*  AudioStream, custom audio stream *)
+
+  rAudioBufferPtr = POINTER TO rAudioBuffer;
+
+  AudioStream = RECORD
+    buffer    : rAudioBufferPtr;  (*  Pointer to internal data used by the audio system *)
+    processor : rAudioBufferPtr;  (*  Pointer to internal data processor, useful for audio effects *)
+    sampleRate: uint;      (*  Frequency (samples per second) *)
+    sampleSize: uint;      (*  Bit depth (bits per sample): 8, 16, 32 (24 not supported) *)
+    channels  : uint;      (*  Number of channels (1-mono, 2-stereo, ...) *)
+  END;
+
+(*  Sound *)
+
+  Sound = RECORD
+    stream    : AudioStream;      (*  Audio stream *)
+    frameCount: uint;  (*  Total number of frames (considering channels) *)
+  END;
+
+(*  Music, audio stream, anything longer than ~10 seconds should be streamed *)
+
+  Music = RECORD
+    stream    : AudioStream;      (*  Audio stream *)
+    frameCount: uint;  (*  Total number of frames (considering channels) *)
+    looping   :BOOLEAN;             (*  Music looping enable *)
+    ctxType   : int;       (*  Type of music context (audio filetype) *)
+    ctxData   : voidptr;   (*  Audio context data, depends on type *)
+  END;
+
+(*  VrDeviceInfo, Head-Mounted-Display device parameters *)
+
+  VrDeviceInfo = RECORD
+    hResolution           : int;              (*  Horizontal resolution in pixels *)
+    vResolution           : int;              (*  Vertical resolution in pixels *)
+    hScreenSize           : float;                    (*  Horizontal size in meters *)
+    vScreenSize           : float;                    (*  Vertical size in meters *)
+    vScreenCenter         : float;                    (*  Screen center in meters *)
+    eyeToScreenDistance   : float;                    (*  Distance between eye and display in meters *)
+    lensSeparationDistance: float;                    (*  Lens separation distance in meters *)
+    interpupillaryDistance: float;                    (*  IPD (distance between pupils) in meters *)
+    lensDistortionValues  : ARRAY [0..4-1] OF float;  (*  Lens distortion constant parameters *)
+    chromaAbCorrection    : ARRAY [0..4-1] OF float;  (*  Chromatic aberration correction parameters *)
+  END;
+
+(*  VrStereoConfig, VR stereo rendering configuration for simulator *)
+
+  VrStereoConfig = RECORD
+    projection       : ARRAY [0..2-1] OF Matrix;  (*  VR projection matrices (per eye) *)
+    viewOffset       : ARRAY [0..2-1] OF Matrix;  (*  VR view offset matrices (per eye) *)
+    leftLensCenter   : ARRAY [0..2-1] OF float;    (*  VR left lens center *)
+    rightLensCenter  : ARRAY [0..2-1] OF float;    (*  VR right lens center *)
+    leftScreenCenter : ARRAY [0..2-1] OF float;    (*  VR left screen center *)
+    rightScreenCenter: ARRAY [0..2-1] OF float;    (*  VR right screen center *)
+    scale            : ARRAY [0..2-1] OF float;    (*  VR distortion scale *)
+    scaleIn          : ARRAY [0..2-1] OF float;    (*  VR distortion scale in *)
+  END;
+
+(*  File path list *)
+
+  charptr = POINTER TO CHAR;
+
+  charptrptr = POINTER TO charptr;
+
+  FilePathList = RECORD
+    capacity: uint;  (*  Filepaths max entries *)
+    count   : uint;  (*  Filepaths entries count *)
+    paths   : charptrptr;  (*  Filepaths entries *)
+  END;
+
+(*  Automation event *)
+
+  AutomationEvent = RECORD
+    frame : uint;               (*  Event frame *)
+    type  : uint;               (*  Event type (AutomationEventType) *)
+    params: ARRAY [0..4-1] OF int;  (*  Event parameters (if required) *)
+  END;
+
+(*  Automation event list *)
+
+  AutomationEventPtr = POINTER TO AutomationEvent;
+
+  AutomationEventList = RECORD
+    capacity: uint;         (*  Events max entries (MAX_AUTOMATION_EVENTS) *)
+    count   : uint;         (*  Events entries count *)
+    events  : AutomationEventPtr;  (*  Events entries *)
+  END;
+
+(* ---------------------------------------------------------------------------------- *)
+(*  Enumerators Definition *)
+(* ---------------------------------------------------------------------------------- *)
+(*  System/Window config flags *)
+(*  NOTE: Every bit registers one state (use it with bit masks) *)
+(*  By default all flags are set to 0 *)
+(* H2D: Enumeration: ConfigFlags *)
+
+CONST 
+  FLAG_VSYNC_HINT = 40H;   (*  Set to try enabling V-Sync on GPU *)
+  FLAG_FULLSCREEN_MODE = 2H;   (*  Set to run program in fullscreen *)
+  FLAG_WINDOW_RESIZABLE = 4H;   (*  Set to allow resizable window *)
+  FLAG_WINDOW_UNDECORATED = 8H;   (*  Set to disable window decoration (frame and buttons) *)
+  FLAG_WINDOW_HIDDEN = 80H;   (*  Set to hide window *)
+  FLAG_WINDOW_MINIMIZED = 200H;   (*  Set to minimize window (iconify) *)
+  FLAG_WINDOW_MAXIMIZED = 400H;   (*  Set to maximize window (expanded to monitor) *)
+  FLAG_WINDOW_UNFOCUSED = 800H;   (*  Set to window non focused *)
+  FLAG_WINDOW_TOPMOST = 1000H;   (*  Set to window always on top *)
+  FLAG_WINDOW_ALWAYS_RUN = 100H;   (*  Set to allow windows running while minimized *)
+  FLAG_WINDOW_TRANSPARENT = 10H;   (*  Set to allow transparent framebuffer *)
+  FLAG_WINDOW_HIGHDPI = 2000H;   (*  Set to support HighDPI *)
+  FLAG_WINDOW_MOUSE_PASSTHROUGH = 4000H;   (*  Set to support mouse passthrough, only supported when FLAG_WINDOW_UNDECORATED 
+   *)
+  FLAG_BORDERLESS_WINDOWED_MODE = 8000H;   (*  Set to run program in borderless windowed mode *)
+  FLAG_MSAA_4X_HINT = 20H;   (*  Set to try enabling MSAA 4X *)
+  FLAG_INTERLACED_HINT = 10000H;   (*  Set to try enabling interlaced video format (for V3D) *)
+
+TYPE 
+  ConfigFlags = int;
+(* H2D: End of enumeration: ConfigFlags *)
+
+(*  Trace log level *)
+(*  NOTE: Organized by priority level *)
+(* H2D: Enumeration: TraceLogLevel *)
+
+
+CONST 
+  LOG_ALL = 0;   (*  Display all logs *)
+  LOG_TRACE = 1;   (*  Trace logging, intended for internal use only *)
+  LOG_DEBUG = 2;   (*  Debug logging, used for internal debugging, it should be disabled on release 
+   builds *)
+  LOG_INFO = 3;   (*  Info logging, used for program execution info *)
+  LOG_WARNING = 4;   (*  Warning logging, used on recoverable failures *)
+  LOG_ERROR = 5;   (*  Error logging, used on unrecoverable failures *)
+  LOG_FATAL = 6;   (*  Fatal logging, used to abort program: exit(EXIT_FAILURE) *)
+  LOG_NONE = 7;   (*  Disable logging *)
+
+TYPE 
+  TraceLogLevel = int;
+(* H2D: End of enumeration: TraceLogLevel *)
+
+(*  Keyboard keys (US keyboard layout) *)
+(*  NOTE: Use GetKeyPressed() to allow redefining *)
+(*  required keys for alternative layouts *)
+(* H2D: Enumeration: KeyboardKey *)
+
+CONST 
+  KEY_NULL = 0;   (*  Key: NULL, used for no key pressed *)
+
+(*  Alphanumeric keys *)
+
+  KEY_APOSTROPHE = 39;   (*  Key: ' *)
+  KEY_COMMA = 44;   (*  Key: , *)
+  KEY_MINUS = 45;   (*  Key: - *)
+  KEY_PERIOD = 46;   (*  Key: . *)
+  KEY_SLASH = 47;   (*  Key: / *)
+  KEY_ZERO = 48;   (*  Key: 0 *)
+  KEY_ONE = 49;   (*  Key: 1 *)
+  KEY_TWO = 50;   (*  Key: 2 *)
+  KEY_THREE = 51;   (*  Key: 3 *)
+  KEY_FOUR = 52;   (*  Key: 4 *)
+  KEY_FIVE = 53;   (*  Key: 5 *)
+  KEY_SIX = 54;   (*  Key: 6 *)
+  KEY_SEVEN = 55;   (*  Key: 7 *)
+  KEY_EIGHT = 56;   (*  Key: 8 *)
+  KEY_NINE = 57;   (*  Key: 9 *)
+  KEY_SEMICOLON = 59;   (*  Key: ; *)
+  KEY_EQUAL = 61;   (*  Key: = *)
+  KEY_A = 65;   (*  Key: A | a *)
+  KEY_B = 66;   (*  Key: B | b *)
+  KEY_C = 67;   (*  Key: C | c *)
+  KEY_D = 68;   (*  Key: D | d *)
+  KEY_E = 69;   (*  Key: E | e *)
+  KEY_F = 70;   (*  Key: F | f *)
+  KEY_G = 71;   (*  Key: G | g *)
+  KEY_H = 72;   (*  Key: H | h *)
+  KEY_I = 73;   (*  Key: I | i *)
+  KEY_J = 74;   (*  Key: J | j *)
+  KEY_K = 75;   (*  Key: K | k *)
+  KEY_L = 76;   (*  Key: L | l *)
+  KEY_M = 77;   (*  Key: M | m *)
+  KEY_N = 78;   (*  Key: N | n *)
+  KEY_O = 79;   (*  Key: O | o *)
+  KEY_P = 80;   (*  Key: P | p *)
+  KEY_Q = 81;   (*  Key: Q | q *)
+  KEY_R = 82;   (*  Key: R | r *)
+  KEY_S = 83;   (*  Key: S | s *)
+  KEY_T = 84;   (*  Key: T | t *)
+  KEY_U = 85;   (*  Key: U | u *)
+  KEY_V = 86;   (*  Key: V | v *)
+  KEY_W = 87;   (*  Key: W | w *)
+  KEY_X = 88;   (*  Key: X | x *)
+  KEY_Y = 89;   (*  Key: Y | y *)
+  KEY_Z = 90;   (*  Key: Z | z *)
+  KEY_LEFT_BRACKET = 91;   (*  Key: [ *)
+  KEY_BACKSLASH = 92;   (*  Key: '\' *)
+  KEY_RIGHT_BRACKET = 93;   (*  Key: ] *)
+  KEY_GRAVE = 96;   (*  Key: ` *)
+
+(*  Function keys *)
+
+  KEY_SPACE = 32;   (*  Key: Space *)
+  KEY_ESCAPE = 256;   (*  Key: Esc *)
+  KEY_ENTER = 257;   (*  Key: Enter *)
+  KEY_TAB = 258;   (*  Key: Tab *)
+  KEY_BACKSPACE = 259;   (*  Key: Backspace *)
+  KEY_INSERT = 260;   (*  Key: Ins *)
+  KEY_DELETE = 261;   (*  Key: Del *)
+  KEY_RIGHT = 262;   (*  Key: Cursor right *)
+  KEY_LEFT = 263;   (*  Key: Cursor left *)
+  KEY_DOWN = 264;   (*  Key: Cursor down *)
+  KEY_UP = 265;   (*  Key: Cursor up *)
+  KEY_PAGE_UP = 266;   (*  Key: Page up *)
+  KEY_PAGE_DOWN = 267;   (*  Key: Page down *)
+  KEY_HOME = 268;   (*  Key: Home *)
+  KEY_END = 269;   (*  Key: End *)
+  KEY_CAPS_LOCK = 280;   (*  Key: Caps lock *)
+  KEY_SCROLL_LOCK = 281;   (*  Key: Scroll down *)
+  KEY_NUM_LOCK = 282;   (*  Key: Num lock *)
+  KEY_PRINT_SCREEN = 283;   (*  Key: Print screen *)
+  KEY_PAUSE = 284;   (*  Key: Pause *)
+  KEY_F1 = 290;   (*  Key: F1 *)
+  KEY_F2 = 291;   (*  Key: F2 *)
+  KEY_F3 = 292;   (*  Key: F3 *)
+  KEY_F4 = 293;   (*  Key: F4 *)
+  KEY_F5 = 294;   (*  Key: F5 *)
+  KEY_F6 = 295;   (*  Key: F6 *)
+  KEY_F7 = 296;   (*  Key: F7 *)
+  KEY_F8 = 297;   (*  Key: F8 *)
+  KEY_F9 = 298;   (*  Key: F9 *)
+  KEY_F10 = 299;   (*  Key: F10 *)
+  KEY_F11 = 300;   (*  Key: F11 *)
+  KEY_F12 = 301;   (*  Key: F12 *)
+  KEY_LEFT_SHIFT = 340;   (*  Key: Shift left *)
+  KEY_LEFT_CONTROL = 341;   (*  Key: Control left *)
+  KEY_LEFT_ALT = 342;   (*  Key: Alt left *)
+  KEY_LEFT_SUPER = 343;   (*  Key: Super left *)
+  KEY_RIGHT_SHIFT = 344;   (*  Key: Shift right *)
+  KEY_RIGHT_CONTROL = 345;   (*  Key: Control right *)
+  KEY_RIGHT_ALT = 346;   (*  Key: Alt right *)
+  KEY_RIGHT_SUPER = 347;   (*  Key: Super right *)
+  KEY_KB_MENU = 348;   (*  Key: KB menu *)
+
+
+(*  Keypad keys *)
+
+  KEY_KP_0 = 320;   (*  Key: Keypad 0 *)
+  KEY_KP_1 = 321;   (*  Key: Keypad 1 *)
+  KEY_KP_2 = 322;   (*  Key: Keypad 2 *)
+  KEY_KP_3 = 323;   (*  Key: Keypad 3 *)
+  KEY_KP_4 = 324;   (*  Key: Keypad 4 *)
+  KEY_KP_5 = 325;   (*  Key: Keypad 5 *)
+  KEY_KP_6 = 326;   (*  Key: Keypad 6 *)
+  KEY_KP_7 = 327;   (*  Key: Keypad 7 *)
+  KEY_KP_8 = 328;   (*  Key: Keypad 8 *)
+  KEY_KP_9 = 329;   (*  Key: Keypad 9 *)
+  KEY_KP_DECIMAL = 330;   (*  Key: Keypad . *)
+  KEY_KP_DIVIDE = 331;   (*  Key: Keypad / *)
+  KEY_KP_MULTIPLY = 332;   (*  Key: Keypad * *)
+  KEY_KP_SUBTRACT = 333;   (*  Key: Keypad - *)
+  KEY_KP_ADD = 334;   (*  Key: Keypad + *)
+  KEY_KP_ENTER = 335;   (*  Key: Keypad Enter *)
+  KEY_KP_EQUAL = 336;   (*  Key: Keypad = *)
+
+(*  Android key buttons *)
+
+  KEY_BACK = 4;   (*  Key: Android back button *)
+  KEY_MENU = 82;   (*  Key: Android menu button *)
+  KEY_VOLUME_UP = 24;   (*  Key: Android volume up button *)
+  KEY_VOLUME_DOWN = 25;   (*  Key: Android volume down button *)
+
+TYPE 
+  KeyboardKey = int;
+(* H2D: End of enumeration: KeyboardKey *)
+
+(*  Add backwards compatibility support for deprecated names *)
+(*  Mouse buttons *)
+(* H2D: Enumeration: MouseButton *)
+
+CONST 
+  MOUSE_BUTTON_LEFT = 0;   (*  Mouse button left *)
+  MOUSE_BUTTON_RIGHT = 1;   (*  Mouse button right *)
+  MOUSE_BUTTON_MIDDLE = 2;   (*  Mouse button middle (pressed wheel) *)
+  MOUSE_BUTTON_SIDE = 3;   (*  Mouse button side (advanced mouse device) *)
+  MOUSE_BUTTON_EXTRA = 4;   (*  Mouse button extra (advanced mouse device) *)
+  MOUSE_BUTTON_FORWARD = 5;   (*  Mouse button forward (advanced mouse device) *)
+  MOUSE_BUTTON_BACK = 6;   (*  Mouse button back (advanced mouse device) *)
+
+TYPE 
+  MouseButton = int;
+(* H2D: End of enumeration: MouseButton *)
+
+(*  Mouse cursor *)
+(* H2D: Enumeration: MouseCursor *)
+
+CONST 
+  MOUSE_CURSOR_DEFAULT = 0;   (*  Default pointer shape *)
+  MOUSE_CURSOR_ARROW = 1;   (*  Arrow shape *)
+  MOUSE_CURSOR_IBEAM = 2;   (*  Text writing cursor shape *)
+  MOUSE_CURSOR_CROSSHAIR = 3;   (*  Cross shape *)
+  MOUSE_CURSOR_POINTING_HAND = 4;   (*  Pointing hand cursor *)
+  MOUSE_CURSOR_RESIZE_EW = 5;   (*  Horizontal resize/move arrow shape *)
+  MOUSE_CURSOR_RESIZE_NS = 6;   (*  Vertical resize/move arrow shape *)
+  MOUSE_CURSOR_RESIZE_NWSE = 7;   (*  Top-left to bottom-right diagonal resize/move arrow shape *)
+  MOUSE_CURSOR_RESIZE_NESW = 8;   (*  The top-right to bottom-left diagonal resize/move arrow shape *)
+  MOUSE_CURSOR_RESIZE_ALL = 9;   (*  The omnidirectional resize/move cursor shape *)
+  MOUSE_CURSOR_NOT_ALLOWED = 10;   (*  The operation-not-allowed shape *)
+
+TYPE 
+  MouseCursor = int;
+(* H2D: End of enumeration: MouseCursor *)
+
+(*  Gamepad buttons *)
+(* H2D: Enumeration: GamepadButton *)
+
+CONST 
+  GAMEPAD_BUTTON_UNKNOWN = 0;   (*  Unknown button, just for error checking *)
+  GAMEPAD_BUTTON_LEFT_FACE_UP = 1;   (*  Gamepad left DPAD up button *)
+  GAMEPAD_BUTTON_LEFT_FACE_RIGHT = 2;   (*  Gamepad left DPAD right button *)
+  GAMEPAD_BUTTON_LEFT_FACE_DOWN = 3;   (*  Gamepad left DPAD down button *)
+  GAMEPAD_BUTTON_LEFT_FACE_LEFT = 4;   (*  Gamepad left DPAD left button *)
+  GAMEPAD_BUTTON_RIGHT_FACE_UP = 5;   (*  Gamepad right button up (i.e. PS3: Triangle, Xbox: Y) *)
+  GAMEPAD_BUTTON_RIGHT_FACE_RIGHT = 6;   (*  Gamepad right button right (i.e. PS3: Square, Xbox: X) *)
+  GAMEPAD_BUTTON_RIGHT_FACE_DOWN = 7;   (*  Gamepad right button down (i.e. PS3: Cross, Xbox: A) *)
+  GAMEPAD_BUTTON_RIGHT_FACE_LEFT = 8;   (*  Gamepad right button left (i.e. PS3: Circle, Xbox: B) *)
+  GAMEPAD_BUTTON_LEFT_TRIGGER_1 = 9;   (*  Gamepad top/back trigger left (first), it could be a trailing button *)
+  GAMEPAD_BUTTON_LEFT_TRIGGER_2 = 10;   (*  Gamepad top/back trigger left (second), it could be a trailing button *)
+  GAMEPAD_BUTTON_RIGHT_TRIGGER_1 = 11;   (*  Gamepad top/back trigger right (one), it could be a trailing button *)
+  GAMEPAD_BUTTON_RIGHT_TRIGGER_2 = 12;   (*  Gamepad top/back trigger right (second), it could be a trailing button *)
+  GAMEPAD_BUTTON_MIDDLE_LEFT = 13;   (*  Gamepad center buttons, left one (i.e. PS3: Select) *)
+  GAMEPAD_BUTTON_MIDDLE = 14;   (*  Gamepad center buttons, middle one (i.e. PS3: PS, Xbox: XBOX) *)
+  GAMEPAD_BUTTON_MIDDLE_RIGHT = 15;   (*  Gamepad center buttons, right one (i.e. PS3: Start) *)
+  GAMEPAD_BUTTON_LEFT_THUMB = 16;   (*  Gamepad joystick pressed button left *)
+  GAMEPAD_BUTTON_RIGHT_THUMB = 17;   (*  Gamepad joystick pressed button right *)
+
+TYPE 
+  GamepadButton = int;
+(* H2D: End of enumeration: GamepadButton *)
+
+(*  Gamepad axis *)
+(* H2D: Enumeration: GamepadAxis *)
+
+CONST
+  GAMEPAD_AXIS_LEFT_X = 0;   (*  Gamepad left stick X axis *)
+  GAMEPAD_AXIS_LEFT_Y = 1;   (*  Gamepad left stick Y axis *)
+  GAMEPAD_AXIS_RIGHT_X = 2;   (*  Gamepad right stick X axis *)
+  GAMEPAD_AXIS_RIGHT_Y = 3;   (*  Gamepad right stick Y axis *)
+  GAMEPAD_AXIS_LEFT_TRIGGER = 4;   (*  Gamepad back trigger left, pressure level: [1..-1] *)
+  GAMEPAD_AXIS_RIGHT_TRIGGER = 5;   (*  Gamepad back trigger right, pressure level: [1..-1] *)
+
+TYPE 
+  GamepadAxis = int;
+(* H2D: End of enumeration: GamepadAxis *)
+
+(*  Material map index *)
+(* H2D: Enumeration: MaterialMapIndex *)
+
+CONST 
+  MATERIAL_MAP_ALBEDO = 0;   (*  Albedo material (same as: MATERIAL_MAP_DIFFUSE) *)
+  MATERIAL_MAP_METALNESS = 1;   (*  Metalness material (same as: MATERIAL_MAP_SPECULAR) *)
+  MATERIAL_MAP_NORMAL = 2;   (*  Normal material *)
+  MATERIAL_MAP_ROUGHNESS = 3;   (*  Roughness material *)
+  MATERIAL_MAP_OCCLUSION = 4;   (*  Ambient occlusion material *)
+  MATERIAL_MAP_EMISSION = 5;   (*  Emission material *)
+  MATERIAL_MAP_HEIGHT = 6;   (*  Heightmap material *)
+  MATERIAL_MAP_CUBEMAP = 7;   (*  Cubemap material (NOTE: Uses GL_TEXTURE_CUBE_MAP) *)
+  MATERIAL_MAP_IRRADIANCE = 8;   (*  Irradiance material (NOTE: Uses GL_TEXTURE_CUBE_MAP) *)
+  MATERIAL_MAP_PREFILTER = 9;   (*  Prefilter material (NOTE: Uses GL_TEXTURE_CUBE_MAP) *)
+  MATERIAL_MAP_BRDF = 10;   (*  Brdf material *)
+
+TYPE 
+  MaterialMapIndex = int;
+(* H2D: End of enumeration: MaterialMapIndex *)
+
+(*  Shader location index *)
+(* H2D: Enumeration: ShaderLocationIndex *)
+
+CONST 
+  SHADER_LOC_VERTEX_POSITION = 0;   (*  Shader location: vertex attribute: position *)
+  SHADER_LOC_VERTEX_TEXCOORD01 = 1;   (*  Shader location: vertex attribute: texcoord01 *)
+  SHADER_LOC_VERTEX_TEXCOORD02 = 2;   (*  Shader location: vertex attribute: texcoord02 *)
+  SHADER_LOC_VERTEX_NORMAL = 3;   (*  Shader location: vertex attribute: normal *)
+  SHADER_LOC_VERTEX_TANGENT = 4;   (*  Shader location: vertex attribute: tangent *)
+  SHADER_LOC_VERTEX_COLOR = 5;   (*  Shader location: vertex attribute: color *)
+  SHADER_LOC_MATRIX_MVP = 6;   (*  Shader location: matrix uniform: model-view-projection *)
+  SHADER_LOC_MATRIX_VIEW = 7;   (*  Shader location: matrix uniform: view (camera transform) *)
+  SHADER_LOC_MATRIX_PROJECTION = 8;   (*  Shader location: matrix uniform: projection *)
+  SHADER_LOC_MATRIX_MODEL = 9;   (*  Shader location: matrix uniform: model (transform) *)
+  SHADER_LOC_MATRIX_NORMAL = 10;   (*  Shader location: matrix uniform: normal *)
+  SHADER_LOC_VECTOR_VIEW = 11;   (*  Shader location: vector uniform: view *)
+  SHADER_LOC_COLOR_DIFFUSE = 12;   (*  Shader location: vector uniform: diffuse color *)
+  SHADER_LOC_COLOR_SPECULAR = 13;   (*  Shader location: vector uniform: specular color *)
+  SHADER_LOC_COLOR_AMBIENT = 14;   (*  Shader location: vector uniform: ambient color *)
+  SHADER_LOC_MAP_ALBEDO = 15;   (*  Shader location: sampler2d texture: albedo (same as: SHADER_LOC_MAP_DIFFUSE) *)
+  SHADER_LOC_MAP_METALNESS = 16;   (*  Shader location: sampler2d texture: metalness (same as: 
+   SHADER_LOC_MAP_SPECULAR) *)
+  SHADER_LOC_MAP_NORMAL = 17;   (*  Shader location: sampler2d texture: normal *)
+  SHADER_LOC_MAP_ROUGHNESS = 18;   (*  Shader location: sampler2d texture: roughness *)
+  SHADER_LOC_MAP_OCCLUSION = 19;   (*  Shader location: sampler2d texture: occlusion *)
+  SHADER_LOC_MAP_EMISSION = 20;   (*  Shader location: sampler2d texture: emission *)
+  SHADER_LOC_MAP_HEIGHT = 21;   (*  Shader location: sampler2d texture: height *)
+  SHADER_LOC_MAP_CUBEMAP = 22;   (*  Shader location: samplerCube texture: cubemap *)
+  SHADER_LOC_MAP_IRRADIANCE = 23;   (*  Shader location: samplerCube texture: irradiance *)
+  SHADER_LOC_MAP_PREFILTER = 24;   (*  Shader location: samplerCube texture: prefilter *)
+  SHADER_LOC_MAP_BRDF = 25;   (*  Shader location: sampler2d texture: brdf *)
+
+TYPE 
+  ShaderLocationIndex = int;
+(* H2D: End of enumeration: ShaderLocationIndex *)
+
+(*  Shader uniform data type *)
+(* H2D: Enumeration: ShaderUniformDataType *)
+
+CONST 
+  SHADER_UNIFORM_FLOAT = 0;   (*  Shader uniform type: float *)
+  SHADER_UNIFORM_VEC2 = 1;   (*  Shader uniform type: vec2 (2 float) *)
+  SHADER_UNIFORM_VEC3 = 2;   (*  Shader uniform type: vec3 (3 float) *)
+  SHADER_UNIFORM_VEC4 = 3;   (*  Shader uniform type: vec4 (4 float) *)
+  SHADER_UNIFORM_INT = 4;   (*  Shader uniform type: int *)
+  SHADER_UNIFORM_IVEC2 = 5;   (*  Shader uniform type: ivec2 (2 int) *)
+  SHADER_UNIFORM_IVEC3 = 6;   (*  Shader uniform type: ivec3 (3 int) *)
+  SHADER_UNIFORM_IVEC4 = 7;   (*  Shader uniform type: ivec4 (4 int) *)
+  SHADER_UNIFORM_SAMPLER2D = 8;   (*  Shader uniform type: sampler2d *)
+
+TYPE 
+  ShaderUniformDataType = int;
+(* H2D: End of enumeration: ShaderUniformDataType *)
+
+(*  Shader attribute data types *)
+(* H2D: Enumeration: ShaderAttributeDataType *)
+
+CONST 
+  SHADER_ATTRIB_FLOAT = 0;   (*  Shader attribute type: float *)
+  SHADER_ATTRIB_VEC2 = 1;   (*  Shader attribute type: vec2 (2 float) *)
+  SHADER_ATTRIB_VEC3 = 2;   (*  Shader attribute type: vec3 (3 float) *)
+  SHADER_ATTRIB_VEC4 = 3;   (*  Shader attribute type: vec4 (4 float) *)
+
+TYPE 
+  ShaderAttributeDataType = int;
+(* H2D: End of enumeration: ShaderAttributeDataType *)
+
+(*  Pixel formats *)
+(*  NOTE: Support depends on OpenGL version and platform *)
+(* H2D: Enumeration: PixelFormat *)
+
+CONST 
+  PIXELFORMAT_UNCOMPRESSED_GRAYSCALE = 1;   (*  8 bit per pixel (no alpha) *)
+  PIXELFORMAT_UNCOMPRESSED_GRAY_ALPHA = 2;   (*  8*2 bpp (2 channels) *)
+  PIXELFORMAT_UNCOMPRESSED_R5G6B5 = 3;   (*  16 bpp *)
+  PIXELFORMAT_UNCOMPRESSED_R8G8B8 = 4;   (*  24 bpp *)
+  PIXELFORMAT_UNCOMPRESSED_R5G5B5A1 = 5;   (*  16 bpp (1 bit alpha) *)
+  PIXELFORMAT_UNCOMPRESSED_R4G4B4A4 = 6;   (*  16 bpp (4 bit alpha) *)
+  PIXELFORMAT_UNCOMPRESSED_R8G8B8A8 = 7;   (*  32 bpp *)
+  PIXELFORMAT_UNCOMPRESSED_R32 = 8;   (*  32 bpp (1 channel - float) *)
+  PIXELFORMAT_UNCOMPRESSED_R32G32B32 = 9;   (*  32*3 bpp (3 channels - float) *)
+  PIXELFORMAT_UNCOMPRESSED_R32G32B32A32 = 10;   (*  32*4 bpp (4 channels - float) *)
+  PIXELFORMAT_UNCOMPRESSED_R16 = 11;   (*  16 bpp (1 channel - half float) *)
+  PIXELFORMAT_UNCOMPRESSED_R16G16B16 = 12;   (*  16*3 bpp (3 channels - half float) *)
+  PIXELFORMAT_UNCOMPRESSED_R16G16B16A16 = 13;   (*  16*4 bpp (4 channels - half float) *)
+  PIXELFORMAT_COMPRESSED_DXT1_RGB = 14;   (*  4 bpp (no alpha) *)
+  PIXELFORMAT_COMPRESSED_DXT1_RGBA = 15;   (*  4 bpp (1 bit alpha) *)
+  PIXELFORMAT_COMPRESSED_DXT3_RGBA = 16;   (*  8 bpp *)
+  PIXELFORMAT_COMPRESSED_DXT5_RGBA = 17;   (*  8 bpp *)
+  PIXELFORMAT_COMPRESSED_ETC1_RGB = 18;   (*  4 bpp *)
+  PIXELFORMAT_COMPRESSED_ETC2_RGB = 19;   (*  4 bpp *)
+  PIXELFORMAT_COMPRESSED_ETC2_EAC_RGBA = 20;   (*  8 bpp *)
+  PIXELFORMAT_COMPRESSED_PVRT_RGB = 21;   (*  4 bpp *)
+  PIXELFORMAT_COMPRESSED_PVRT_RGBA = 22;   (*  4 bpp *)
+  PIXELFORMAT_COMPRESSED_ASTC_4x4_RGBA = 23;   (*  8 bpp *)
+  PIXELFORMAT_COMPRESSED_ASTC_8x8_RGBA = 24;   (*  2 bpp *)
+
+TYPE 
+  PixelFormat = int;
+(* H2D: End of enumeration: PixelFormat *)
+
+(*  Texture parameters: filter mode *)
+(*  NOTE 1: Filtering considers mipmaps if available in the texture *)
+(*  NOTE 2: Filter is accordingly set for minification and magnification *)
+(* H2D: Enumeration: TextureFilter *)
+
+CONST 
+  TEXTURE_FILTER_POINT = 0;   (*  No filter, just pixel approximation *)
+  TEXTURE_FILTER_BILINEAR = 1;   (*  Linear filtering *)
+  TEXTURE_FILTER_TRILINEAR = 2;   (*  Trilinear filtering (linear with mipmaps) *)
+  TEXTURE_FILTER_ANISOTROPIC_4X = 3;   (*  Anisotropic filtering 4x *)
+  TEXTURE_FILTER_ANISOTROPIC_8X = 4;   (*  Anisotropic filtering 8x *)
+  TEXTURE_FILTER_ANISOTROPIC_16X = 5;   (*  Anisotropic filtering 16x *)
+
+
+TYPE 
+  TextureFilter = int;
+(* H2D: End of enumeration: TextureFilter *)
+
+(*  Texture parameters: wrap mode *)
+(* H2D: Enumeration: TextureWrap *)
+
+CONST 
+  TEXTURE_WRAP_REPEAT = 0;   (*  Repeats texture in tiled mode *)
+  TEXTURE_WRAP_CLAMP = 1;   (*  Clamps texture to edge pixel in tiled mode *)
+  TEXTURE_WRAP_MIRROR_REPEAT = 2;   (*  Mirrors and repeats the texture in tiled mode *)
+  TEXTURE_WRAP_MIRROR_CLAMP = 3;   (*  Mirrors and clamps to border the texture in tiled mode *)
+
+TYPE 
+  TextureWrap = int;
+(* H2D: End of enumeration: TextureWrap *)
+
+(*  Cubemap layouts *)
+(* H2D: Enumeration: CubemapLayout *)
+
+CONST 
+  CUBEMAP_LAYOUT_AUTO_DETECT = 0;   (*  Automatically detect layout type *)
+  CUBEMAP_LAYOUT_LINE_VERTICAL = 1;   (*  Layout is defined by a vertical line with faces *)
+  CUBEMAP_LAYOUT_LINE_HORIZONTAL = 2;   (*  Layout is defined by a horizontal line with faces *)
+  CUBEMAP_LAYOUT_CROSS_THREE_BY_FOUR = 3;   (*  Layout is defined by a 3x4 cross with cubemap faces *)
+  CUBEMAP_LAYOUT_CROSS_FOUR_BY_THREE = 4;   (*  Layout is defined by a 4x3 cross with cubemap faces *)
+  CUBEMAP_LAYOUT_PANORAMA = 5;   (*  Layout is defined by a panorama image (equirrectangular map) *)
+
+TYPE 
+  CubemapLayout = int;
+(* H2D: End of enumeration: CubemapLayout *)
+
+(*  Font type, defines generation method *)
+(* H2D: Enumeration: FontType *)
+
+
+
+CONST 
+  FONT_DEFAULT = 0;   (*  Default font generation, anti-aliased *)
+  FONT_BITMAP = 1;   (*  Bitmap font generation, no anti-aliasing *)
+  FONT_SDF = 2;   (*  SDF font generation, requires external shader *)
+
+
+TYPE 
+  FontType = int;
+(* H2D: End of enumeration: FontType *)
+
+(*  Color blending modes (pre-defined) *)
+(* H2D: Enumeration: BlendMode *)
+
+
+
+CONST 
+  BLEND_ALPHA = 0;   (*  Blend textures considering alpha (default) *)
+  BLEND_ADDITIVE = 1;   (*  Blend textures adding colors *)
+  BLEND_MULTIPLIED = 2;   (*  Blend textures multiplying colors *)
+  BLEND_ADD_COLORS = 3;   (*  Blend textures adding colors (alternative) *)
+  BLEND_SUBTRACT_COLORS = 4;   (*  Blend textures subtracting colors (alternative) *)
+  BLEND_ALPHA_PREMULTIPLY = 5;   (*  Blend premultiplied textures considering alpha *)
+  BLEND_CUSTOM = 6;   (*  Blend textures using custom src/dst factors (use rlSetBlendFactors()) *)
+  BLEND_CUSTOM_SEPARATE = 7;   (*  Blend textures using custom rgb/alpha separate src/dst factors (use 
+   rlSetBlendFactorsSeparate()) *)
+
+
+TYPE 
+  BlendMode = int;
+(* H2D: End of enumeration: BlendMode *)
+
+(*  Gesture *)
+(*  NOTE: Provided as bit-wise flags to enable only desired gestures *)
+(* H2D: Enumeration: Gesture *)
+
+
+
+CONST 
+  GESTURE_NONE = 0;   (*  No gesture *)
+  GESTURE_TAP = 1;   (*  Tap gesture *)
+  GESTURE_DOUBLETAP = 2;   (*  Double tap gesture *)
+  GESTURE_HOLD = 4;   (*  Hold gesture *)
+  GESTURE_DRAG = 8;   (*  Drag gesture *)
+  GESTURE_SWIPE_RIGHT = 16;   (*  Swipe right gesture *)
+  GESTURE_SWIPE_LEFT = 32;   (*  Swipe left gesture *)
+  GESTURE_SWIPE_UP = 64;   (*  Swipe up gesture *)
+  GESTURE_SWIPE_DOWN = 128;   (*  Swipe down gesture *)
+  GESTURE_PINCH_IN = 256;   (*  Pinch in gesture *)
+  GESTURE_PINCH_OUT = 512;   (*  Pinch out gesture *)
+
+
+TYPE 
+  Gesture = int;
+(* H2D: End of enumeration: Gesture *)
+
+(*  Camera system modes *)
+(* H2D: Enumeration: CameraMode *)
+
+
+CONST 
+  CAMERA_CUSTOM = 0;   (*  Custom camera *)
+  CAMERA_FREE = 1;   (*  Free camera *)
+  CAMERA_ORBITAL = 2;   (*  Orbital camera *)
+  CAMERA_FIRST_PERSON = 3;   (*  First person camera *)
+  CAMERA_THIRD_PERSON = 4;   (*  Third person camera *)
+
+
+TYPE 
+  CameraMode = int;
+(* H2D: End of enumeration: CameraMode *)
+
+(*  Camera projection *)
+(* H2D: Enumeration: CameraProjection *)
+
+CONST 
+  CAMERA_PERSPECTIVE = 0;   (*  Perspective projection *)
+  CAMERA_ORTHOGRAPHIC = 1;   (*  Orthographic projection *)
+
+
+TYPE 
+  CameraProjection = int;
+(* H2D: End of enumeration: CameraProjection *)
+
+(*  N-patch layout *)
+(* H2D: Enumeration: NPatchLayout *)
+
+
+CONST 
+  NPATCH_NINE_PATCH = 0;   (*  Npatch layout: 3x3 tiles *)
+  NPATCH_THREE_PATCH_VERTICAL = 1;   (*  Npatch layout: 1x3 tiles *)
+  NPATCH_THREE_PATCH_HORIZONTAL = 2;   (*  Npatch layout: 3x1 tiles *)
+
+
+TYPE 
+  NPatchLayout = int;
+(* H2D: End of enumeration: NPatchLayout *)
+
+(*  Callbacks to hook some internal functions *)
+(*  WARNING: These callbacks are intended for advance users *)
+(* typedef void ( *TraceLogCallback)(int logLevel, const char *text, va_list args);  // Logging: Redirect trace log messages *)
+
+  LoadFileDataCallback = PROCEDURE ( (* fileName *) ARRAY OF CHAR, (* dataSize *)
+                                   intptr ): ucharptr;   (*  FileIO: Load binary data *)
+
+  SaveFileDataCallback = PROCEDURE ( (* fileName *) ARRAY OF CHAR, (* data *)
+                                   voidptr, (* dataSize *) int ):BOOLEAN;   (*  FileIO: Save binary data *)
+
+  LoadFileTextCallback = PROCEDURE ( (* fileName *) ARRAY OF CHAR ): charptr;   (*  FileIO: Load text data *)
+
+  SaveFileTextCallback = PROCEDURE ( (* fileName *) ARRAY OF CHAR, (* text *)
+                                   ARRAY OF CHAR ):BOOLEAN;   (*  FileIO: Save text data *)
+
+(* ------------------------------------------------------------------------------------ *)
+(*  Global Variables Definition *)
+(* ------------------------------------------------------------------------------------ *)
+(*  It's lonely here... *)
+(* ------------------------------------------------------------------------------------ *)
+(*  Window and Graphics Device Functions (Module: core) *)
+(* ------------------------------------------------------------------------------------ *)
+(*  Window-related functions *)
+
+PROCEDURE InitWindow ( width: int; height: int; title: ARRAY OF CHAR );
+
+(*  Initialize window and OpenGL context *)
+
+PROCEDURE CloseWindow (  );
+
+(*  Close window and unload OpenGL context *)
+
+PROCEDURE WindowShouldClose (  ):BOOLEAN;
+
+(*  Check if application should close (KEY_ESCAPE pressed or windows close icon clicked) *)
+
+PROCEDURE IsWindowReady (  ):BOOLEAN;
+
+(*  Check if window has been initialized successfully *)
+
+PROCEDURE IsWindowFullscreen (  ):BOOLEAN;
+
+(*  Check if window is currently fullscreen *)
+
+PROCEDURE IsWindowHidden (  ):BOOLEAN;
+
+(*  Check if window is currently hidden (only PLATFORM_DESKTOP) *)
+
+PROCEDURE IsWindowMinimized (  ):BOOLEAN;
+
+(*  Check if window is currently minimized (only PLATFORM_DESKTOP) *)
+
+PROCEDURE IsWindowMaximized (  ):BOOLEAN;
+
+(*  Check if window is currently maximized (only PLATFORM_DESKTOP) *)
+
+PROCEDURE IsWindowFocused (  ):BOOLEAN;
+
+(*  Check if window is currently focused (only PLATFORM_DESKTOP) *)
+
+PROCEDURE IsWindowResized (  ):BOOLEAN;
+
+(*  Check if window has been resized last frame *)
+
+PROCEDURE IsWindowState ( flag: uint ):BOOLEAN;
+
+(*  Check if one specific window flag is enabled *)
+
+PROCEDURE SetWindowState ( flags: uint );
+
+(*  Set window configuration state using flags (only PLATFORM_DESKTOP) *)
+
+PROCEDURE ClearWindowState ( flags: uint );
+
+(*  Clear window configuration state flags *)
+
+PROCEDURE ToggleFullscreen (  );
+
+(*  Toggle window state: fullscreen/windowed (only PLATFORM_DESKTOP) *)
+
+PROCEDURE ToggleBorderlessWindowed (  );
+
+(*  Toggle window state: borderless windowed (only PLATFORM_DESKTOP) *)
+
+PROCEDURE MaximizeWindow (  );
+
+(*  Set window state: maximized, if resizable (only PLATFORM_DESKTOP) *)
+
+PROCEDURE MinimizeWindow (  );
+
+(*  Set window state: minimized, if resizable (only PLATFORM_DESKTOP) *)
+
+PROCEDURE RestoreWindow (  );
+
+(*  Set window state: not minimized/maximized (only PLATFORM_DESKTOP) *)
+
+PROCEDURE SetWindowIcon ( image: Image );
+
+(*  Set icon for window (single image, RGBA 32bit, only PLATFORM_DESKTOP) *)
+
+TYPE 
+  ImagePtr = POINTER TO Image;
+
+PROCEDURE SetWindowIcons ( images: ImagePtr; count: int );
+
+(*  Set icon for window (multiple images, RGBA 32bit, only PLATFORM_DESKTOP) *)
+
+PROCEDURE SetWindowTitle ( title: ARRAY OF CHAR );
+
+(*  Set title for window (only PLATFORM_DESKTOP and PLATFORM_WEB) *)
+
+PROCEDURE SetWindowPosition ( x: int; y: int );
+
+(*  Set window position on screen (only PLATFORM_DESKTOP) *)
+
+PROCEDURE SetWindowMonitor ( monitor: int );
+
+(*  Set monitor for the current window *)
+
+PROCEDURE SetWindowMinSize ( width: int; height: int );
+
+(*  Set window minimum dimensions (for FLAG_WINDOW_RESIZABLE) *)
+
+PROCEDURE SetWindowMaxSize ( width: int; height: int );
+
+(*  Set window maximum dimensions (for FLAG_WINDOW_RESIZABLE) *)
+
+PROCEDURE SetWindowSize ( width: int; height: int );
+
+(*  Set window dimensions *)
+
+PROCEDURE SetWindowOpacity ( opacity: float );
+
+(*  Set window opacity [0.0f..1.0f] (only PLATFORM_DESKTOP) *)
+
+PROCEDURE SetWindowFocused (  );
+
+(*  Set window focused (only PLATFORM_DESKTOP) *)
+
+PROCEDURE GetWindowHandle (  ): voidptr;
+
+(*  Get native window handle *)
+
+PROCEDURE GetScreenWidth (  ): int;
+
+(*  Get current screen width *)
+
+PROCEDURE GetScreenHeight (  ): int;
+
+(*  Get current screen height *)
+
+PROCEDURE GetRenderWidth (  ): int;
+
+(*  Get current render width (it considers HiDPI) *)
+
+PROCEDURE GetRenderHeight (  ): int;
+
+(*  Get current render height (it considers HiDPI) *)
+
+PROCEDURE GetMonitorCount (  ): int;
+
+(*  Get number of connected monitors *)
+
+PROCEDURE GetCurrentMonitor (  ): int;
+
+(*  Get current connected monitor *)
+
+PROCEDURE GetMonitorPosition ( monitor: int ): Vector2;
+
+(*  Get specified monitor position *)
+
+PROCEDURE GetMonitorWidth ( monitor: int ): int;
+
+(*  Get specified monitor width (current video mode used by monitor) *)
+
+PROCEDURE GetMonitorHeight ( monitor: int ): int;
+
+(*  Get specified monitor height (current video mode used by monitor) *)
+
+PROCEDURE GetMonitorPhysicalWidth ( monitor: int ): int;
+
+(*  Get specified monitor physical width in millimetres *)
+
+PROCEDURE GetMonitorPhysicalHeight ( monitor: int ): int;
+
+(*  Get specified monitor physical height in millimetres *)
+
+PROCEDURE GetMonitorRefreshRate ( monitor: int ): int;
+
+(*  Get specified monitor refresh rate *)
+
+PROCEDURE GetWindowPosition (  ): Vector2;
+
+(*  Get window position XY on monitor *)
+
+PROCEDURE GetWindowScaleDPI (  ): Vector2;
+
+(*  Get window scale DPI factor *)
+
+PROCEDURE GetMonitorName ( monitor: int ): charptr;
+
+(*  Get the human-readable, UTF-8 encoded name of the specified monitor *)
+
+PROCEDURE SetClipboardText ( text: ARRAY OF CHAR );
+
+(*  Set clipboard text content *)
+
+PROCEDURE GetClipboardText (  ): charptr;
+
+(*  Get clipboard text content *)
+
+PROCEDURE EnableEventWaiting (  );
+
+(*  Enable waiting for events on EndDrawing(), no automatic event polling *)
+
+PROCEDURE DisableEventWaiting (  );
+
+(*  Disable waiting for events on EndDrawing(), automatic events polling *)
+(*  Cursor-related functions *)
+
+PROCEDURE ShowCursor (  );
+
+(*  Shows cursor *)
+
+PROCEDURE HideCursor (  );
+
+(*  Hides cursor *)
+
+PROCEDURE IsCursorHidden (  ):BOOLEAN;
+
+(*  Check if cursor is not visible *)
+
+PROCEDURE EnableCursor (  );
+
+(*  Enables cursor (unlock cursor) *)
+
+PROCEDURE DisableCursor (  );
+
+(*  Disables cursor (lock cursor) *)
+
+PROCEDURE IsCursorOnScreen (  ):BOOLEAN;
+
+(*  Check if cursor is on the screen *)
+(*  Drawing-related functions *)
+
+PROCEDURE ClearBackground ( color: Color );
+
+(*  Set background color (framebuffer clear color) *)
+
+PROCEDURE BeginDrawing (  );
+
+(*  Setup canvas (framebuffer) to start drawing *)
+
+PROCEDURE EndDrawing (  );
+
+(*  End canvas drawing and swap buffers (float buffering) *)
+
+PROCEDURE BeginMode2D ( camera: Camera2D );
+
+(*  Begin 2D mode with custom camera (2D) *)
+
+PROCEDURE EndMode2D (  );
+
+(*  Ends 2D mode with custom camera *)
+
+PROCEDURE BeginMode3D ( camera: Camera3D );
+
+(*  Begin 3D mode with custom camera (3D) *)
+
+PROCEDURE EndMode3D (  );
+
+(*  Ends 3D mode and returns to default 2D orthographic mode *)
+
+PROCEDURE BeginTextureMode ( target: RenderTexture2D );
+
+(*  Begin drawing to render texture *)
+
+PROCEDURE EndTextureMode (  );
+
+(*  Ends drawing to render texture *)
+
+PROCEDURE BeginShaderMode ( shader: Shader );
+
+(*  Begin custom shader drawing *)
+
+PROCEDURE EndShaderMode (  );
+
+(*  End custom shader drawing (use default shader) *)
+
+PROCEDURE BeginBlendMode ( mode: int );
+
+(*  Begin blending mode (alpha, additive, multiplied, subtract, custom) *)
+
+PROCEDURE EndBlendMode (  );
+
+(*  End blending mode (reset to default: alpha blending) *)
+
+PROCEDURE BeginScissorMode ( x: int; y: int; width: int;
+                             height: int );
+
+(*  Begin scissor mode (define screen area for following drawing) *)
+
+PROCEDURE EndScissorMode (  );
+
+(*  End scissor mode *)
+
+PROCEDURE BeginVrStereoMode ( config: VrStereoConfig );
+
+(*  Begin stereo rendering (requires VR simulator) *)
+
+PROCEDURE EndVrStereoMode (  );
+
+(*  End stereo rendering (requires VR simulator) *)
+(*  VR stereo config functions for VR simulator *)
+
+PROCEDURE LoadVrStereoConfig ( device: VrDeviceInfo ): VrStereoConfig;
+
+(*  Load VR stereo config for VR simulator device parameters *)
+
+PROCEDURE UnloadVrStereoConfig ( config: VrStereoConfig );
+
+(*  Unload VR stereo config *)
+(*  Shader management functions *)
+(*  NOTE: Shader functionality is not available on OpenGL 1.1 *)
+
+PROCEDURE LoadShader ( vsFileName: ARRAY OF CHAR; fsFileName: ARRAY OF CHAR ): Shader;
+
+(*  Load shader from files and bind default locations *)
+
+PROCEDURE LoadShaderFromMemory ( vsCode: ARRAY OF CHAR; fsCode: ARRAY OF CHAR ): Shader;
+
+(*  Load shader from code strings and bind default locations *)
+
+PROCEDURE IsShaderReady ( shader: Shader ):BOOLEAN;
+
+(*  Check if a shader is ready *)
+
+PROCEDURE GetShaderLocation ( shader: Shader; uniformName: ARRAY OF CHAR ): int;
+
+(*  Get shader uniform location *)
+
+PROCEDURE GetShaderLocationAttrib ( shader: Shader;
+                                    attribName: ARRAY OF CHAR ): int;
+
+(*  Get shader attribute location *)
+
+PROCEDURE SetShaderValue ( shader: Shader; locIndex: int;
+                           value: voidptr; uniformType: int );
+
+(*  Set shader uniform value *)
+
+PROCEDURE SetShaderValueV ( shader: Shader; locIndex: int;
+                            value: voidptr; uniformType: int;
+                            count: int );
+
+(*  Set shader uniform value vector *)
+
+PROCEDURE SetShaderValueMatrix ( shader: Shader; locIndex: int; mat: Matrix );
+
+(*  Set shader uniform value (matrix 4x4) *)
+
+PROCEDURE SetShaderValueTexture ( shader: Shader; locIndex: int;
+                                  texture: Texture2D );
+
+(*  Set shader uniform value for texture (sampler2d) *)
+
+PROCEDURE UnloadShader ( shader: Shader );
+
+(*  Unload shader from GPU memory (VRAM) *)
+(*  Screen-space-related functions *)
+
+PROCEDURE GetMouseRay ( mousePosition: Vector2; camera: Camera ): Ray;
+
+(*  Get a ray trace from mouse position *)
+
+PROCEDURE GetCameraMatrix ( camera: Camera ): Matrix;
+
+(*  Get camera transform matrix (view matrix) *)
+
+PROCEDURE GetCameraMatrix2D ( camera: Camera2D ): Matrix;
+
+(*  Get camera 2d transform matrix *)
+
+PROCEDURE GetWorldToScreen ( position: Vector3; camera: Camera ): Vector2;
+
+(*  Get the screen space position for a 3d world space position *)
+
+PROCEDURE GetScreenToWorld2D ( position: Vector2; camera: Camera2D ): Vector2;
+
+(*  Get the world space position for a 2d camera screen space position *)
+
+PROCEDURE GetWorldToScreenEx ( position: Vector3; camera: Camera; width: int;
+                               height: int ): Vector2;
+
+(*  Get size position for a 3d world space position *)
+
+PROCEDURE GetWorldToScreen2D ( position: Vector2; camera: Camera2D ): Vector2;
+
+(*  Get the screen space position for a 2d camera world space position *)
+(*  Timing-related functions *)
+
+PROCEDURE SetTargetFPS ( fps: int );
+
+(*  Set target FPS (maximum) *)
+
+PROCEDURE GetFrameTime (  ): float;
+
+(*  Get time in seconds for last frame drawn (delta time) *)
+
+PROCEDURE GetTime (  ): double;
+
+(*  Get elapsed time in seconds since InitWindow() *)
+
+PROCEDURE GetFPS (  ): int;
+
+(*  Get current FPS *)
+(*  Custom frame control functions *)
+(*  NOTE: Those functions are intended for advance users that want full control over the frame processing *)
+(*  By default EndDrawing() does this job: draws everything + SwapScreenBuffer() + manage frame timing + PollInputEvents() *)
+(*  To avoid that behaviour and control frame processes manually, enable in config.h: SUPPORT_CUSTOM_FRAME_CONTROL *)
+
+PROCEDURE SwapScreenBuffer (  );
+
+(*  Swap back buffer with front buffer (screen drawing) *)
+
+PROCEDURE PollInputEvents (  );
+
+(*  Register all input events *)
+
+PROCEDURE WaitTime ( seconds: double );
+
+(*  Wait for some time (halt program execution) *)
+(*  Random values generation functions *)
+
+PROCEDURE SetRandomSeed ( seed: uint );
+
+(*  Set the seed for the random number generator *)
+
+PROCEDURE GetRandomValue ( min: int; max: int ): int;
+
+(*  Get a random value between min and max (both included) *)
+
+PROCEDURE LoadRandomSequence ( count: uint; min: int;
+                               max: int ): intptr;
+
+(*  Load random values sequence, no values repeated *)
+
+PROCEDURE UnloadRandomSequence ( sequence: intptr );
+
+(*  Unload random values sequence *)
+(*  Misc. functions *)
+
+PROCEDURE TakeScreenshot ( fileName: ARRAY OF CHAR );
+
+(*  Takes a screenshot of current screen (filename extension defines format) *)
+
+PROCEDURE SetConfigFlags ( flags: uint );
+
+(*  Setup init configuration flags (view FLAGS) *)
+
+PROCEDURE OpenURL ( url: ARRAY OF CHAR );
+
+(*  Open URL with default system browser (if available) *)
+(*  NOTE: Following functions implemented in module [utils] *)
+(* ------------------------------------------------------------------ *)
+
+PROCEDURE TraceLog ( logLevel: int; text: ARRAY OF CHAR; ... );
+
+(*  Show trace log messages (LOG_DEBUG, LOG_INFO, LOG_WARNING, LOG_ERROR...) *)
+
+PROCEDURE SetTraceLogLevel ( logLevel: int );
+
+(*  Set the current threshold (minimum) log level *)
+
+PROCEDURE MemAlloc ( size: uint ): voidptr;
+
+(*  Internal memory allocator *)
+
+PROCEDURE MemRealloc ( ptr: voidptr; size: uint ): voidptr;
+
+(*  Internal memory reallocator *)
+
+PROCEDURE MemFree ( ptr: voidptr);
+
+(*  Internal memory free *)
+(*  Set custom callbacks *)
+(*  WARNING: Callbacks setup is intended for advance users *)
+(* RLAPI void SetTraceLogCallback(TraceLogCallback callback);         // Set custom trace log *)
+
+PROCEDURE SetLoadFileDataCallback ( callback: LoadFileDataCallback );
+
+(*  Set custom file binary data loader *)
+
+PROCEDURE SetSaveFileDataCallback ( callback: SaveFileDataCallback );
+
+(*  Set custom file binary data saver *)
+
+PROCEDURE SetLoadFileTextCallback ( callback: LoadFileTextCallback );
+
+(*  Set custom file text data loader *)
+
+PROCEDURE SetSaveFileTextCallback ( callback: SaveFileTextCallback );
+
+(*  Set custom file text data saver *)
+(*  Files management functions *)
+
+PROCEDURE LoadFileData ( fileName: ARRAY OF CHAR;
+                         dataSize: intptr ): ucharptr;
+
+(*  Load file data as byte array (read) *)
+
+PROCEDURE UnloadFileData ( data: ucharptr );
+
+(*  Unload file data allocated by LoadFileData() *)
+
+PROCEDURE SaveFileData ( fileName: ARRAY OF CHAR; data: voidptr;
+                         dataSize: int ):BOOLEAN;
+
+(*  Save data to file from byte array (write), returns true on success *)
+
+PROCEDURE ExportDataAsCode ( data: ucharptr; dataSize: int;
+                             fileName: ARRAY OF CHAR ):BOOLEAN;
+
+(*  Export data to code (.h), returns true on success *)
+
+PROCEDURE LoadFileText ( fileName: ARRAY OF CHAR ): charptr;
+
+(*  Load text data from file (read), returns a '\0' terminated string *)
+
+PROCEDURE UnloadFileText ( text: ARRAY OF CHAR );
+
+(*  Unload file text data allocated by LoadFileText() *)
+
+PROCEDURE SaveFileText ( fileName: ARRAY OF CHAR; text:ARRAY OF CHAR ):BOOLEAN;
+
+(*  Save text data to file (write), string must be '\0' terminated, returns true on success *)
+(* ------------------------------------------------------------------ *)
+(*  File system functions *)
+
+PROCEDURE FileExists ( fileName: ARRAY OF CHAR ):BOOLEAN;
+
+(*  Check if file exists *)
+
+PROCEDURE DirectoryExists ( dirPath:ARRAY OF CHAR ):BOOLEAN;
+
+(*  Check if a directory path exists *)
+
+PROCEDURE IsFileExtension ( fileName: ARRAY OF CHAR; ext:ARRAY OF CHAR ):BOOLEAN;
+
+(*  Check file extension (including point: .png, .wav) *)
+
+PROCEDURE GetFileLength ( fileName: ARRAY OF CHAR ): int;
+
+(*  Get file length in bytes (NOTE: GetFileSize() conflicts with windows.h) *)
+
+PROCEDURE GetFileExtension ( fileName: ARRAY OF CHAR ): charptr;
+
+(*  Get pointer to extension for a filename string (includes dot: '.png') *)
+
+PROCEDURE GetFileName ( filePath:ARRAY OF CHAR ): charptr;
+
+(*  Get pointer to filename for a path string *)
+
+PROCEDURE GetFileNameWithoutExt ( filePath:ARRAY OF CHAR ): charptr;
+
+(*  Get filename string without extension (uses static string) *)
+
+PROCEDURE GetDirectoryPath ( filePath:ARRAY OF CHAR ): charptr;
+
+(*  Get full path for a given fileName with path (uses static string) *)
+
+PROCEDURE GetPrevDirectoryPath ( dirPath:ARRAY OF CHAR ): charptr;
+
+(*  Get previous directory path for a given path (uses static string) *)
+
+PROCEDURE GetWorkingDirectory (  ): charptr;
+
+(*  Get current working directory (uses static string) *)
+
+PROCEDURE GetApplicationDirectory (  ): charptr;
+
+(*  Get the directory of the running application (uses static string) *)
+
+PROCEDURE ChangeDirectory ( dir:ARRAY OF CHAR ):BOOLEAN;
+
+(*  Change working directory, return true on success *)
+
+PROCEDURE IsPathFile ( path:ARRAY OF CHAR ):BOOLEAN;
+
+(*  Check if a given path is a file or a directory *)
+
+PROCEDURE LoadDirectoryFiles ( dirPath:ARRAY OF CHAR ): FilePathList;
+
+(*  Load directory filepaths *)
+
+PROCEDURE LoadDirectoryFilesEx ( basePath:ARRAY OF CHAR; filter:ARRAY OF CHAR;
+                                 scanSubdirs:BOOLEAN ): FilePathList;
+
+(*  Load directory filepaths with extension filtering and recursive directory scan *)
+
+PROCEDURE UnloadDirectoryFiles ( files: FilePathList );
+
+(*  Unload filepaths *)
+
+PROCEDURE IsFileDropped (  ):BOOLEAN;
+
+(*  Check if a file has been dropped into window *)
+
+PROCEDURE LoadDroppedFiles (  ): FilePathList;
+
+(*  Load dropped filepaths *)
+
+PROCEDURE UnloadDroppedFiles ( files: FilePathList );
+
+(*  Unload dropped filepaths *)
+
+PROCEDURE GetFileModTime ( fileName: ARRAY OF CHAR ): long;
+
+(*  Get file modification time (last write time) *)
+(*  Compression/Encoding functionality *)
+
+PROCEDURE CompressData ( data: ucharptr; dataSize: int;
+                         compDataSize: intptr ): ucharptr;
+
+(*  Compress data (DEFLATE algorithm), memory must be MemFree() *)
+
+PROCEDURE DecompressData ( compData: ucharptr; compDataSize: int;
+                           dataSize: intptr ): ucharptr;
+
+(*  Decompress data (DEFLATE algorithm), memory must be MemFree() *)
+
+PROCEDURE EncodeDataBase64 ( data: ucharptr; dataSize: int;
+                             outputSize: intptr ): charptr;
+
+(*  Encode data to Base64 string, memory must be MemFree() *)
+
+PROCEDURE DecodeDataBase64 ( data: ucharptr;
+                             outputSize: intptr ): ucharptr;
+
+(*  Decode Base64 string data, memory must be MemFree() *)
+(*  Automation events functionality *)
+
+PROCEDURE LoadAutomationEventList ( fileName: ARRAY OF CHAR ): AutomationEventList;
+
+(*  Load automation events list from file, NULL for empty list, capacity = MAX_AUTOMATION_EVENTS *)
+
+TYPE 
+  AutomationEventPtrList = POINTER TO AutomationEventList;
+
+PROCEDURE UnloadAutomationEventList ( list: AutomationEventPtrList );
+
+(*  Unload automation events list from file *)
+
+PROCEDURE ExportAutomationEventList ( list: AutomationEventList;
+                                      fileName: ARRAY OF CHAR ):BOOLEAN;
+
+(*  Export automation events list as text file *)
+
+PROCEDURE SetAutomationEventList ( list: AutomationEventPtrList );
+
+(*  Set automation event list to record to *)
+
+PROCEDURE SetAutomationEventBaseFrame ( frame: int );
+
+(*  Set automation event internal base frame to start recording *)
+
+PROCEDURE StartAutomationEventRecording (  );
+
+(*  Start recording automation events (AutomationEventList must be set) *)
+
+PROCEDURE StopAutomationEventRecording (  );
+
+(*  Stop recording automation events *)
+
+PROCEDURE PlayAutomationEvent ( event: AutomationEvent );
+
+(*  Play a recorded automation event *)
+(* ------------------------------------------------------------------------------------ *)
+(*  Input Handling Functions (Module: core) *)
+(* ------------------------------------------------------------------------------------ *)
+(*  Input-related functions: keyboard *)
+
+PROCEDURE IsKeyPressed ( key: int ):BOOLEAN;
+
+(*  Check if a key has been pressed once *)
+
+PROCEDURE IsKeyPressedRepeat ( key: int ):BOOLEAN;
+
+(*  Check if a key has been pressed again (Only PLATFORM_DESKTOP) *)
+
+PROCEDURE IsKeyDown ( key: int ):BOOLEAN;
+
+(*  Check if a key is being pressed *)
+
+PROCEDURE IsKeyReleased ( key: int ):BOOLEAN;
+
+(*  Check if a key has been released once *)
+
+PROCEDURE IsKeyUp ( key: int ):BOOLEAN;
+
+(*  Check if a key is NOT being pressed *)
+
+PROCEDURE GetKeyPressed (  ): int;
+
+(*  Get key pressed (keycode), call it multiple times for keys queued, returns 0 when the queue is empty *)
+
+PROCEDURE GetCharPressed (  ): int;
+
+(*  Get char pressed (unicode), call it multiple times for chars queued, returns 0 when the queue is empty *)
+
+PROCEDURE SetExitKey ( key: int );
+
+(*  Set a custom key to exit program (default is ESC) *)
+(*  Input-related functions: gamepads *)
+
+PROCEDURE IsGamepadAvailable ( gamepad: int ):BOOLEAN;
+
+(*  Check if a gamepad is available *)
+
+PROCEDURE GetGamepadName ( gamepad: int ): charptr;
+
+(*  Get gamepad internal name id *)
+
+PROCEDURE IsGamepadButtonPressed ( gamepad: int; button: int ):BOOLEAN;
+
+(*  Check if a gamepad button has been pressed once *)
+
+PROCEDURE IsGamepadButtonDown ( gamepad: int; button: int ):BOOLEAN;
+
+(*  Check if a gamepad button is being pressed *)
+
+PROCEDURE IsGamepadButtonReleased ( gamepad: int; button: int ):BOOLEAN;
+
+(*  Check if a gamepad button has been released once *)
+
+PROCEDURE IsGamepadButtonUp ( gamepad: int; button: int ):BOOLEAN;
+
+(*  Check if a gamepad button is NOT being pressed *)
+
+PROCEDURE GetGamepadButtonPressed (  ): int;
+
+(*  Get the last gamepad button pressed *)
+
+PROCEDURE GetGamepadAxisCount ( gamepad: int ): int;
+
+(*  Get gamepad axis count for a gamepad *)
+
+PROCEDURE GetGamepadAxisMovement ( gamepad: int; axis: int ): float;
+
+(*  Get axis movement value for a gamepad axis *)
+
+PROCEDURE SetGamepadMappings ( mappings:ARRAY OF CHAR ): int;
+
+(*  Set internal gamepad mappings (SDL_GameControllerDB) *)
+(*  Input-related functions: mouse *)
+
+PROCEDURE IsMouseButtonPressed ( button: int ):BOOLEAN;
+
+(*  Check if a mouse button has been pressed once *)
+
+PROCEDURE IsMouseButtonDown ( button: int ):BOOLEAN;
+
+(*  Check if a mouse button is being pressed *)
+
+PROCEDURE IsMouseButtonReleased ( button: int ):BOOLEAN;
+
+(*  Check if a mouse button has been released once *)
+
+PROCEDURE IsMouseButtonUp ( button: int ):BOOLEAN;
+
+(*  Check if a mouse button is NOT being pressed *)
+
+PROCEDURE GetMouseX (  ): int;
+
+(*  Get mouse position X *)
+
+PROCEDURE GetMouseY (  ): int;
+
+(*  Get mouse position Y *)
+
+PROCEDURE GetMousePosition (  ): Vector2;
+
+(*  Get mouse position XY *)
+
+PROCEDURE GetMouseDelta (  ): Vector2;
+
+(*  Get mouse delta between frames *)
+
+PROCEDURE SetMousePosition ( x: int; y: int );
+
+(*  Set mouse position XY *)
+
+PROCEDURE SetMouseOffset ( offsetX: int; offsetY: int );
+
+(*  Set mouse offset *)
+
+PROCEDURE SetMouseScale ( scaleX: float; scaleY: float );
+
+(*  Set mouse scaling *)
+
+PROCEDURE GetMouseWheelMove (  ): float;
+
+(*  Get mouse wheel movement for X or Y, whichever is larger *)
+
+PROCEDURE GetMouseWheelMoveV (  ): Vector2;
+
+(*  Get mouse wheel movement for both X and Y *)
+
+PROCEDURE SetMouseCursor ( cursor: int );
+
+(*  Set mouse cursor *)
+(*  Input-related functions: touch *)
+
+PROCEDURE GetTouchX (  ): int;
+
+(*  Get touch position X for touch point 0 (relative to screen size) *)
+
+PROCEDURE GetTouchY (  ): int;
+
+(*  Get touch position Y for touch point 0 (relative to screen size) *)
+
+PROCEDURE GetTouchPosition ( index: int ): Vector2;
+
+(*  Get touch position XY for a touch point index (relative to screen size) *)
+
+PROCEDURE GetTouchPointId ( index: int ): int;
+
+(*  Get touch point identifier for given index *)
+
+PROCEDURE GetTouchPointCount (  ): int;
+
+(*  Get number of touch points *)
+(* ------------------------------------------------------------------------------------ *)
+(*  Gestures and Touch Handling Functions (Module: rgestures) *)
+(* ------------------------------------------------------------------------------------ *)
+
+PROCEDURE SetGesturesEnabled ( flags: uint );
+
+(*  Enable a set of gestures using flags *)
+
+PROCEDURE IsGestureDetected ( gesture: uint ):BOOLEAN;
+
+(*  Check if a gesture have been detected *)
+
+PROCEDURE GetGestureDetected (  ): int;
+
+(*  Get latest detected gesture *)
+
+PROCEDURE GetGestureHoldDuration (  ): float;
+
+(*  Get gesture hold time in milliseconds *)
+
+PROCEDURE GetGestureDragVector (  ): Vector2;
+
+(*  Get gesture drag vector *)
+
+PROCEDURE GetGestureDragAngle (  ): float;
+
+(*  Get gesture drag angle *)
+
+PROCEDURE GetGesturePinchVector (  ): Vector2;
+
+(*  Get gesture pinch delta *)
+
+PROCEDURE GetGesturePinchAngle (  ): float;
+
+(*  Get gesture pinch angle *)
+(* ------------------------------------------------------------------------------------ *)
+(*  Camera System Functions (Module: rcamera) *)
+(* ------------------------------------------------------------------------------------ *)
+
+TYPE 
+  CameraPtr = POINTER TO Camera;
+
+PROCEDURE UpdateCamera ( camera: CameraPtr; mode: int );
+
+(*  Update camera position for selected mode *)
+
+PROCEDURE UpdateCameraPro ( camera: CameraPtr; movement: Vector3;
+                            rotation: Vector3; zoom: float );
+
+(*  Update camera movement/rotation *)
+(* ------------------------------------------------------------------------------------ *)
+(*  Basic Shapes Drawing Functions (Module: shapes) *)
+(* ------------------------------------------------------------------------------------ *)
+(*  Set texture and rectangle to be used on shapes drawing *)
+(*  NOTE: It can be useful when using basic shapes and one single font, *)
+(*  defining a font char white rectangle would allow drawing everything in a single draw call *)
+
+PROCEDURE SetShapesTexture ( texture: Texture2D; source: Rectangle );
+
+(*  Set texture and rectangle to be used on shapes drawing *)
+(*  Basic shapes drawing functions *)
+
+PROCEDURE DrawPixel ( posX: int; posY: int; color: Color );
+
+(*  Draw a pixel *)
+
+PROCEDURE DrawPixelV ( position: Vector2; color: Color );
+
+(*  Draw a pixel (Vector version) *)
+
+PROCEDURE DrawLine ( startPosX: int; startPosY: int;
+                     endPosX: int; endPosY: int; color: Color );
+
+(*  Draw a line *)
+
+PROCEDURE DrawLineV ( startPos: Vector2; endPos: Vector2; color: Color );
+
+(*  Draw a line (Vector version) *)
+
+PROCEDURE DrawLineEx ( startPos: Vector2; endPos: Vector2; thick: float;
+                       color: Color );
+
+(*  Draw a line defining thickness *)
+
+PROCEDURE DrawLineBezier ( startPos: Vector2; endPos: Vector2; thick: float;
+                           color: Color );
+
+(*  Draw a line using cubic-bezier curves in-out *)
+
+PROCEDURE DrawLineBezierQuad ( startPos: Vector2; endPos: Vector2;
+                               controlPos: Vector2; thick: float; color: Color );
+
+(*  Draw line using quadratic bezier curves with a control point *)
+
+PROCEDURE DrawLineBezierCubic ( startPos: Vector2; endPos: Vector2;
+                                startControlPos: Vector2; endControlPos: Vector2;
+                                thick: float; color: Color );
+
+(*  Draw line using cubic bezier curves with 2 control points *)
+
+TYPE 
+  Vector2Ptr = POINTER TO Vector2;
+
+PROCEDURE DrawLineBSpline ( points: Vector2Ptr; pointCount: int;
+                            thick: float; color: Color );
+
+(*  Draw a B-Spline line, minimum 4 points *)
+
+PROCEDURE DrawLineCatmullRom ( points: Vector2Ptr; pointCount: int;
+                               thick: float; color: Color );
+
+(*  Draw a Catmull Rom spline line, minimum 4 points *)
+
+PROCEDURE DrawLineStrip ( points: Vector2Ptr; pointCount: int;
+                          color: Color );
+
+(*  Draw lines sequence *)
+
+PROCEDURE DrawCircle ( centerX: int; centerY: int; radius: float;
+                       color: Color );
+
+(*  Draw a color-filled circle *)
+
+PROCEDURE DrawCircleSector ( center: Vector2; radius: float; startAngle: float;
+                             endAngle: float; segments: int; color: Color );
+
+(*  Draw a piece of a circle *)
+
+PROCEDURE DrawCircleSectorLines ( center: Vector2; radius: float; startAngle: float;
+                                  endAngle: float; segments: int;
+                                  color: Color );
+
+(*  Draw circle sector outline *)
+
+PROCEDURE DrawCircleGradient ( centerX: int; centerY: int; radius: float;
+                               color1: Color; color2: Color );
+
+(*  Draw a gradient-filled circle *)
+
+PROCEDURE DrawCircleV ( center: Vector2; radius: float; color: Color );
+
+(*  Draw a color-filled circle (Vector version) *)
+
+PROCEDURE DrawCircleLines ( centerX: int; centerY: int; radius: float;
+                            color: Color );
+
+(*  Draw circle outline *)
+
+PROCEDURE DrawCircleLinesV ( center: Vector2; radius: float; color: Color );
+
+(*  Draw circle outline (Vector version) *)
+
+PROCEDURE DrawEllipse ( centerX: int; centerY: int; radiusH: float;
+                        radiusV: float; color: Color );
+
+(*  Draw ellipse *)
+
+PROCEDURE DrawEllipseLines ( centerX: int; centerY: int; radiusH: float;
+                             radiusV: float; color: Color );
+
+(*  Draw ellipse outline *)
+
+PROCEDURE DrawRing ( center: Vector2; innerRadius: float; outerRadius: float;
+                     startAngle: float; endAngle: float; segments: int;
+                     color: Color );
+
+(*  Draw ring *)
+
+PROCEDURE DrawRingLines ( center: Vector2; innerRadius: float; outerRadius: float;
+                          startAngle: float; endAngle: float; segments: int;
+                          color: Color );
+
+(*  Draw ring outline *)
+
+PROCEDURE DrawRectangle ( posX: int; posY: int; width: int;
+                          height: int; color: Color );
+
+(*  Draw a color-filled rectangle *)
+
+PROCEDURE DrawRectangleV ( position: Vector2; size: Vector2; color: Color );
+
+(*  Draw a color-filled rectangle (Vector version) *)
+
+PROCEDURE DrawRectangleRec ( rec: Rectangle; color: Color );
+
+(*  Draw a color-filled rectangle *)
+
+PROCEDURE DrawRectanglePro ( rec: Rectangle; origin: Vector2; rotation: float;
+                             color: Color );
+
+(*  Draw a color-filled rectangle with pro parameters *)
+
+PROCEDURE DrawRectangleGradientV ( posX: int; posY: int;
+                                   width: int; height: int;
+                                   color1: Color; color2: Color );
+
+(*  Draw a vertical-gradient-filled rectangle *)
+
+PROCEDURE DrawRectangleGradientH ( posX: int; posY: int;
+                                   width: int; height: int;
+                                   color1: Color; color2: Color );
+
+(*  Draw a horizontal-gradient-filled rectangle *)
+
+PROCEDURE DrawRectangleGradientEx ( rec: Rectangle; col1: Color; col2: Color;
+                                    col3: Color; col4: Color );
+
+(*  Draw a gradient-filled rectangle with custom vertex colors *)
+
+PROCEDURE DrawRectangleLines ( posX: int; posY: int; width: int;
+                               height: int; color: Color );
+
+(*  Draw rectangle outline *)
+
+PROCEDURE DrawRectangleLinesEx ( rec: Rectangle; lineThick: float; color: Color );
+
+(*  Draw rectangle outline with extended parameters *)
+
+PROCEDURE DrawRectangleRounded ( rec: Rectangle; roundness: float;
+                                 segments: int; color: Color );
+
+(*  Draw rectangle with rounded edges *)
+
+PROCEDURE DrawRectangleRoundedLines ( rec: Rectangle; roundness: float;
+                                      segments: int; lineThick: float;
+                                      color: Color );
+
+(*  Draw rectangle with rounded edges outline *)
+
+PROCEDURE DrawTriangle ( v1: Vector2; v2: Vector2; v3: Vector2; color: Color );
+
+(*  Draw a color-filled triangle (vertex in counter-clockwise order!) *)
+
+PROCEDURE DrawTriangleLines ( v1: Vector2; v2: Vector2; v3: Vector2; color: Color );
+
+(*  Draw triangle outline (vertex in counter-clockwise order!) *)
+
+PROCEDURE DrawTriangleFan ( points: Vector2Ptr; pointCount: int;
+                            color: Color );
+
+(*  Draw a triangle fan defined by points (first vertex is the center) *)
+
+PROCEDURE DrawTriangleStrip ( points: Vector2Ptr; pointCount: int;
+                              color: Color );
+
+(*  Draw a triangle strip defined by points *)
+
+PROCEDURE DrawPoly ( center: Vector2; sides: int; radius: float; rotation: float;
+                     color: Color );
+
+(*  Draw a regular polygon (Vector version) *)
+
+PROCEDURE DrawPolyLines ( center: Vector2; sides: int; radius: float;
+                          rotation: float; color: Color );
+
+(*  Draw a polygon outline of n sides *)
+
+PROCEDURE DrawPolyLinesEx ( center: Vector2; sides: int; radius: float;
+                            rotation: float; lineThick: float; color: Color );
+
+(*  Draw a polygon outline of n sides with extended parameters *)
+(*  Basic shapes collision detection functions *)
+
+PROCEDURE CheckCollisionRecs ( rec1: Rectangle; rec2: Rectangle ):BOOLEAN;
+
+(*  Check collision between two rectangles *)
+
+PROCEDURE CheckCollisionCircles ( center1: Vector2; radius1: float; center2: Vector2;
+                                  radius2: float ):BOOLEAN;
+
+(*  Check collision between two circles *)
+
+PROCEDURE CheckCollisionCircleRec ( center: Vector2; radius: float;
+                                    rec: Rectangle ):BOOLEAN;
+
+(*  Check collision between circle and rectangle *)
+
+PROCEDURE CheckCollisionPointRec ( point: Vector2; rec: Rectangle ):BOOLEAN;
+
+(*  Check if point is inside rectangle *)
+
+PROCEDURE CheckCollisionPointCircle ( point: Vector2; center: Vector2;
+                                      radius: float ):BOOLEAN;
+
+(*  Check if point is inside circle *)
+
+PROCEDURE CheckCollisionPointTriangle ( point: Vector2; p1: Vector2; p2: Vector2;
+                                        p3: Vector2 ):BOOLEAN;
+
+(*  Check if point is inside a triangle *)
+
+PROCEDURE CheckCollisionPointPoly ( point: Vector2; points: Vector2Ptr;
+                                    pointCount: int ):BOOLEAN;
+
+(*  Check if point is within a polygon described by array of vertices *)
+
+PROCEDURE CheckCollisionLines ( startPos1: Vector2; endPos1: Vector2;
+                                startPos2: Vector2; endPos2: Vector2;
+                                collisionPoint: Vector2Ptr ):BOOLEAN;
+
+(*  Check the collision between two lines defined by two points each, returns collision point by reference *)
+
+PROCEDURE CheckCollisionPointLine ( point: Vector2; p1: Vector2; p2: Vector2;
+                                    threshold: int ):BOOLEAN;
+
+(*  Check if point belongs to line created between two points [p1] and [p2] with defined margin in pixels [threshold] *)
+
+PROCEDURE GetCollisionRec ( rec1: Rectangle; rec2: Rectangle ): Rectangle;
+
+(*  Get collision rectangle for two rectangles collision *)
+(* ------------------------------------------------------------------------------------ *)
+(*  Texture Loading and Drawing Functions (Module: textures) *)
+(* ------------------------------------------------------------------------------------ *)
+(*  Image loading functions *)
+(*  NOTE: These functions do not require GPU access *)
+
+PROCEDURE LoadImage ( fileName: ARRAY OF CHAR ): Image;
+
+(*  Load image from file into CPU memory (RAM) *)
+
+PROCEDURE LoadImageRaw ( fileName: ARRAY OF CHAR; width: int;
+                         height: int; format: int;
+                         headerSize: int ): Image;
+
+(*  Load image from RAW file data *)
+
+PROCEDURE LoadImageSvg ( fileNameOrString:ARRAY OF CHAR; width: int;
+                         height: int ): Image;
+
+(*  Load image from SVG file data or string with specified size *)
+
+PROCEDURE LoadImageAnim ( fileName: ARRAY OF CHAR; frames: intptr ): Image;
+
+(*  Load image sequence from file (frames appended to image.data) *)
+
+PROCEDURE LoadImageFromMemory ( fileType:ARRAY OF CHAR; fileData: ucharptr;
+                                dataSize: int ): Image;
+
+(*  Load image from memory buffer, fileType refers to extension: i.e. '.png' *)
+
+PROCEDURE LoadImageFromTexture ( texture: Texture2D ): Image;
+
+(*  Load image from GPU texture data *)
+
+PROCEDURE LoadImageFromScreen (  ): Image;
+
+(*  Load image from screen buffer and (screenshot) *)
+
+PROCEDURE IsImageReady ( image: Image ):BOOLEAN;
+
+(*  Check if an image is ready *)
+
+PROCEDURE UnloadImage ( image: Image );
+
+(*  Unload image from CPU memory (RAM) *)
+
+PROCEDURE ExportImage ( image: Image; fileName: ARRAY OF CHAR ):BOOLEAN;
+
+(*  Export image data to file, returns true on success *)
+
+PROCEDURE ExportImageToMemory ( image: Image; fileType:ARRAY OF CHAR;
+                                fileSize: intptr ): ucharptr;
+
+(*  Export image to memory buffer *)
+
+PROCEDURE ExportImageAsCode ( image: Image; fileName: ARRAY OF CHAR ):BOOLEAN;
+
+(*  Export image as code file defining an array of bytes, returns true on success *)
+(*  Image generation functions *)
+
+PROCEDURE GenImageColor ( width: int; height: int;
+                          color: Color ): Image;
+
+(*  Generate image: plain color *)
+
+PROCEDURE GenImageGradientLinear ( width: int; height: int;
+                                   direction: int; start: Color;
+                                   end: Color ): Image;
+
+(*  Generate image: linear gradient, direction in degrees [0..360], 0=Vertical gradient *)
+
+PROCEDURE GenImageGradientRadial ( width: int; height: int;
+                                   density: float; inner: Color; outer: Color ): Image;
+
+(*  Generate image: radial gradient *)
+
+PROCEDURE GenImageGradientSquare ( width: int; height: int;
+                                   density: float; inner: Color; outer: Color ): Image;
+
+(*  Generate image: square gradient *)
+
+PROCEDURE GenImageChecked ( width: int; height: int;
+                            checksX: int; checksY: int; col1: Color;
+                            col2: Color ): Image;
+
+(*  Generate image: checked *)
+
+PROCEDURE GenImageWhiteNoise ( width: int; height: int;
+                               factor: float ): Image;
+
+(*  Generate image: white noise *)
+
+PROCEDURE GenImagePerlinNoise ( width: int; height: int;
+                                offsetX: int; offsetY: int;
+                                scale: float ): Image;
+
+(*  Generate image: perlin noise *)
+
+PROCEDURE GenImageCellular ( width: int; height: int;
+                             tileSize: int ): Image;
+
+(*  Generate image: cellular algorithm, bigger tileSize means bigger cells *)
+
+PROCEDURE GenImageText ( width: int; height: int;
+                         text:ARRAY OF CHAR ): Image;
+
+(*  Generate image: grayscale image from text data *)
+(*  Image manipulation functions *)
+
+PROCEDURE ImageCopy ( image: Image ): Image;
+
+(*  Create an image duplicate (useful for transformations) *)
+
+PROCEDURE ImageFromImage ( image: Image; rec: Rectangle ): Image;
+
+(*  Create an image from another image piece *)
+
+PROCEDURE ImageText ( text:ARRAY OF CHAR; fontSize: int; color: Color ): Image;
+
+(*  Create an image from text (default font) *)
+
+PROCEDURE ImageTextEx ( font: Font; text:ARRAY OF CHAR; fontSize: float; spacing: float;
+                        tint: Color ): Image;
+
+(*  Create an image from text (custom sprite font) *)
+
+PROCEDURE ImageFormat ( image: ImagePtr; newFormat: int );
+
+(*  Convert image data to desired format *)
+
+PROCEDURE ImageToPOT ( image: ImagePtr; fill: Color );
+
+(*  Convert image to POT (power-of-two) *)
+
+PROCEDURE ImageCrop ( image: ImagePtr; crop: Rectangle );
+
+(*  Crop an image to a defined rectangle *)
+
+PROCEDURE ImageAlphaCrop ( image: ImagePtr; threshold: float );
+
+(*  Crop image depending on alpha value *)
+
+PROCEDURE ImageAlphaClear ( image: ImagePtr; color: Color; threshold: float );
+
+(*  Clear alpha channel to desired color *)
+
+PROCEDURE ImageAlphaMask ( image: ImagePtr; alphaMask: Image );
+
+(*  Apply alpha mask to image *)
+
+PROCEDURE ImageAlphaPremultiply ( image: ImagePtr );
+
+(*  Premultiply alpha channel *)
+
+PROCEDURE ImageBlurGaussian ( image: ImagePtr; blurSize: int );
+
+(*  Apply Gaussian blur using a box blur approximation *)
+
+PROCEDURE ImageResize ( image: ImagePtr; newWidth: int;
+                        newHeight: int );
+
+(*  Resize image (Bicubic scaling algorithm) *)
+
+PROCEDURE ImageResizeNN ( image: ImagePtr; newWidth: int;
+                          newHeight: int );
+
+(*  Resize image (Nearest-Neighbor scaling algorithm) *)
+
+PROCEDURE ImageResizeCanvas ( image: ImagePtr; newWidth: int;
+                              newHeight: int; offsetX: int;
+                              offsetY: int; fill: Color );
+
+(*  Resize canvas and fill with color *)
+
+PROCEDURE ImageMipmaps ( image: ImagePtr );
+
+(*  Compute all mipmap levels for a provided image *)
+
+PROCEDURE ImageDither ( image: ImagePtr; rBpp: int; gBpp: int;
+                        bBpp: int; aBpp: int );
+
+(*  Dither image data to 16bpp or lower (Floyd-Steinberg dithering) *)
+
+PROCEDURE ImageFlipVertical ( image: ImagePtr );
+
+(*  Flip image vertically *)
+
+PROCEDURE ImageFlipHorizontal ( image: ImagePtr );
+
+(*  Flip image horizontally *)
+
+PROCEDURE ImageRotate ( image: ImagePtr; degrees: int );
+
+(*  Rotate image by input angle in degrees (-359 to 359) *)
+
+PROCEDURE ImageRotateCW ( image: ImagePtr );
+
+(*  Rotate image clockwise 90deg *)
+
+PROCEDURE ImageRotateCCW ( image: ImagePtr );
+
+(*  Rotate image counter-clockwise 90deg *)
+
+PROCEDURE ImageColorTint ( image: ImagePtr; color: Color );
+
+(*  Modify image color: tint *)
+
+PROCEDURE ImageColorInvert ( image: ImagePtr );
+
+(*  Modify image color: invert *)
+
+PROCEDURE ImageColorGrayscale ( image: ImagePtr );
+
+(*  Modify image color: grayscale *)
+
+PROCEDURE ImageColorContrast ( image: ImagePtr; contrast: float );
+
+(*  Modify image color: contrast (-100 to 100) *)
+
+PROCEDURE ImageColorBrightness ( image: ImagePtr; brightness: int );
+
+(*  Modify image color: brightness (-255 to 255) *)
+
+PROCEDURE ImageColorReplace ( image: ImagePtr; color: Color; replace: Color );
+
+(*  Modify image color: replace color *)
+
+TYPE 
+  ColorPtr = POINTER TO Color;
+
+PROCEDURE LoadImageColors ( image: Image ): ColorPtr;
+
+(*  Load color data from image as a Color array (RGBA - 32bit) *)
+
+PROCEDURE LoadImagePalette ( image: Image; maxPaletteSize: int;
+                             colorCount: intptr ): ColorPtr;
+
+(*  Load colors palette from image as a Color array (RGBA - 32bit) *)
+
+PROCEDURE UnloadImageColors ( colors: ColorPtr );
+
+(*  Unload color data loaded with LoadImageColors() *)
+
+PROCEDURE UnloadImagePalette ( colors: ColorPtr );
+
+(*  Unload colors palette loaded with LoadImagePalette() *)
+
+PROCEDURE GetImageAlphaBorder ( image: Image; threshold: float ): Rectangle;
+
+(*  Get image alpha border rectangle *)
+
+PROCEDURE GetImageColor ( image: Image; x: int; y: int ): Color;
+
+(*  Get image pixel color at (x, y) position *)
+(*  Image drawing functions *)
+(*  NOTE: Image software-rendering functions (CPU) *)
+
+PROCEDURE ImageClearBackground ( dst: ImagePtr; color: Color );
+
+(*  Clear image background with given color *)
+
+PROCEDURE ImageDrawPixel ( dst: ImagePtr; posX: int; posY: int;
+                           color: Color );
+
+(*  Draw pixel within an image *)
+
+PROCEDURE ImageDrawPixelV ( dst: ImagePtr; position: Vector2; color: Color );
+
+(*  Draw pixel within an image (Vector version) *)
+
+PROCEDURE ImageDrawLine ( dst: ImagePtr; startPosX: int;
+                          startPosY: int; endPosX: int;
+                          endPosY: int; color: Color );
+
+(*  Draw line within an image *)
+
+PROCEDURE ImageDrawLineV ( dst: ImagePtr; start: Vector2; end: Vector2;
+                           color: Color );
+
+(*  Draw line within an image (Vector version) *)
+
+PROCEDURE ImageDrawCircle ( dst: ImagePtr; centerX: int;
+                            centerY: int; radius: int; color: Color );
+
+(*  Draw a filled circle within an image *)
+
+PROCEDURE ImageDrawCircleV ( dst: ImagePtr; center: Vector2; radius: int;
+                             color: Color );
+
+(*  Draw a filled circle within an image (Vector version) *)
+
+PROCEDURE ImageDrawCircleLines ( dst: ImagePtr; centerX: int;
+                                 centerY: int; radius: int;
+                                 color: Color );
+
+(*  Draw circle outline within an image *)
+
+PROCEDURE ImageDrawCircleLinesV ( dst: ImagePtr; center: Vector2;
+                                  radius: int; color: Color );
+
+(*  Draw circle outline within an image (Vector version) *)
+
+PROCEDURE ImageDrawRectangle ( dst: ImagePtr; posX: int; posY: int;
+                               width: int; height: int; color: Color );
+
+(*  Draw rectangle within an image *)
+
+PROCEDURE ImageDrawRectangleV ( dst: ImagePtr; position: Vector2; size: Vector2;
+                                color: Color );
+
+(*  Draw rectangle within an image (Vector version) *)
+
+PROCEDURE ImageDrawRectangleRec ( dst: ImagePtr; rec: Rectangle; color: Color );
+
+(*  Draw rectangle within an image *)
+
+PROCEDURE ImageDrawRectangleLines ( dst: ImagePtr; rec: Rectangle;
+                                    thick: int; color: Color );
+
+(*  Draw rectangle lines within an image *)
+
+PROCEDURE ImageDraw ( dst: ImagePtr; src: Image; srcRec: Rectangle;
+                      dstRec: Rectangle; tint: Color );
+
+(*  Draw a source image within a destination image (tint applied to source) *)
+
+PROCEDURE ImageDrawText ( dst: ImagePtr; text:ARRAY OF CHAR; posX: int;
+                          posY: int; fontSize: int; color: Color );
+
+(*  Draw text (using default font) within an image (destination) *)
+
+PROCEDURE ImageDrawTextEx ( dst: ImagePtr; font: Font; text:ARRAY OF CHAR;
+                            position: Vector2; fontSize: float; spacing: float;
+                            tint: Color );
+
+(*  Draw text (custom sprite font) within an image (destination) *)
+(*  Texture loading functions *)
+(*  NOTE: These functions require GPU access *)
+
+PROCEDURE LoadTexture ( fileName: ARRAY OF CHAR ): Texture2D;
+
+(*  Load texture from file into GPU memory (VRAM) *)
+
+PROCEDURE LoadTextureFromImage ( image: Image ): Texture2D;
+
+(*  Load texture from image data *)
+
+PROCEDURE LoadTextureCubemap ( image: Image; layout: int ): TextureCubemap;
+
+(*  Load cubemap from image, multiple image cubemap layouts supported *)
+
+PROCEDURE LoadRenderTexture ( width: int;
+                              height: int ): RenderTexture2D;
+
+(*  Load texture for rendering (framebuffer) *)
+
+PROCEDURE IsTextureReady ( texture: Texture2D ):BOOLEAN;
+
+(*  Check if a texture is ready *)
+
+PROCEDURE UnloadTexture ( texture: Texture2D );
+
+(*  Unload texture from GPU memory (VRAM) *)
+
+PROCEDURE IsRenderTextureReady ( target: RenderTexture2D ):BOOLEAN;
+
+(*  Check if a render texture is ready *)
+
+PROCEDURE UnloadRenderTexture ( target: RenderTexture2D );
+
+(*  Unload render texture from GPU memory (VRAM) *)
+
+PROCEDURE UpdateTexture ( texture: Texture2D; pixels:voidptr);
+
+(*  Update GPU texture with new data *)
+
+PROCEDURE UpdateTextureRec ( texture: Texture2D; rec: Rectangle;
+                             pixels:voidptr);
+
+(*  Update GPU texture rectangle with new data *)
+(*  Texture configuration functions *)
+
+TYPE 
+  Texture2DPtr = POINTER TO Texture2D;
+
+PROCEDURE GenTextureMipmaps ( texture: Texture2DPtr );
+
+(*  Generate GPU mipmaps for a texture *)
+
+PROCEDURE SetTextureFilter ( texture: Texture2D; filter: int );
+
+(*  Set texture scaling filter mode *)
+
+PROCEDURE SetTextureWrap ( texture: Texture2D; wrap: int );
+
+(*  Set texture wrapping mode *)
+(*  Texture drawing functions *)
+
+PROCEDURE DrawTexture ( texture: Texture2D; posX: int; posY: int;
+                        tint: Color );
+
+(*  Draw a Texture2D *)
+
+PROCEDURE DrawTextureV ( texture: Texture2D; position: Vector2; tint: Color );
+
+(*  Draw a Texture2D with position defined as Vector2 *)
+
+PROCEDURE DrawTextureEx ( texture: Texture2D; position: Vector2; rotation: float;
+                          scale: float; tint: Color );
+
+(*  Draw a Texture2D with extended parameters *)
+
+PROCEDURE DrawTextureRec ( texture: Texture2D; source: Rectangle; position: Vector2;
+                           tint: Color );
+
+(*  Draw a part of a texture defined by a rectangle *)
+
+PROCEDURE DrawTexturePro ( texture: Texture2D; source: Rectangle; dest: Rectangle;
+                           origin: Vector2; rotation: float; tint: Color );
+
+(*  Draw a part of a texture defined by a rectangle with 'pro' parameters *)
+
+PROCEDURE DrawTextureNPatch ( texture: Texture2D; nPatchInfo: NPatchInfo;
+                              dest: Rectangle; origin: Vector2; rotation: float;
+                              tint: Color );
+
+(*  Draws a texture (or part of it) that stretches or shrinks nicely *)
+(*  Color/pixel related functions *)
+
+PROCEDURE Fade ( color: Color; alpha: float ): Color;
+
+(*  Get color with alpha applied, alpha goes from 0.0f to 1.0f *)
+
+PROCEDURE ColorToInt ( color: Color ): int;
+
+(*  Get hexadecimal value for a Color *)
+
+PROCEDURE ColorNormalize ( color: Color ): Vector4;
+
+(*  Get Color normalized as float [0..1] *)
+
+PROCEDURE ColorFromNormalized ( normalized: Vector4 ): Color;
+
+(*  Get Color from normalized values [0..1] *)
+
+PROCEDURE ColorToHSV ( color: Color ): Vector3;
+
+(*  Get HSV values for a Color, hue [0..360], saturation/value [0..1] *)
+
+PROCEDURE ColorFromHSV ( hue: float; saturation: float; value: float ): Color;
+
+(*  Get a Color from HSV values, hue [0..360], saturation/value [0..1] *)
+
+PROCEDURE ColorTint ( color: Color; tint: Color ): Color;
+
+(*  Get color multiplied with another color *)
+
+PROCEDURE ColorBrightness ( color: Color; factor: float ): Color;
+
+(*  Get color with brightness correction, brightness factor goes from -1.0f to 1.0f *)
+
+PROCEDURE ColorContrast ( color: Color; contrast: float ): Color;
+
+(*  Get color with contrast correction, contrast values between -1.0f and 1.0f *)
+
+PROCEDURE ColorAlpha ( color: Color; alpha: float ): Color;
+
+(*  Get color with alpha applied, alpha goes from 0.0f to 1.0f *)
+
+PROCEDURE ColorAlphaBlend ( dst: Color; src: Color; tint: Color ): Color;
+
+(*  Get src alpha-blended into dst color with tint *)
+
+PROCEDURE GetColor ( hexValue: uint ): Color;
+
+(*  Get Color structure from hexadecimal value *)
+
+PROCEDURE GetPixelColor ( srcPtr: voidptr; format: int ): Color;
+
+(*  Get Color from a source pixel pointer of certain format *)
+
+PROCEDURE SetPixelColor ( dstPtr: voidptr; color: Color; format: int );
+
+(*  Set color formatted into destination pixel pointer *)
+
+PROCEDURE GetPixelDataSize ( width: int; height: int;
+                             format: int ): int;
+
+(*  Get pixel data size in bytes for certain format *)
+(* ------------------------------------------------------------------------------------ *)
+(*  Font Loading and Text Drawing Functions (Module: text) *)
+(* ------------------------------------------------------------------------------------ *)
+(*  Font loading/unloading functions *)
+
+PROCEDURE GetFontDefault (  ): Font;
+
+(*  Get the default Font *)
+
+PROCEDURE LoadFont ( fileName: ARRAY OF CHAR ): Font;
+
+(*  Load font from file into GPU memory (VRAM) *)
+
+PROCEDURE LoadFontEx ( fileName: ARRAY OF CHAR; fontSize: int;
+                       codepoints: intptr; codepointCount: int ): Font;
+
+(*  Load font from file with extended parameters, use NULL for codepoints and 0 for codepointCount to load the default character set *)
+
+PROCEDURE LoadFontFromImage ( image: Image; key: Color; firstChar: int ): Font;
+
+(*  Load font from Image (XNA style) *)
+
+PROCEDURE LoadFontFromMemory ( fileType:ARRAY OF CHAR; fileData: ucharptr;
+                               dataSize: int; fontSize: int;
+                               codepoints: intptr;
+                               codepointCount: int ): Font;
+
+(*  Load font from memory buffer, fileType refers to extension: i.e. '.ttf' *)
+
+PROCEDURE IsFontReady ( font: Font ):BOOLEAN;
+
+(*  Check if a font is ready *)
+
+PROCEDURE LoadFontData ( fileData: ucharptr; dataSize: int;
+                         fontSize: int; codepoints: intptr;
+                         codepointCount: int;
+                         type: int ): GlyphInfoPtr;
+
+(*  Load font data for further use *)
+
+TYPE 
+  RectanglePtrPtr = POINTER TO RectanglePtr;
+
+PROCEDURE GenImageFontAtlas ( glyphs: GlyphInfoPtr;
+                              glyphRecs: RectanglePtrPtr; glyphCount: int;
+                              fontSize: int; padding: int;
+                              packMethod: int ): Image;
+
+(*  Generate image font atlas using chars info *)
+
+PROCEDURE UnloadFontData ( glyphs: GlyphInfoPtr; glyphCount: int );
+
+(*  Unload font chars info data (RAM) *)
+
+PROCEDURE UnloadFont ( font: Font );
+
+(*  Unload font from GPU memory (VRAM) *)
+
+PROCEDURE ExportFontAsCode ( font: Font; fileName: ARRAY OF CHAR ):BOOLEAN;
+
+(*  Export font as code file, returns true on success *)
+(*  Text drawing functions *)
+
+PROCEDURE DrawFPS ( posX: int; posY: int );
+
+(*  Draw current FPS *)
+
+PROCEDURE DrawText ( text:ARRAY OF CHAR; posX: int; posY: int;
+                     fontSize: int; color: Color );
+
+(*  Draw text (using default font) *)
+
+PROCEDURE DrawTextEx ( font: Font; text:ARRAY OF CHAR; position: Vector2;
+                       fontSize: float; spacing: float; tint: Color );
+
+(*  Draw text using font and additional parameters *)
+
+PROCEDURE DrawTextPro ( font: Font; text:ARRAY OF CHAR; position: Vector2;
+                        origin: Vector2; rotation: float; fontSize: float;
+                        spacing: float; tint: Color );
+
+(*  Draw text using Font and pro parameters (rotation) *)
+
+PROCEDURE DrawTextCodepoint ( font: Font; codepoint: int; position: Vector2;
+                              fontSize: float; tint: Color );
+
+(*  Draw one character (codepoint) *)
+
+PROCEDURE DrawTextCodepoints ( font: Font; codepoints: intptr;
+                               codepointCount: int; position: Vector2;
+                               fontSize: float; spacing: float; tint: Color );
+
+(*  Draw multiple character (codepoint) *)
+(*  Text font info functions *)
+
+PROCEDURE SetTextLineSpacing ( spacing: int );
+
+(*  Set vertical line spacing when drawing with line-breaks *)
+
+PROCEDURE MeasureText ( text:ARRAY OF CHAR; fontSize: int ): int;
+
+(*  Measure string width for default font *)
+
+PROCEDURE MeasureTextEx ( font: Font; text:ARRAY OF CHAR; fontSize: float;
+                          spacing: float ): Vector2;
+
+(*  Measure string size for Font *)
+
+PROCEDURE GetGlyphIndex ( font: Font; codepoint: int ): int;
+
+(*  Get glyph index position in font for a codepoint (unicode character), fallback to '?' if not found *)
+
+PROCEDURE GetGlyphInfo ( font: Font; codepoint: int ): GlyphInfo;
+
+(*  Get glyph font info data for a codepoint (unicode character), fallback to '?' if not found *)
+
+PROCEDURE GetGlyphAtlasRec ( font: Font; codepoint: int ): Rectangle;
+
+(*  Get glyph rectangle in font atlas for a codepoint (unicode character), fallback to '?' if not found *)
+(*  Text codepoints management functions (unicode characters) *)
+
+PROCEDURE LoadUTF8 ( codepoints: intptr; length: int ): charptr;
+
+(*  Load UTF-8 text encoded from codepoints array *)
+
+PROCEDURE UnloadUTF8 ( text:ARRAY OF CHAR );
+
+(*  Unload UTF-8 text encoded from codepoints array *)
+
+PROCEDURE LoadCodepoints ( text:ARRAY OF CHAR; count: intptr ): intptr;
+
+(*  Load all codepoints from a UTF-8 text string, codepoints count returned by parameter *)
+
+PROCEDURE UnloadCodepoints ( codepoints: intptr );
+
+(*  Unload codepoints data from memory *)
+
+PROCEDURE GetCodepointCount ( text:ARRAY OF CHAR ): int;
+
+(*  Get total number of codepoints in a UTF-8 encoded string *)
+
+PROCEDURE GetCodepoint ( text:ARRAY OF CHAR; codepointSize: intptr ): int;
+
+(*  Get next codepoint in a UTF-8 encoded string, 0x3f('?') is returned on failure *)
+
+PROCEDURE GetCodepointNext ( text:ARRAY OF CHAR;
+                             codepointSize: intptr ): int;
+
+(*  Get next codepoint in a UTF-8 encoded string, 0x3f('?') is returned on failure *)
+
+PROCEDURE GetCodepointPrevious ( text:ARRAY OF CHAR;
+                                 codepointSize: intptr ): int;
+
+(*  Get previous codepoint in a UTF-8 encoded string, 0x3f('?') is returned on failure *)
+
+PROCEDURE CodepointToUTF8 ( codepoint: int;
+                            utf8Size: intptr ): charptr;
+
+(*  Encode one codepoint into UTF-8 byte array (array length returned as parameter) *)
+(*  Text strings management functions (no UTF-8 strings, only byte chars) *)
+(*  NOTE: Some strings allocate memory internally for returned strings, just be careful! *)
+
+PROCEDURE TextCopy ( dst:ARRAY OF CHAR; src:ARRAY OF CHAR ): int;
+
+(*  Copy one string to another, returns bytes copied *)
+
+PROCEDURE TextIsEqual ( text1:ARRAY OF CHAR; text2:ARRAY OF CHAR ):BOOLEAN;
+
+(*  Check if two text string are equal *)
+
+PROCEDURE TextLength ( text:ARRAY OF CHAR ): uint;
+
+(*  Get text length, checks for '\0' ending *)
+
+PROCEDURE TextFormat ( text:ARRAY OF CHAR; ...): charptr;
+
+(*  Text formatting with variables (sprintf() style) *)
+
+PROCEDURE TextSubtext ( text:ARRAY OF CHAR; position: int;
+                        length: int ): charptr;
+
+(*  Get a piece of a text string *)
+
+PROCEDURE TextReplace ( text:ARRAY OF CHAR; replace:ARRAY OF CHAR;
+                        by:ARRAY OF CHAR ): charptr;
+
+(*  Replace text string (WARNING: memory must be freed!) *)
+
+PROCEDURE TextInsert ( text:ARRAY OF CHAR; insert:ARRAY OF CHAR;
+                       position: int ): charptr;
+
+(*  Insert text in a position (WARNING: memory must be freed!) *)
+
+PROCEDURE TextJoin ( textList: charptrptr; count: int;
+                     delimiter:ARRAY OF CHAR ): charptr;
+
+(*  Join text strings with delimiter *)
+
+PROCEDURE TextSplit ( text:ARRAY OF CHAR; delimiter: CHAR;
+                      count: intptr ): charptrptr;
+
+(*  Split text into multiple strings *)
+
+PROCEDURE TextAppend ( text:ARRAY OF CHAR; append:ARRAY OF CHAR;
+                       position: intptr );
+
+(*  Append text at specific position and move cursor! *)
+
+PROCEDURE TextFindIndex ( text:ARRAY OF CHAR; find:ARRAY OF CHAR ): int;
+
+(*  Find first text occurrence within a string *)
+
+PROCEDURE TextToUpper ( text:ARRAY OF CHAR ): charptr;
+
+(*  Get upper case version of provided string *)
+
+PROCEDURE TextToLower ( text:ARRAY OF CHAR ): charptr;
+
+(*  Get lower case version of provided string *)
+
+PROCEDURE TextToPascal ( text:ARRAY OF CHAR ): charptr;
+
+(*  Get Pascal case notation version of provided string *)
+
+PROCEDURE TextToInteger ( text:ARRAY OF CHAR ): int;
+
+(*  Get integer value from text (negative values not supported) *)
+(* ------------------------------------------------------------------------------------ *)
+(*  Basic 3d Shapes Drawing Functions (Module: models) *)
+(* ------------------------------------------------------------------------------------ *)
+(*  Basic geometric 3D shapes drawing functions *)
+
+PROCEDURE DrawLine3D ( startPos: Vector3; endPos: Vector3; color: Color );
+
+(*  Draw a line in 3D world space *)
+
+PROCEDURE DrawPoint3D ( position: Vector3; color: Color );
+
+(*  Draw a point in 3D space, actually a small line *)
+
+PROCEDURE DrawCircle3D ( center: Vector3; radius: float; rotationAxis: Vector3;
+                         rotationAngle: float; color: Color );
+
+(*  Draw a circle in 3D world space *)
+
+PROCEDURE DrawTriangle3D ( v1: Vector3; v2: Vector3; v3: Vector3; color: Color );
+
+(*  Draw a color-filled triangle (vertex in counter-clockwise order!) *)
+
+TYPE 
+  Vector3Ptr = POINTER TO Vector3;
+
+PROCEDURE DrawTriangleStrip3D ( points: Vector3Ptr; pointCount: int;
+                                color: Color );
+
+(*  Draw a triangle strip defined by points *)
+
+PROCEDURE DrawCube ( position: Vector3; width: float; height: float; length: float;
+                     color: Color );
+
+(*  Draw cube *)
+
+PROCEDURE DrawCubeV ( position: Vector3; size: Vector3; color: Color );
+
+(*  Draw cube (Vector version) *)
+
+PROCEDURE DrawCubeWires ( position: Vector3; width: float; height: float; length: float;
+                          color: Color );
+
+(*  Draw cube wires *)
+
+PROCEDURE DrawCubeWiresV ( position: Vector3; size: Vector3; color: Color );
+
+(*  Draw cube wires (Vector version) *)
+
+PROCEDURE DrawSphere ( centerPos: Vector3; radius: float; color: Color );
+
+(*  Draw sphere *)
+
+PROCEDURE DrawSphereEx ( centerPos: Vector3; radius: float; rings: int;
+                         slices: int; color: Color );
+
+(*  Draw sphere with extended parameters *)
+
+PROCEDURE DrawSphereWires ( centerPos: Vector3; radius: float; rings: int;
+                            slices: int; color: Color );
+
+(*  Draw sphere wires *)
+
+PROCEDURE DrawCylinder ( position: Vector3; radiusTop: float; radiusBottom: float;
+                         height: float; slices: int; color: Color );
+
+(*  Draw a cylinder/cone *)
+
+PROCEDURE DrawCylinderEx ( startPos: Vector3; endPos: Vector3; startRadius: float;
+                           endRadius: float; sides: int; color: Color );
+
+(*  Draw a cylinder with base at startPos and top at endPos *)
+
+PROCEDURE DrawCylinderWires ( position: Vector3; radiusTop: float; radiusBottom: float;
+                              height: float; slices: int; color: Color );
+
+(*  Draw a cylinder/cone wires *)
+
+PROCEDURE DrawCylinderWiresEx ( startPos: Vector3; endPos: Vector3; startRadius: float;
+                                endRadius: float; sides: int; color: Color );
+
+(*  Draw a cylinder wires with base at startPos and top at endPos *)
+
+PROCEDURE DrawCapsule ( startPos: Vector3; endPos: Vector3; radius: float;
+                        slices: int; rings: int; color: Color );
+
+(*  Draw a capsule with the center of its sphere caps at startPos and endPos *)
+
+PROCEDURE DrawCapsuleWires ( startPos: Vector3; endPos: Vector3; radius: float;
+                             slices: int; rings: int; color: Color );
+
+(*  Draw capsule wireframe with the center of its sphere caps at startPos and endPos *)
+
+PROCEDURE DrawPlane ( centerPos: Vector3; size: Vector2; color: Color );
+
+(*  Draw a plane XZ *)
+
+PROCEDURE DrawRay ( ray: Ray; color: Color );
+
+(*  Draw a ray line *)
+
+PROCEDURE DrawGrid ( slices: int; spacing: float );
+
+(*  Draw a grid (centered at (0, 0, 0)) *)
+(* ------------------------------------------------------------------------------------ *)
+(*  Model 3d Loading and Drawing Functions (Module: models) *)
+(* ------------------------------------------------------------------------------------ *)
+(*  Model management functions *)
+
+PROCEDURE LoadModel ( fileName: ARRAY OF CHAR ): Model;
+
+(*  Load model from files (meshes and materials) *)
+
+PROCEDURE LoadModelFromMesh ( mesh: Mesh ): Model;
+
+(*  Load model from generated mesh (default material) *)
+
+PROCEDURE IsModelReady ( model: Model ):BOOLEAN;
+
+(*  Check if a model is ready *)
+
+PROCEDURE UnloadModel ( model: Model );
+
+(*  Unload model (including meshes) from memory (RAM and/or VRAM) *)
+
+PROCEDURE GetModelBoundingBox ( model: Model ): BoundingBox;
+
+(*  Compute model bounding box limits (considers all meshes) *)
+(*  Model drawing functions *)
+
+PROCEDURE DrawModel ( model: Model; position: Vector3; scale: float; tint: Color );
+
+(*  Draw a model (with texture if set) *)
+
+PROCEDURE DrawModelEx ( model: Model; position: Vector3; rotationAxis: Vector3;
+                        rotationAngle: float; scale: Vector3; tint: Color );
+
+(*  Draw a model with extended parameters *)
+
+PROCEDURE DrawModelWires ( model: Model; position: Vector3; scale: float;
+                           tint: Color );
+
+(*  Draw a model wires (with texture if set) *)
+
+PROCEDURE DrawModelWiresEx ( model: Model; position: Vector3; rotationAxis: Vector3;
+                             rotationAngle: float; scale: Vector3; tint: Color );
+
+(*  Draw a model wires (with texture if set) with extended parameters *)
+
+PROCEDURE DrawBoundingBox ( box: BoundingBox; color: Color );
+
+(*  Draw bounding box (wires) *)
+
+PROCEDURE DrawBillboard ( camera: Camera; texture: Texture2D; position: Vector3;
+                          size: float; tint: Color );
+
+(*  Draw a billboard texture *)
+
+PROCEDURE DrawBillboardRec ( camera: Camera; texture: Texture2D; source: Rectangle;
+                             position: Vector3; size: Vector2; tint: Color );
+
+(*  Draw a billboard texture defined by source *)
+
+PROCEDURE DrawBillboardPro ( camera: Camera; texture: Texture2D; source: Rectangle;
+                             position: Vector3; up: Vector3; size: Vector2;
+                             origin: Vector2; rotation: float; tint: Color );
+
+(*  Draw a billboard texture defined by source and rotation *)
+(*  Mesh management functions *)
+
+PROCEDURE UploadMesh ( mesh: MeshPtr; dynamic:BOOLEAN );
+
+(*  Upload mesh vertex data in GPU and provide VAO/VBO ids *)
+
+PROCEDURE UpdateMeshBuffer ( mesh: Mesh; index: int; data: voidptr;
+                             dataSize: int; offset: int );
+
+(*  Update mesh vertex data in GPU for a specific buffer index *)
+
+PROCEDURE UnloadMesh ( mesh: Mesh );
+
+(*  Unload mesh data from CPU and GPU *)
+
+PROCEDURE DrawMesh ( mesh: Mesh; material: Material; transform: Matrix );
+
+(*  Draw a 3d mesh with material and transform *)
+
+TYPE 
+  MatrixPtr = POINTER TO Matrix;
+
+PROCEDURE DrawMeshInstanced ( mesh: Mesh; material: Material;
+                              transforms: MatrixPtr; instances: int );
+
+(*  Draw multiple mesh instances with material and different transforms *)
+
+PROCEDURE ExportMesh ( mesh: Mesh; fileName: ARRAY OF CHAR ):BOOLEAN;
+
+(*  Export mesh data to file, returns true on success *)
+
+PROCEDURE GetMeshBoundingBox ( mesh: Mesh ): BoundingBox;
+
+(*  Compute mesh bounding box limits *)
+
+PROCEDURE GenMeshTangents ( mesh: MeshPtr );
+
+(*  Compute mesh tangents *)
+(*  Mesh generation functions *)
+
+PROCEDURE GenMeshPoly ( sides: int; radius: float ): Mesh;
+
+(*  Generate polygonal mesh *)
+
+PROCEDURE GenMeshPlane ( width: float; length: float; resX: int;
+                         resZ: int ): Mesh;
+
+(*  Generate plane mesh (with subdivisions) *)
+
+PROCEDURE GenMeshCube ( width: float; height: float; length: float ): Mesh;
+
+(*  Generate cuboid mesh *)
+
+PROCEDURE GenMeshSphere ( radius: float; rings: int; slices: int ): Mesh;
+
+(*  Generate sphere mesh (standard sphere) *)
+
+PROCEDURE GenMeshHemiSphere ( radius: float; rings: int;
+                              slices: int ): Mesh;
+
+(*  Generate half-sphere mesh (no bottom cap) *)
+
+PROCEDURE GenMeshCylinder ( radius: float; height: float; slices: int ): Mesh;
+
+(*  Generate cylinder mesh *)
+
+PROCEDURE GenMeshCone ( radius: float; height: float; slices: int ): Mesh;
+
+(*  Generate cone/pyramid mesh *)
+
+PROCEDURE GenMeshTorus ( radius: float; size: float; radSeg: int;
+                         sides: int ): Mesh;
+
+(*  Generate torus mesh *)
+
+PROCEDURE GenMeshKnot ( radius: float; size: float; radSeg: int;
+                        sides: int ): Mesh;
+
+(*  Generate trefoil knot mesh *)
+
+PROCEDURE GenMeshHeightmap ( heightmap: Image; size: Vector3 ): Mesh;
+
+(*  Generate heightmap mesh from image data *)
+
+PROCEDURE GenMeshCubicmap ( cubicmap: Image; cubeSize: Vector3 ): Mesh;
+
+(*  Generate cubes-based map mesh from image data *)
+(*  Material loading/unloading functions *)
+
+PROCEDURE LoadMaterials ( fileName: ARRAY OF CHAR;
+                          materialCount: intptr ): MaterialPtr;
+
+(*  Load materials from model file *)
+
+PROCEDURE LoadMaterialDefault (  ): Material;
+
+(*  Load default material (Supports: DIFFUSE, SPECULAR, NORMAL maps) *)
+
+PROCEDURE IsMaterialReady ( material: Material ):BOOLEAN;
+
+(*  Check if a material is ready *)
+
+PROCEDURE UnloadMaterial ( material: Material );
+
+(*  Unload material from GPU memory (VRAM) *)
+
+PROCEDURE SetMaterialTexture ( material: MaterialPtr; mapType: int;
+                               texture: Texture2D );
+
+(*  Set texture for a material map type (MATERIAL_MAP_DIFFUSE, MATERIAL_MAP_SPECULAR...) *)
+
+TYPE 
+  ModelPtr = POINTER TO Model;
+
+PROCEDURE SetModelMeshMaterial ( model: ModelPtr; meshId: int;
+                                 materialId: int );
+
+(*  Set material for a mesh *)
+(*  Model animations loading/unloading functions *)
+
+TYPE 
+  ModelAnimationPtr = POINTER TO ModelAnimation;
+
+PROCEDURE LoadModelAnimations ( fileName: ARRAY OF CHAR;
+                                animCount: intptr ): ModelAnimationPtr;
+
+(*  Load model animations from file *)
+
+PROCEDURE UpdateModelAnimation ( model: Model; anim: ModelAnimation;
+                                 frame: int );
+
+(*  Update model animation pose *)
+
+PROCEDURE UnloadModelAnimation ( anim: ModelAnimation );
+
+(*  Unload animation data *)
+
+PROCEDURE UnloadModelAnimations ( animations: ModelAnimationPtr;
+                                  animCount: int );
+
+(*  Unload animation array data *)
+
+PROCEDURE IsModelAnimationValid ( model: Model; anim: ModelAnimation ):BOOLEAN;
+
+(*  Check model animation skeleton match *)
+(*  Collision detection functions *)
+
+PROCEDURE CheckCollisionSpheres ( center1: Vector3; radius1: float; center2: Vector3;
+                                  radius2: float ):BOOLEAN;
+
+(*  Check collision between two spheres *)
+
+PROCEDURE CheckCollisionBoxes ( box1: BoundingBox; box2: BoundingBox ):BOOLEAN;
+
+(*  Check collision between two bounding boxes *)
+
+PROCEDURE CheckCollisionBoxSphere ( box: BoundingBox; center: Vector3;
+                                    radius: float ):BOOLEAN;
+
+(*  Check collision between box and sphere *)
+
+PROCEDURE GetRayCollisionSphere ( ray: Ray; center: Vector3;
+                                  radius: float ): RayCollision;
+
+(*  Get collision info between ray and sphere *)
+
+PROCEDURE GetRayCollisionBox ( ray: Ray; box: BoundingBox ): RayCollision;
+
+(*  Get collision info between ray and box *)
+
+PROCEDURE GetRayCollisionMesh ( ray: Ray; mesh: Mesh;
+                                transform: Matrix ): RayCollision;
+
+(*  Get collision info between ray and mesh *)
+
+PROCEDURE GetRayCollisionTriangle ( ray: Ray; p1: Vector3; p2: Vector3;
+                                    p3: Vector3 ): RayCollision;
+
+(*  Get collision info between ray and triangle *)
+
+PROCEDURE GetRayCollisionQuad ( ray: Ray; p1: Vector3; p2: Vector3; p3: Vector3;
+                                p4: Vector3 ): RayCollision;
+
+(*  Get collision info between ray and quad *)
+(* ------------------------------------------------------------------------------------ *)
+(*  Audio Loading and Playing Functions (Module: audio) *)
+(* ------------------------------------------------------------------------------------ *)
+
+TYPE 
+  AudioCallback = PROCEDURE ( (* bufferData *) voidptr, (* frames *)
+                            uint );
+
+(*  Audio device management functions *)
+
+PROCEDURE InitAudioDevice (  );
+
+(*  Initialize audio device and context *)
+
+PROCEDURE CloseAudioDevice (  );
+
+(*  Close the audio device and context *)
+
+PROCEDURE IsAudioDeviceReady (  ):BOOLEAN;
+
+(*  Check if audio device has been initialized successfully *)
+
+PROCEDURE SetMasterVolume ( volume: float );
+
+(*  Set master volume (listener) *)
+
+PROCEDURE GetMasterVolume (  ): float;
+
+(*  Get master volume (listener) *)
+(*  Wave/Sound loading/unloading functions *)
+
+PROCEDURE LoadWave ( fileName: ARRAY OF CHAR ): Wave;
+
+(*  Load wave data from file *)
+
+PROCEDURE LoadWaveFromMemory ( fileType:ARRAY OF CHAR; fileData: ucharptr;
+                               dataSize: int ): Wave;
+
+(*  Load wave from memory buffer, fileType refers to extension: i.e. '.wav' *)
+
+PROCEDURE IsWaveReady ( wave: Wave ):BOOLEAN;
+
+(*  Checks if wave data is ready *)
+
+PROCEDURE LoadSound ( fileName: ARRAY OF CHAR ): Sound;
+
+(*  Load sound from file *)
+
+PROCEDURE LoadSoundFromWave ( wave: Wave ): Sound;
+
+(*  Load sound from wave data *)
+
+PROCEDURE LoadSoundAlias ( source: Sound ): Sound;
+
+(*  Create a new sound that shares the same sample data as the source sound, does not own the sound data *)
+
+PROCEDURE IsSoundReady ( sound: Sound ):BOOLEAN;
+
+(*  Checks if a sound is ready *)
+
+PROCEDURE UpdateSound ( sound: Sound; data: voidptr; sampleCount: int );
+
+(*  Update sound buffer with new data *)
+
+PROCEDURE UnloadWave ( wave: Wave );
+
+(*  Unload wave data *)
+
+PROCEDURE UnloadSound ( sound: Sound );
+
+(*  Unload sound *)
+
+PROCEDURE UnloadSoundAlias ( alias: Sound );
+
+(*  Unload a sound alias (does not deallocate sample data) *)
+
+PROCEDURE ExportWave ( wave: Wave; fileName: ARRAY OF CHAR ):BOOLEAN;
+
+(*  Export wave data to file, returns true on success *)
+
+PROCEDURE ExportWaveAsCode ( wave: Wave; fileName: ARRAY OF CHAR ):BOOLEAN;
+
+(*  Export wave sample data to code (.h), returns true on success *)
+(*  Wave/Sound management functions *)
+
+PROCEDURE PlaySound ( sound: Sound );
+
+(*  Play a sound *)
+
+PROCEDURE StopSound ( sound: Sound );
+
+(*  Stop playing a sound *)
+
+PROCEDURE PauseSound ( sound: Sound );
+
+(*  Pause a sound *)
+
+PROCEDURE ResumeSound ( sound: Sound );
+
+(*  Resume a paused sound *)
+
+PROCEDURE IsSoundPlaying ( sound: Sound ):BOOLEAN;
+
+(*  Check if a sound is currently playing *)
+
+PROCEDURE SetSoundVolume ( sound: Sound; volume: float );
+
+(*  Set volume for a sound (1.0 is max level) *)
+
+PROCEDURE SetSoundPitch ( sound: Sound; pitch: float );
+
+(*  Set pitch for a sound (1.0 is base level) *)
+
+PROCEDURE SetSoundPan ( sound: Sound; pan: float );
+
+(*  Set pan for a sound (0.5 is center) *)
+
+PROCEDURE WaveCopy ( wave: Wave ): Wave;
+
+(*  Copy a wave to a new wave *)
+
+TYPE 
+  WavePtr = POINTER TO Wave;
+
+PROCEDURE WaveCrop ( wave: WavePtr; initSample: int;
+                     finalSample: int );
+
+(*  Crop a wave to defined samples range *)
+
+PROCEDURE WaveFormat ( wave: WavePtr; sampleRate: int;
+                       sampleSize: int; channels: int );
+
+(*  Convert wave data to desired format *)
+
+PROCEDURE LoadWaveSamples ( wave: Wave ): floatptr;
+
+(*  Load samples data from wave as a 32bit float data array *)
+
+PROCEDURE UnloadWaveSamples ( samples: floatptr );
+
+(*  Unload samples data loaded with LoadWaveSamples() *)
+(*  Music management functions *)
+
+PROCEDURE LoadMusicStream ( fileName: ARRAY OF CHAR ): Music;
+
+(*  Load music stream from file *)
+
+PROCEDURE LoadMusicStreamFromMemory ( fileType:ARRAY OF CHAR; data: ucharptr;
+                                      dataSize: int ): Music;
+
+(*  Load music stream from data *)
+
+PROCEDURE IsMusicReady ( music: Music ):BOOLEAN;
+
+(*  Checks if a music stream is ready *)
+
+PROCEDURE UnloadMusicStream ( music: Music );
+
+(*  Unload music stream *)
+
+PROCEDURE PlayMusicStream ( music: Music );
+
+(*  Start music playing *)
+
+PROCEDURE IsMusicStreamPlaying ( music: Music ):BOOLEAN;
+
+(*  Check if music is playing *)
+
+PROCEDURE UpdateMusicStream ( music: Music );
+
+(*  Updates buffers for music streaming *)
+
+PROCEDURE StopMusicStream ( music: Music );
+
+(*  Stop music playing *)
+
+PROCEDURE PauseMusicStream ( music: Music );
+
+(*  Pause music playing *)
+
+PROCEDURE ResumeMusicStream ( music: Music );
+
+(*  Resume playing paused music *)
+
+PROCEDURE SeekMusicStream ( music: Music; position: float );
+
+(*  Seek music to a position (in seconds) *)
+
+PROCEDURE SetMusicVolume ( music: Music; volume: float );
+
+(*  Set volume for music (1.0 is max level) *)
+
+PROCEDURE SetMusicPitch ( music: Music; pitch: float );
+
+(*  Set pitch for a music (1.0 is base level) *)
+
+PROCEDURE SetMusicPan ( music: Music; pan: float );
+
+(*  Set pan for a music (0.5 is center) *)
+
+PROCEDURE GetMusicTimeLength ( music: Music ): float;
+
+(*  Get music time length (in seconds) *)
+
+PROCEDURE GetMusicTimePlayed ( music: Music ): float;
+
+(*  Get current music time played (in seconds) *)
+(*  AudioStream management functions *)
+
+PROCEDURE LoadAudioStream ( sampleRate: uint; sampleSize: uint;
+                            channels: uint ): AudioStream;
+
+(*  Load audio stream (to stream raw audio pcm data) *)
+
+PROCEDURE IsAudioStreamReady ( stream: AudioStream ):BOOLEAN;
+
+(*  Checks if an audio stream is ready *)
+
+PROCEDURE UnloadAudioStream ( stream: AudioStream );
+
+(*  Unload audio stream and free memory *)
+
+PROCEDURE UpdateAudioStream ( stream: AudioStream; data: voidptr;
+                              frameCount: int );
+
+(*  Update audio stream buffers with data *)
+
+PROCEDURE IsAudioStreamProcessed ( stream: AudioStream ):BOOLEAN;
+
+(*  Check if any audio stream buffers requires refill *)
+
+PROCEDURE PlayAudioStream ( stream: AudioStream );
+
+(*  Play audio stream *)
+
+PROCEDURE PauseAudioStream ( stream: AudioStream );
+
+(*  Pause audio stream *)
+
+PROCEDURE ResumeAudioStream ( stream: AudioStream );
+
+(*  Resume audio stream *)
+
+PROCEDURE IsAudioStreamPlaying ( stream: AudioStream ):BOOLEAN;
+
+(*  Check if audio stream is playing *)
+
+PROCEDURE StopAudioStream ( stream: AudioStream );
+
+(*  Stop audio stream *)
+
+PROCEDURE SetAudioStreamVolume ( stream: AudioStream; volume: float );
+
+(*  Set volume for audio stream (1.0 is max level) *)
+
+PROCEDURE SetAudioStreamPitch ( stream: AudioStream; pitch: float );
+
+(*  Set pitch for audio stream (1.0 is base level) *)
+
+PROCEDURE SetAudioStreamPan ( stream: AudioStream; pan: float );
+
+(*  Set pan for audio stream (0.5 is centered) *)
+
+PROCEDURE SetAudioStreamBufferSizeDefault ( size: int );
+
+(*  Default size for new audio streams *)
+
+PROCEDURE SetAudioStreamCallback ( stream: AudioStream; callback: AudioCallback );
+
+(*  Audio thread callback to request new data *)
+
+PROCEDURE AttachAudioStreamProcessor ( stream: AudioStream;
+                                       processor: AudioCallback );
+
+(*  Attach audio stream processor to stream, receives the samples as <float>s *)
+
+PROCEDURE DetachAudioStreamProcessor ( stream: AudioStream;
+                                       processor: AudioCallback );
+
+(*  Detach audio stream processor from stream *)
+
+PROCEDURE AttachAudioMixedProcessor ( processor: AudioCallback );
+
+(*  Attach audio stream processor to the entire audio pipeline, receives the samples as <float>s *)
+
+PROCEDURE DetachAudioMixedProcessor ( processor: AudioCallback );
+
+(*  Detach audio stream processor from the entire audio pipeline *)
+
+CONST 
+  MATERIAL_MAP_DIFFUSE = MATERIAL_MAP_ALBEDO;
+  MATERIAL_MAP_SPECULAR = MATERIAL_MAP_METALNESS;
+  MOUSE_LEFT_BUTTON = MOUSE_BUTTON_LEFT;
+  MOUSE_MIDDLE_BUTTON = MOUSE_BUTTON_MIDDLE;
+  MOUSE_RIGHT_BUTTON = MOUSE_BUTTON_RIGHT;
+  SHADER_LOC_MAP_DIFFUSE = SHADER_LOC_MAP_ALBEDO;
+  SHADER_LOC_MAP_SPECULAR = SHADER_LOC_MAP_METALNESS;
+
+END rl.

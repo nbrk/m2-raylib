@@ -1,29 +1,37 @@
+MODULES = 
+PROGRAMS = SampleUsage 
 
-EXEMODULES = Driver1.mod
+#DEFDIR = def
+#MODDIR = mod
+#OBJDIR = obj
+OBJDIR = .
 
-# EXEAUXLIBS = -lm libraylib.a # for static linking
-EXEAUXLIBS = libraylib.so
+#EXTRADEFDIR = ../m2-raylib
+EXTRALINK = -lraylib
+#EXTRALINK = $(OBJDIR)/libraylib.so.4.5.0
 
-# ----------------------------
+GM2 = gm2-14
+GM2FLAGS = -fsoft-check-all -fiso -g -O2 -Wall -I$(DEFDIR) -I$(EXTRADEFDIR)
 
-all: objects executables
+MODULES_DEF = $(addprefix $(DEFDIR)/, $(MODULES:=.def))
+MODULES_MOD = $(addprefix $(MODDIR)/, $(MODULES:=.mod))
+MODULES_OBJ = $(addprefix $(OBJDIR)/, $(MODULES:=.o))
+PROGRAMS_BIN = $(addprefix $(OBJDIR)/, $(PROGRAMS:=.bin))
 
-executables: $(EXEMODULES:.mod=)
+#all: modules programs
+all: $(MODULES_OBJ) $(PROGRAMS_BIN)
 
-ALLMODULES = $(wildcard *.mod)
-ALLDEFS = $(wildcard *.def)
+#modules: $(addprefix $(OBJDIR)/, $(MODULES:=.o))
 
-# Link as an executable: trampoline into the module's initialization block
-%: %.mod $(ALLMODULES:.mod=.o)
-	gm2 -fiso -fsoft-check-all -g -Wall -fonlylink -o $@ $< $(EXEAUXLIBS)
+#programs: $(addprefix $(OBJDIR)/, $(PROGRAMS:=.bin))
 
-objects: $(ALLMODULES:.mod=.o)
+$(OBJDIR)/%.o: $(MODDIR)/%.mod $(DEFDIR)/%.def
+	$(GM2) $(GM2FLAGS) -c -o $@ $<
 
-# %.o: %.mod $(ALLDEFS)
-# Just compile the Modula-2 module (TODO: remove ALLDEFS but recompile on def change...)
-%.o: %.mod
-	gm2 -fiso -fsoft-check-all -g -c -Wall $<
+$(OBJDIR)/%.bin: %.mod $(MODULES_DEF) $(MODULES_OBJ)
+	$(GM2) $(GM2FLAGS) -o $@ $(MODULES_OBJ) $< $(EXTRALINK)
 
 clean:
-	rm -f $(ALLMODULES:.mod=.o)
-	rm -f $(EXEMODULES:.mod=)
+	rm -f *.o
+	rm -f $(OBJDIR)/*.o
+	rm -f $(OBJDIR)/*.bin
