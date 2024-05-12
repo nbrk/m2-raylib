@@ -29,7 +29,7 @@ BEGIN
 
 (*   rl.ToggleFullscreen; *)
 
-  WHILE NOT rl.WindowShouldClose() OR rl.IsKeyPressed(rl.KEY_SPACE) DO
+  WHILE (NOT rl.WindowShouldClose()) AND (NOT rl.IsKeyPressed(rl.KEY_SPACE)) DO
     rl.BeginDrawing;
     rl.ClearBackground(rl.Color{0,0,0, 0});
 
@@ -42,7 +42,7 @@ BEGIN
         rl.Color{0, 0, 255, 255});
     rl.DrawText("Hello, from Modula-2!", 320, 240, 20,
         rl.Color{150, 20, 100,255});
-    rl.DrawTextEx(fnt, "MOUSE", pos, 18.0, 6.0, rl.Color{255,255,0,255});
+    rl.DrawTextEx(fnt, "MOUSE", pos, 18.0, 6.0, rl.YELLOW);
     rl.DrawTextEx(fnt, "Привет, Мир!",
         rl.Vector2{300.0, 260.0}, 40.0, 1.0, rl.Color{255, 255, 255, 100});
 
