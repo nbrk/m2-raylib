@@ -1,24 +1,42 @@
-# m2-raylib
+# Description
 GNU Modula-2 bindings for [raylib](http://www.raylib.com/), a simple and easy-to-use library to enjoy videogames programming.
 
-This is a low-level, *thin* bindings, i.e. the module definition just directly maps C API to Modula-2, with all of the names
-and meanings left intact to mimic the original API.
+This is a low-level, *thin* bindings, i.e. the module definitions just directly map C API to Modula-2, with all of the names and meanings left intact to mimic the original behaviour.
 
 # Status
-The bindings are considered to be **complete**, with every `raylib` type, procedure or constant being interfaced somehow.
-Testing is especially requested for stuff other than that used for a simple 2D-drawing.
+The bindings are considered to be **fairly complete**, with every type, procedure or constant being interfaced somehow. The following `raylib` library components are bound to their respective Modula-2 definition files:
+- **raylib** as per `raylib.h` is covered in **rl.def**
+- **raymath** as per `raymath.h` is covered in **rm.def**
+
+Testing is especially requested for stuff other than that used for simple 2D-drawing, etc.
 
 # Versions
 The library version used in making of the bindings is `raylib-5.1-dev` (the C header file is bundled). 
 Tested with `GCC 14.0.1`, ISO Modula-2.
 
-# TODO
-- excessive testing
-
 # Usage
-Use entities from the provided definition module `rl`. Functions, datastructures and constants are bound one-to-one, 
-so old knowledge holds. The [Raylib cheatsheet](https://www.raylib.com/cheatsheet/raylib_cheatsheet_v4.5.pdf) helps). 
+Use entities from provided definition modules:
+- module **rl** covers `raylib`
+- module **rm** covers `raymath`
 
+Functions, datastructures and constants are bound one-to-one, so old knowledge of the API holds. The [Raylib](https://www.raylib.com/cheatsheet/raylib_cheatsheet_v4.5.pdf) and [Raymath](https://www.raylib.com/cheatsheet/raymath_cheatsheet.html) cheatsheets help. 
+
+I have decided to explicitly redefine the C primitives as follows:
+
+``` modula-2
+TYPE
+  voidptr = SYSTEM.ADDRESS;
+  int     = SYSTEM.INTEGER32;
+  uint    = SYSTEM.CARDINAL32;
+  ushort  = SYSTEM.CARDINAL16;
+  char    = SYSTEM.INTEGER8;
+  uchar   = SYSTEM.BYTE;
+  float   = SYSTEM.REAL32;
+  double  = SYSTEM.REAL64;
+  long    = SYSTEM.INTEGER64;
+```
+
+# Compilation
 Compile a program module with something like that:
 ``` sh
 gm2-14 -fsoft-check-all -fiso -g -O2 -Wall SampleUsage.mod ./libraylib.so.4.5.0
@@ -28,8 +46,13 @@ or just
 gm2-14 -fsoft-check-all -fiso -g -O2 -Wall SampleUsage.mod -lraylib
 ```
 if the linker can find the library on your system.
+Please see provided `Makefile` for my attempt at a more general workflow with *modules* and *driver programs*.
 
-Please see the provided `Makefile` for my attempt at a more general workflow with *modules* and *driver programs*.
+# TODO
+- excessive testing
+- unify comments formatting
+- optimize code sections 
+- bind `raygui` library
 
 # Sample code
 This is what a client code looks like:
@@ -37,7 +60,7 @@ This is what a client code looks like:
 ``` modula-2
 MODULE SampleUsage;
 
-IMPORT rl;
+IMPORT rl, rm;
 
 PROCEDURE TestRaylib;
 CONST
@@ -66,6 +89,7 @@ BEGIN
     rl.ClearBackground(rl.Color{0,0,0, 0});
 
     pos := rl.GetMousePosition();
+    pos := rm.Vector2AddValue(pos, FLOAT(100.0));
     rl.DrawTexture(texImg, 0, 0, rl.Color{255,255,255,255});
     rl.DrawTexture(texFile, 100, 100, rl.Color{255,255,255,255});
     rl.DrawLine(0, 0, rl.GetScreenWidth(), rl.GetScreenHeight(),

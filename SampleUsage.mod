@@ -5,7 +5,7 @@
 
 MODULE SampleUsage;
 
-IMPORT rl;
+IMPORT rl, rm;
 
 PROCEDURE TestRaylib;
 CONST
@@ -34,6 +34,7 @@ BEGIN
     rl.ClearBackground(rl.Color{0,0,0, 0});
 
     pos := rl.GetMousePosition();
+    pos := rm.Vector2AddValue(pos, FLOAT(100.0));
     rl.DrawTexture(texImg, 0, 0, rl.Color{255,255,255,255});
     rl.DrawTexture(texFile, 100, 100, rl.Color{255,255,255,255});
     rl.DrawLine(0, 0, rl.GetScreenWidth(), rl.GetScreenHeight(),

@@ -1,0 +1,599 @@
+(*
+    Title:     Modula-2 direct bindings to the excellent Raylib (raymath part).
+    Created:   Mon May 13 21:06:23 2024
+    Author:    Nikolay A. Burkov <nbrk@linklevel.net>
+ *)
+DEFINITION MODULE FOR "C" rm;
+
+IMPORT rl;
+
+EXPORT UNQUALIFIED
+  (* types *)
+  float3,
+  float16,
+
+  (* procedures *)
+  Clamp,
+  Lerp,
+  Normalize,
+  Remap,
+  Wrap,
+  FloatEquals,
+  Vector2Zero,
+  Vector2One,
+  Vector2Add,
+  Vector2AddValue,
+  Vector2Subtract,
+  Vector2SubtractValue,
+  Vector2Length,
+  Vector2LengthSqr,
+  Vector2DotProduct,
+  Vector2Distance,
+  Vector2DistanceSqr,
+  Vector2Angle,
+  Vector2Scale,
+  Vector2Multiply,
+  Vector2Negate,
+  Vector2Divide,
+  Vector2Normalize,
+  Vector2Transform,
+  Vector2Lerp,
+  Vector2Reflect,
+  Vector2Rotate,
+  Vector2MoveTowards,
+  Vector2Invert,
+  Vector2Clamp,
+  Vector2ClampValue,
+  Vector2Equals,
+  Vector3Zero,
+  Vector3One,
+  Vector3Add,
+  Vector3AddValue,
+  Vector3Subtract,
+  Vector3SubtractValue,
+  Vector3Scale,
+  Vector3Multiply,
+  Vector3CrossProduct,
+  Vector3Perpendicular,
+  Vector3Length,
+  Vector3LengthSqr,
+  Vector3DotProduct,
+  Vector3Distance,
+  Vector3DistanceSqr,
+  Vector3Angle,
+  Vector3Negate,
+  Vector3Divide,
+  Vector3Normalize,
+  Vector3OrthoNormalize,
+  Vector3Transform,
+  Vector3RotateByQuaternion,
+  Vector3RotateByAxisAngle,
+  Vector3Lerp,
+  Vector3Reflect,
+  Vector3Min,
+  Vector3Max,
+  Vector3Barycenter,
+  Vector3Unproject,
+  Vector3ToFloatV,
+  Vector3Invert,
+  Vector3Clamp,
+  Vector3ClampValue,
+  Vector3Equals,
+  Vector3Refract,
+  MatrixDeterminant,
+  MatrixTrace,
+  MatrixTranspose,
+  MatrixInvert,
+  MatrixIdentity,
+  MatrixAdd,
+  MatrixSubtract,
+  MatrixMultiply,
+  MatrixTranslate,
+  MatrixRotate,
+  MatrixRotateX,
+  MatrixRotateY,
+  MatrixRotateZ,
+  MatrixRotateXYZ,
+  MatrixRotateZYX,
+  MatrixScale,
+  MatrixFrustum,
+  MatrixPerspective,
+  MatrixOrtho,
+  MatrixLookAt,
+  MatrixToFloatV,
+  QuaternionAdd,
+  QuaternionAddValue,
+  QuaternionSubtract,
+  QuaternionSubtractValue,
+  QuaternionIdentity,
+  QuaternionLength,
+  QuaternionNormalize,
+  QuaternionInvert,
+  QuaternionMultiply,
+  QuaternionScale,
+  QuaternionDivide,
+  QuaternionLerp,
+  QuaternionNlerp,
+  QuaternionSlerp,
+  QuaternionFromVector3ToVector3,
+  QuaternionFromMatrix,
+  QuaternionToMatrix,
+  QuaternionFromAxisAngle,
+  QuaternionToAxisAngle,
+  QuaternionFromEuler,
+  QuaternionToEuler,
+  QuaternionTransform,
+  QuaternionEquals;
+
+
+TYPE
+  float3 = RECORD
+    v: ARRAY [0..3-1] OF rl.float;
+  END;
+
+  float16 = RECORD
+    v: ARRAY [0..16-1] OF rl.float;
+  END;
+
+(*  Utils math *)
+
+PROCEDURE Clamp ( value: rl.float; min: rl.float; max: rl.float ): rl.float;
+
+(*  Function specifiers definition Defines and Macros Get float vector for Matrix Get float vector for Vector3 Types and Structures Definition Vector2 type Vector3 type Vector4 type Quaternion type Matrix type (OpenGL style 4x4 - right handed, column major) NOTE: Helper types to be used instead of array return types for *ToFloat functions Clamp float value *)
+
+PROCEDURE Lerp ( start: rl.float; end: rl.float; amount: rl.float ): rl.float;
+
+(*  Calculate linear interpolation between two floats *)
+
+PROCEDURE Normalize ( value: rl.float; start: rl.float; end: rl.float ): rl.float;
+
+(*  Normalize input value within input range *)
+
+PROCEDURE Remap ( value: rl.float; inputStart: rl.float; inputEnd: rl.float; outputStart: rl.float;
+                  outputEnd: rl.float ): rl.float;
+
+(*  Remap input value within input range to output range *)
+
+PROCEDURE Wrap ( value: rl.float; min: rl.float; max: rl.float ): rl.float;
+
+(*  Wrap input value from min to max *)
+
+PROCEDURE FloatEquals ( x: rl.float; y: rl.float ): rl.int;
+
+(*  Check whether two given floats are almost equal *)
+(*  Vector2 math *)
+
+PROCEDURE Vector2Zero (  ): rl.Vector2;
+
+(*  Vector with components value 0.0f *)
+
+PROCEDURE Vector2One (  ): rl.Vector2;
+
+(*  Vector with components value 1.0f *)
+
+PROCEDURE Vector2Add ( v1: rl.Vector2; v2: rl.Vector2 ): rl.Vector2;
+
+(*  Add two vectors (v1 + v2) *)
+
+PROCEDURE Vector2AddValue ( v: rl.Vector2; add: rl.float ): rl.Vector2;
+
+(*  Add vector and float value *)
+
+PROCEDURE Vector2Subtract ( v1: rl.Vector2; v2: rl.Vector2 ): rl.Vector2;
+
+(*  Subtract two vectors (v1 - v2) *)
+
+PROCEDURE Vector2SubtractValue ( v: rl.Vector2; sub: rl.float ): rl.Vector2;
+
+(*  Subtract vector by float value *)
+
+PROCEDURE Vector2Length ( v: rl.Vector2 ): rl.float;
+
+(*  Calculate vector length *)
+
+PROCEDURE Vector2LengthSqr ( v: rl.Vector2 ): rl.float;
+
+(*  Calculate vector square length *)
+
+PROCEDURE Vector2DotProduct ( v1: rl.Vector2; v2: rl.Vector2 ): rl.float;
+
+(*  Calculate two vectors dot product *)
+
+PROCEDURE Vector2Distance ( v1: rl.Vector2; v2: rl.Vector2 ): rl.float;
+
+(*  Calculate distance between two vectors *)
+
+PROCEDURE Vector2DistanceSqr ( v1: rl.Vector2; v2: rl.Vector2 ): rl.float;
+
+(*  Calculate square distance between two vectors *)
+
+PROCEDURE Vector2Angle ( v1: rl.Vector2; v2: rl.Vector2 ): rl.float;
+
+(*  Calculate angle from two vectors *)
+
+PROCEDURE Vector2Scale ( v: rl.Vector2; scale: rl.float ): rl.Vector2;
+
+(*  Scale vector (multiply by value) *)
+
+PROCEDURE Vector2Multiply ( v1: rl.Vector2; v2: rl.Vector2 ): rl.Vector2;
+
+(*  Multiply vector by vector *)
+
+PROCEDURE Vector2Negate ( v: rl.Vector2 ): rl.Vector2;
+
+(*  Negate vector *)
+
+PROCEDURE Vector2Divide ( v1: rl.Vector2; v2: rl.Vector2 ): rl.Vector2;
+
+(*  Divide vector by vector *)
+
+PROCEDURE Vector2Normalize ( v: rl.Vector2 ): rl.Vector2;
+
+(*  Normalize provided vector *)
+
+PROCEDURE Vector2Transform ( v: rl.Vector2; mat: rl.Matrix ): rl.Vector2;
+
+(*  Transforms a Vector2 by a given Matrix *)
+
+PROCEDURE Vector2Lerp ( v1: rl.Vector2; v2: rl.Vector2; amount: rl.float ): rl.Vector2;
+
+(*  Calculate linear interpolation between two vectors *)
+
+PROCEDURE Vector2Reflect ( v: rl.Vector2; normal: rl.Vector2 ): rl.Vector2;
+
+(*  Calculate reflected vector to normal *)
+
+PROCEDURE Vector2Rotate ( v: rl.Vector2; angle: rl.float ): rl.Vector2;
+
+(*  Rotate vector by angle *)
+
+PROCEDURE Vector2MoveTowards ( v: rl.Vector2; target: rl.Vector2;
+                               maxDistance: rl.float ): rl.Vector2;
+
+(*  Move Vector towards target *)
+
+PROCEDURE Vector2Invert ( v: rl.Vector2 ): rl.Vector2;
+
+(*  Invert the given vector *)
+
+PROCEDURE Vector2Clamp ( v: rl.Vector2; min: rl.Vector2; max: rl.Vector2 ): rl.Vector2;
+
+(*  Clamp the components of the vector between min and max values specified by the given vectors *)
+
+PROCEDURE Vector2ClampValue ( v: rl.Vector2; min: rl.float; max: rl.float ): rl.Vector2;
+
+(*  Clamp the magnitude of the vector between two min and max values *)
+
+PROCEDURE Vector2Equals ( p: rl.Vector2; q: rl.Vector2 ): rl.int;
+
+(*  Check whether two given vectors are almost equal *)
+(*  Vector3 math *)
+
+PROCEDURE Vector3Zero (  ): rl.Vector3;
+
+(*  Vector with components value 0.0f *)
+
+PROCEDURE Vector3One (  ): rl.Vector3;
+
+(*  Vector with components value 1.0f *)
+
+PROCEDURE Vector3Add ( v1: rl.Vector3; v2: rl.Vector3 ): rl.Vector3;
+
+(*  Add two vectors *)
+
+PROCEDURE Vector3AddValue ( v: rl.Vector3; add: rl.float ): rl.Vector3;
+
+(*  Add vector and float value *)
+
+PROCEDURE Vector3Subtract ( v1: rl.Vector3; v2: rl.Vector3 ): rl.Vector3;
+
+(*  Subtract two vectors *)
+
+PROCEDURE Vector3SubtractValue ( v: rl.Vector3; sub: rl.float ): rl.Vector3;
+
+(*  Subtract vector by float value *)
+
+PROCEDURE Vector3Scale ( v: rl.Vector3; scalar: rl.float ): rl.Vector3;
+
+(*  Multiply vector by scalar *)
+
+PROCEDURE Vector3Multiply ( v1: rl.Vector3; v2: rl.Vector3 ): rl.Vector3;
+
+(*  Multiply vector by vector *)
+
+PROCEDURE Vector3CrossProduct ( v1: rl.Vector3; v2: rl.Vector3 ): rl.Vector3;
+
+(*  Calculate two vectors cross product *)
+
+PROCEDURE Vector3Perpendicular ( v: rl.Vector3 ): rl.Vector3;
+
+(*  Calculate one vector perpendicular vector *)
+
+PROCEDURE Vector3Length ( v: rl.Vector3 ): rl.float;
+
+(*  Calculate vector length *)
+
+PROCEDURE Vector3LengthSqr ( v: rl.Vector3 ): rl.float;
+
+(*  Calculate vector square length *)
+
+PROCEDURE Vector3DotProduct ( v1: rl.Vector3; v2: rl.Vector3 ): rl.float;
+
+(*  Calculate two vectors dot product *)
+
+PROCEDURE Vector3Distance ( v1: rl.Vector3; v2: rl.Vector3 ): rl.float;
+
+(*  Calculate distance between two vectors *)
+
+PROCEDURE Vector3DistanceSqr ( v1: rl.Vector3; v2: rl.Vector3 ): rl.float;
+
+(*  Calculate square distance between two vectors *)
+
+PROCEDURE Vector3Angle ( v1: rl.Vector3; v2: rl.Vector3 ): rl.float;
+
+(*  Calculate angle between two vectors *)
+
+PROCEDURE Vector3Negate ( v: rl.Vector3 ): rl.Vector3;
+
+(*  Negate provided vector (invert direction) *)
+
+PROCEDURE Vector3Divide ( v1: rl.Vector3; v2: rl.Vector3 ): rl.Vector3;
+
+(*  Divide vector by vector *)
+
+PROCEDURE Vector3Normalize ( v: rl.Vector3 ): rl.Vector3;
+
+(*  Normalize provided vector *)
+
+PROCEDURE Vector3OrthoNormalize ( v1: rl.Vector3Ptr; v2: rl.Vector3Ptr );
+
+(*  Orthonormalize provided vectors Makes vectors normalized and orthogonal to each other Gram-Schmidt function implementation *)
+
+PROCEDURE Vector3Transform ( v: rl.Vector3; mat: rl.Matrix ): rl.Vector3;
+
+(*  Transforms a Vector3 by a given Matrix *)
+
+PROCEDURE Vector3RotateByQuaternion ( v: rl.Vector3; q: rl.Quaternion ): rl.Vector3;
+
+(*  Transform a vector by quaternion rotation *)
+
+PROCEDURE Vector3RotateByAxisAngle ( v: rl.Vector3; axis: rl.Vector3;
+                                     angle: rl.float ): rl.Vector3;
+
+(*  Rotates a vector around an axis *)
+
+PROCEDURE Vector3Lerp ( v1: rl.Vector3; v2: rl.Vector3; amount: rl.float ): rl.Vector3;
+
+(*  Calculate linear interpolation between two vectors *)
+
+PROCEDURE Vector3Reflect ( v: rl.Vector3; normal: rl.Vector3 ): rl.Vector3;
+
+(*  Calculate reflected vector to normal *)
+
+PROCEDURE Vector3Min ( v1: rl.Vector3; v2: rl.Vector3 ): rl.Vector3;
+
+(*  Get min value for each pair of components *)
+
+PROCEDURE Vector3Max ( v1: rl.Vector3; v2: rl.Vector3 ): rl.Vector3;
+
+(*  Get max value for each pair of components *)
+
+PROCEDURE Vector3Barycenter ( p: rl.Vector3; a: rl.Vector3; b: rl.Vector3;
+                              c: rl.Vector3 ): rl.Vector3;
+
+(*  Compute barycenter coordinates (u, v, w) for point p with respect to triangle (a, b, c) NOTE: Assumes P is on the plane of the triangle *)
+
+PROCEDURE Vector3Unproject ( source: rl.Vector3; projection: rl.Matrix;
+                             view: rl.Matrix ): rl.Vector3;
+
+(*  Projects a Vector3 from screen space into object space NOTE: We are avoiding calling other raymath functions despite available *)
+
+PROCEDURE Vector3ToFloatV ( v: rl.Vector3 ): float3;
+
+(*  Get Vector3 as float array *)
+
+PROCEDURE Vector3Invert ( v: rl.Vector3 ): rl.Vector3;
+
+(*  Invert the given vector *)
+
+PROCEDURE Vector3Clamp ( v: rl.Vector3; min: rl.Vector3; max: rl.Vector3 ): rl.Vector3;
+
+(*  Clamp the components of the vector between min and max values specified by the given vectors *)
+
+PROCEDURE Vector3ClampValue ( v: rl.Vector3; min: rl.float; max: rl.float ): rl.Vector3;
+
+(*  Clamp the magnitude of the vector between two values *)
+
+PROCEDURE Vector3Equals ( p: rl.Vector3; q: rl.Vector3 ): rl.int;
+
+(*  Check whether two given vectors are almost equal *)
+
+PROCEDURE Vector3Refract ( v: rl.Vector3; n: rl.Vector3; r: rl.float ): rl.Vector3;
+
+(*  Compute the direction of a refracted ray where v specifies the normalized direction of the incoming ray, n specifies the normalized normal vector of the interface of two optical media, and r specifies the ratio of the refractive index of the medium from where the ray comes to the refractive index of the medium on the other side of the surface *)
+(*  Matrix math *)
+
+PROCEDURE MatrixDeterminant ( mat: rl.Matrix ): rl.float;
+
+(*  Compute matrix determinant *)
+
+PROCEDURE MatrixTrace ( mat: rl.Matrix ): rl.float;
+
+(*  Get the trace of the matrix (sum of the values along the diagonal) *)
+
+PROCEDURE MatrixTranspose ( mat: rl.Matrix ): rl.Matrix;
+
+(*  Transposes provided matrix *)
+
+PROCEDURE MatrixInvert ( mat: rl.Matrix ): rl.Matrix;
+
+(*  Invert provided matrix *)
+
+PROCEDURE MatrixIdentity (  ): rl.Matrix;
+
+(*  Get identity matrix *)
+
+PROCEDURE MatrixAdd ( left: rl.Matrix; right: rl.Matrix ): rl.Matrix;
+
+(*  Add two matrices *)
+
+PROCEDURE MatrixSubtract ( left: rl.Matrix; right: rl.Matrix ): rl.Matrix;
+
+(*  Subtract two matrices (left - right) *)
+
+PROCEDURE MatrixMultiply ( left: rl.Matrix; right: rl.Matrix ): rl.Matrix;
+
+(*  Get two matrix multiplication NOTE: When multiplying matrices... the order matters! *)
+
+PROCEDURE MatrixTranslate ( x: rl.float; y: rl.float; z: rl.float ): rl.Matrix;
+
+(*  Get translation matrix *)
+
+PROCEDURE MatrixRotate ( axis: rl.Vector3; angle: rl.float ): rl.Matrix;
+
+(*  Create rotation matrix from axis and angle NOTE: Angle should be provided in radians *)
+
+PROCEDURE MatrixRotateX ( angle: rl.float ): rl.Matrix;
+
+(*  Get x-rotation matrix NOTE: Angle must be provided in radians *)
+
+PROCEDURE MatrixRotateY ( angle: rl.float ): rl.Matrix;
+
+(*  Get y-rotation matrix NOTE: Angle must be provided in radians *)
+
+PROCEDURE MatrixRotateZ ( angle: rl.float ): rl.Matrix;
+
+(*  Get z-rotation matrix NOTE: Angle must be provided in radians *)
+
+PROCEDURE MatrixRotateXYZ ( angle: rl.Vector3 ): rl.Matrix;
+
+(*  Get xyz-rotation matrix NOTE: Angle must be provided in radians *)
+
+PROCEDURE MatrixRotateZYX ( angle: rl.Vector3 ): rl.Matrix;
+
+(*  Get zyx-rotation matrix NOTE: Angle must be provided in radians *)
+
+PROCEDURE MatrixScale ( x: rl.float; y: rl.float; z: rl.float ): rl.Matrix;
+
+(*  Get scaling matrix *)
+
+PROCEDURE MatrixFrustum ( left: rl.double; right: rl.double; bottom: rl.double;
+                          top: rl.double; fnear: rl.double; ffar: rl.double ): rl.Matrix;
+
+(*  Get perspective projection matrix *)
+
+PROCEDURE MatrixPerspective ( fovy: rl.double; aspect: rl.double; fnear: rl.double;
+                              ffar: rl.double ): rl.Matrix;
+
+(*  Get perspective projection matrix NOTE: Fovy angle must be provided in radians *)
+
+PROCEDURE MatrixOrtho ( left: rl.double; right: rl.double; bottom: rl.double;
+                        top: rl.double; fnear: rl.double; ffar: rl.double ): rl.Matrix;
+
+(*  Get orthographic projection matrix *)
+
+PROCEDURE MatrixLookAt ( eye: rl.Vector3; target: rl.Vector3; up: rl.Vector3 ): rl.Matrix;
+
+(*  Get camera look-at matrix (view matrix) *)
+
+PROCEDURE MatrixToFloatV ( mat: rl.Matrix ): float16;
+
+(*  Get float array of matrix data *)
+(*  Quaternion math *)
+
+PROCEDURE QuaternionAdd ( q1: rl.Quaternion; q2: rl.Quaternion ): rl.Quaternion;
+
+(*  Add two quaternions *)
+
+PROCEDURE QuaternionAddValue ( q: rl.Quaternion; add: rl.float ): rl.Quaternion;
+
+(*  Add quaternion and float value *)
+
+PROCEDURE QuaternionSubtract ( q1: rl.Quaternion; q2: rl.Quaternion ): rl.Quaternion;
+
+(*  Subtract two quaternions *)
+
+PROCEDURE QuaternionSubtractValue ( q: rl.Quaternion; sub: rl.float ): rl.Quaternion;
+
+(*  Subtract quaternion and float value *)
+
+PROCEDURE QuaternionIdentity (  ): rl.Quaternion;
+
+(*  Get identity quaternion *)
+
+PROCEDURE QuaternionLength ( q: rl.Quaternion ): rl.float;
+
+(*  Computes the length of a quaternion *)
+
+PROCEDURE QuaternionNormalize ( q: rl.Quaternion ): rl.Quaternion;
+
+(*  Normalize provided quaternion *)
+
+PROCEDURE QuaternionInvert ( q: rl.Quaternion ): rl.Quaternion;
+
+(*  Invert provided quaternion *)
+
+PROCEDURE QuaternionMultiply ( q1: rl.Quaternion; q2: rl.Quaternion ): rl.Quaternion;
+
+(*  Calculate two quaternion multiplication *)
+
+PROCEDURE QuaternionScale ( q: rl.Quaternion; mul: rl.float ): rl.Quaternion;
+
+(*  Scale quaternion by float value *)
+
+PROCEDURE QuaternionDivide ( q1: rl.Quaternion; q2: rl.Quaternion ): rl.Quaternion;
+
+(*  Divide two quaternions *)
+
+PROCEDURE QuaternionLerp ( q1: rl.Quaternion; q2: rl.Quaternion; amount: rl.float ): rl.Quaternion;
+
+(*  Calculate linear interpolation between two quaternions *)
+
+PROCEDURE QuaternionNlerp ( q1: rl.Quaternion; q2: rl.Quaternion;
+                            amount: rl.float ): rl.Quaternion;
+
+(*  Calculate slerp-optimized interpolation between two quaternions *)
+
+PROCEDURE QuaternionSlerp ( q1: rl.Quaternion; q2: rl.Quaternion;
+                            amount: rl.float ): rl.Quaternion;
+
+(*  Calculates spherical linear interpolation between two quaternions *)
+
+PROCEDURE QuaternionFromVector3ToVector3 ( from: rl.Vector3; to: rl.Vector3 ): rl.Quaternion;
+
+(*  Calculate quaternion based on the rotation from one vector to another *)
+
+PROCEDURE QuaternionFromMatrix ( mat: rl.Matrix ): rl.Quaternion;
+
+(*  Get a quaternion for a given rotation matrix *)
+
+PROCEDURE QuaternionToMatrix ( q: rl.Quaternion ): rl.Matrix;
+
+(*  Get a matrix for a given quaternion *)
+
+PROCEDURE QuaternionFromAxisAngle ( axis: rl.Vector3; angle: rl.float ): rl.Quaternion;
+
+(*  Get rotation quaternion for an angle and axis NOTE: Angle must be provided in radians *)
+
+PROCEDURE QuaternionToAxisAngle ( q: rl.Quaternion; outAxis: rl.Vector3Ptr;
+                                  outAngle: rl.floatptr );
+
+(*  Get the rotation angle and axis for a given quaternion *)
+
+PROCEDURE QuaternionFromEuler ( pitch: rl.float; yaw: rl.float; roll: rl.float ): rl.Quaternion;
+
+(*  Get the quaternion equivalent to Euler angles NOTE: Rotation order is ZYX *)
+
+PROCEDURE QuaternionToEuler ( q: rl.Quaternion ): rl.Vector3;
+
+(*  Get the Euler angles equivalent to quaternion (roll, pitch, yaw) NOTE: Angles are returned in a Vector3 struct in radians *)
+
+PROCEDURE QuaternionTransform ( q: rl.Quaternion; mat: rl.Matrix ): rl.Quaternion;
+
+(*  Transform a quaternion given a transformation matrix *)
+
+PROCEDURE QuaternionEquals ( p: rl.Quaternion; q: rl.Quaternion ): rl.int;
+
+(*  Check whether two given quaternions are almost equal *)
+
+END rm.
