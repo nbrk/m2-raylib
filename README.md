@@ -1,18 +1,17 @@
 # Description
-GNU Modula-2 bindings for [raylib](http://www.raylib.com/), a simple and easy-to-use library to enjoy videogames programming.
+GNU Modula-2 bindings to [raylib](http://www.raylib.com/), a "simple and easy-to-use library to enjoy videogames programming".
 
 This is a low-level, *thin* bindings, i.e. the module definitions just directly map C API to Modula-2, with all of the names and meanings left intact to mimic the original behaviour.
 
 # Status
-The bindings are considered to be **fairly complete**, with every type, procedure or constant being interfaced somehow. The following `raylib` library components are bound to their respective Modula-2 definition files:
+The bindings are considered to be **fairly complete**, with every type, procedure or constant being interfaced somehow. The following raylib library components are bound to their respective Modula-2 definition files:
 - **raylib** as per `raylib.h` is covered in **rl.def**
 - **raymath** as per `raymath.h` is covered in **rm.def**
 
 Testing is especially requested for stuff other than that used for simple 2D-drawing, etc.
 
 # Versions
-The library version used in making of the bindings is `raylib-5.1-dev` (the C header file is bundled). 
-Tested with `GCC 14.0.1`, ISO Modula-2.
+The library version used in making of the bindings is `raylib-5.1-dev`. Tested with `GCC 14.0.1`, ISO Modula-2.
 
 # Usage
 Use entities from provided definition modules:
@@ -37,7 +36,7 @@ TYPE
 ```
 
 # Compilation
-Compile a program module with something like that:
+Compile program module with something like that:
 ``` sh
 gm2-14 -fsoft-check-all -fiso -g -O2 -Wall SampleUsage.mod ./libraylib.so.4.5.0
 ```
@@ -47,6 +46,8 @@ gm2-14 -fsoft-check-all -fiso -g -O2 -Wall SampleUsage.mod -lraylib
 ```
 if the linker can find the library on your system.
 Please see provided `Makefile` for my attempt at a more general workflow with *modules* and *driver programs*.
+
+N.B. The raylib component named `raymath` is contained also in `raylib.so`.
 
 # TODO
 - excessive testing
