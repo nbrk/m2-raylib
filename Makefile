@@ -7,7 +7,7 @@ PROGRAMS = SampleUsage
 OBJDIR = .
 
 #EXTRADEFDIR = ../m2-raylib
-EXTRALINK = -lraylib
+EXTRALINK = -lraylib /home/nbrk/Downloads/devel/raygui/raygui.so
 #EXTRALINK = $(OBJDIR)/libraylib.so.4.5.0
 
 GM2 = gm2-14

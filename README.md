@@ -1,24 +1,33 @@
 # Description
-GNU Modula-2 bindings to [raylib](http://www.raylib.com/), a "simple and easy-to-use library to enjoy videogames programming".
+GNU Modula-2 bindings to excellent **Raylib** and **Raygui**.
+
+[Raylib](http://www.raylib.com/) is a "simple and easy-to-use library to enjoy videogames programming".
+[Raygui](https://github.com/raysan5/raygui) is a "simple and easy-to-use immediate-mode gui library". 
 
 This is a low-level, *thin* bindings, i.e. the module definitions just directly map C API to Modula-2, with all of the names and meanings left intact to mimic the original behaviour.
 
 # Status
-The bindings are considered to be **fairly complete**, with every type, procedure or constant being interfaced somehow. The following raylib library components are bound to their respective Modula-2 definition files:
+The bindings are considered to be **complete**, with every type, procedure or constant being interfaced somehow. The following raylib library components are bound to their respective Modula-2 definition files:
 - **raylib** as per `raylib.h` is covered in **rl.def**
 - **raymath** as per `raymath.h` is covered in **rm.def**
-
-Testing is especially requested for stuff other than that used for simple 2D-drawing, etc.
-
+- **raygui** as per `raygui.h` is covered in **rg.def**
+ 
 # Versions
-The library version used in making of the bindings is `raylib-5.1-dev`. Tested with `GCC 14.0.1`, ISO Modula-2.
+The library versions used in making of the bindings are:
+- `raylib-5.1-dev`
+- `raygui-4.0-dev` 
+
+Tested with `GCC 14.0.1`, ISO Modula-2.
 
 # Usage
 Use entities from provided definition modules:
 - module **rl** covers `raylib`
 - module **rm** covers `raymath`
+- module **rg** convers `raygui`
 
-Functions, datastructures and constants are bound one-to-one, so old knowledge of the API holds. The [Raylib](https://www.raylib.com/cheatsheet/raylib_cheatsheet_v4.5.pdf) and [Raymath](https://www.raylib.com/cheatsheet/raymath_cheatsheet.html) cheatsheets help. 
+Functions, datastructures and constants are bound one-to-one, so old knowledge of the API holds. 
+The [Raylib](https://www.raylib.com/cheatsheet/raylib_cheatsheet_v4.5.pdf) and 
+[Raymath](https://www.raylib.com/cheatsheet/raymath_cheatsheet.html) cheatsheets help, the [Raygui](https://github.com/raysan5/raygui/blob/master/src/raygui.h) is not documented well enough for the moment, so one must consult the source file.
 
 I have decided to explicitly redefine the C primitives as follows:
 
@@ -38,22 +47,23 @@ TYPE
 # Compilation
 Compile program module with something like that:
 ``` sh
-gm2-14 -fsoft-check-all -fiso -g -O2 -Wall SampleUsage.mod ./libraylib.so.4.5.0
+gm2-14 -fsoft-check-all -fiso -g -O2 -Wall SampleUsage.mod ./libraylib.so.4.5.0 ./raygui.so
 ```
 or just
 ``` sh
-gm2-14 -fsoft-check-all -fiso -g -O2 -Wall SampleUsage.mod -lraylib
+gm2-14 -fsoft-check-all -fiso -g -O2 -Wall SampleUsage.mod -lraylib -lraygui
 ```
 if the linker can find the library on your system.
 Please see provided `Makefile` for my attempt at a more general workflow with *modules* and *driver programs*.
 
 N.B. The raylib component named `raymath` is contained also in `raylib.so`.
+N.B. The raygui is a separate library per se.
 
 # TODO
 - excessive testing
 - unify comments formatting
 - optimize code sections 
-- bind `raygui` library
+- cleanup ugliness in `rg`
 
 # Sample code
 This is what a client code looks like:
@@ -61,7 +71,7 @@ This is what a client code looks like:
 ``` modula-2
 MODULE SampleUsage;
 
-IMPORT rl, rm;
+IMPORT rl, rm, rg;
 
 PROCEDURE TestRaylib;
 CONST
@@ -71,7 +81,11 @@ VAR
   img : rl.Image;
   texImg, texFile : rl.Texture2D;
   fnt : rl.Font;
+  showMessageBox : BOOLEAN;
+  result : rl.int;
 BEGIN
+  showMessageBox := FALSE;
+
   rl.InitWindow(800, 600, "Modula-2 + Raylib");
 
   img := rl.GenImageCellular(800, 600, 20);
@@ -103,6 +117,18 @@ BEGIN
     rl.DrawTextEx(fnt, "Привет, Мир!",
         rl.Vector2{300.0, 260.0}, 40.0, 1.0, rl.Color{255, 255, 255, 100});
 
+    IF rg.GuiButton(rl.Rectangle{ 24, 24, 120, 30 }, "#191#Show Message") THEN
+      showMessageBox := TRUE;
+    END;
+
+    IF showMessageBox THEN
+       result := rg.GuiMessageBox(rl.Rectangle{ 85, 70, 250, 100 },
+                    "#191#Message Box", "Hi! This is a message!", "Nice;Cool");
+        IF result >= 0 THEN
+          showMessageBox := FALSE;
+        END;
+    END;
+
     rl.EndDrawing;
     rl.WaitTime(1.0 / 60.0);
   END;
@@ -110,7 +136,6 @@ END TestRaylib;
 
 BEGIN
    TestRaylib;
-
 END SampleUsage.
 
 ```

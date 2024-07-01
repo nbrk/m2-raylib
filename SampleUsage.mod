@@ -5,7 +5,7 @@
 
 MODULE SampleUsage;
 
-IMPORT rl, rm;
+IMPORT rl, rm, rg;
 
 PROCEDURE TestRaylib;
 CONST
@@ -15,7 +15,11 @@ VAR
   img : rl.Image;
   texImg, texFile : rl.Texture2D;
   fnt : rl.Font;
+  showMessageBox : BOOLEAN;
+  result : rl.int;
 BEGIN
+  showMessageBox := FALSE;
+
   rl.InitWindow(800, 600, "Modula-2 + Raylib");
 
   img := rl.GenImageCellular(800, 600, 20);
@@ -46,6 +50,18 @@ BEGIN
     rl.DrawTextEx(fnt, "MOUSE", pos, 18.0, 6.0, rl.YELLOW);
     rl.DrawTextEx(fnt, "Привет, Мир!",
         rl.Vector2{300.0, 260.0}, 40.0, 1.0, rl.Color{255, 255, 255, 100});
+
+    IF rg.GuiButton(rl.Rectangle{ 24, 24, 120, 30 }, "#191#Show Message") THEN
+      showMessageBox := TRUE;
+    END;
+
+    IF showMessageBox THEN
+       result := rg.GuiMessageBox(rl.Rectangle{ 85, 70, 250, 100 },
+                    "#191#Message Box", "Hi! This is a message!", "Nice;Cool");
+        IF result >= 0 THEN
+          showMessageBox := FALSE;
+        END;
+    END;
 
     rl.EndDrawing;
     rl.WaitTime(1.0 / 60.0);
