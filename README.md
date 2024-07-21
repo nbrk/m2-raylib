@@ -2,6 +2,7 @@
 GNU Modula-2 bindings to excellent **Raylib** and **Raygui**.
 
 [Raylib](http://www.raylib.com/) is a "simple and easy-to-use library to enjoy videogames programming".
+
 [Raygui](https://github.com/raysan5/raygui) is a "simple and easy-to-use immediate-mode gui library". 
 
 This is a low-level, *thin* bindings, i.e. the module definitions just directly map C API to Modula-2, with all of the names and meanings left intact to mimic the original behaviour.
@@ -23,12 +24,13 @@ Tested with `GCC 14.0.1`, ISO Modula-2.
 Use entities from provided definition modules:
 - module **rl** covers `raylib`
 - module **rm** covers `raymath`
-- module **rg** convers `raygui`
+- module **rg** covers `raygui`
 
 Functions, datastructures and constants are bound one-to-one, so old knowledge of the API holds. 
 The [Raylib](https://www.raylib.com/cheatsheet/raylib_cheatsheet_v4.5.pdf) and 
 [Raymath](https://www.raylib.com/cheatsheet/raymath_cheatsheet.html) cheatsheets help, the [Raygui](https://github.com/raysan5/raygui/blob/master/src/raygui.h) is not documented well enough for the moment, so one must consult the source file.
 
+# Design
 I have decided to explicitly redefine the C primitives as follows:
 
 ``` modula-2
@@ -57,13 +59,14 @@ if the linker can find the library on your system.
 Please see provided `Makefile` for my attempt at a more general workflow with *modules* and *driver programs*.
 
 N.B. The raylib component named `raymath` is contained also in `raylib.so`.
+
 N.B. The raygui is a separate library per se.
 
 # TODO
 - excessive testing
 - unify comments formatting
 - optimize code sections 
-- cleanup ugliness in `rg`
+- cleanup ugliness in rg
 
 # Sample code
 This is what a client code looks like:
