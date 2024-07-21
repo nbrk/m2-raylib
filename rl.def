@@ -1100,7 +1100,12 @@ TYPE
 
 (*  Rectangle, 4 components *)
 
-  Rectangle = Vector4;
+  Rectangle = RECORD
+    x: float;          (*  Rectangle top-left corner position x *)
+    y: float;          (*  Rectangle top-left corner position y *)
+    width: float;          (*  Rectangle width *)
+    height: float;          (*  Rectangle height *)
+  END;
 
 (*  Image, pixel data stored in CPU memory (RAM) *)
 
