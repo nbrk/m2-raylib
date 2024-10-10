@@ -634,88 +634,88 @@ PROCEDURE GuiDrawIcon ( iconId: rl.int; posX: rl.int; posY: rl.int; pixelSize: r
 (* ---------------------------------------------------------------------------------------------------------- *)
 (*  Container/separator controls, useful for controls organization *)
 
-PROCEDURE GuiWindowBox ( bounds: rl.Rectangle; title: ARRAY OF CHAR ): BOOLEAN;
+PROCEDURE GuiWindowBox ( bounds: rl.Rectangle; title: ARRAY OF CHAR ): [BOOLEAN];
 
 (*  Window Box control, shows a window that can be closed *)
 
-PROCEDURE GuiGroupBox ( bounds: rl.Rectangle; text: ARRAY OF CHAR ): BOOLEAN;
+PROCEDURE GuiGroupBox ( bounds: rl.Rectangle; text: ARRAY OF CHAR ): [BOOLEAN];
 
 (*  Group Box control with text name *)
 
-PROCEDURE GuiLine ( bounds: rl.Rectangle; text: ARRAY OF CHAR ): BOOLEAN;
+PROCEDURE GuiLine ( bounds: rl.Rectangle; text: ARRAY OF CHAR ): [BOOLEAN];
 
 (*  Line separator control, could contain text *)
 
-PROCEDURE GuiPanel ( bounds: rl.Rectangle; text: ARRAY OF CHAR ): BOOLEAN;
+PROCEDURE GuiPanel ( bounds: rl.Rectangle; text: ARRAY OF CHAR ): [BOOLEAN];
 
 (*  Panel control, useful to group controls *)
 
 TYPE
 
 PROCEDURE GuiTabBar ( bounds: rl.Rectangle; text: rl.voidptr; count: rl.int;
-                      VAR active: rl.int ): BOOLEAN;
+                      VAR active: rl.int ): [BOOLEAN];
 
 (*  Tab Bar control, returns TAB to be closed or -1 *)
 
 TYPE
 
 PROCEDURE GuiScrollPanel ( bounds: rl.Rectangle; text: ARRAY OF CHAR; content: rl.Rectangle;
-                           VAR scroll: rl.Vector2; VAR view: rl.Rectangle): BOOLEAN;
+                           VAR scroll: rl.Vector2; VAR view: rl.Rectangle): [BOOLEAN];
 
 (*  Scroll Panel control *)
 (*  Basic controls set *)
 
-PROCEDURE GuiLabel ( bounds: rl.Rectangle; text: ARRAY OF CHAR ): BOOLEAN;
+PROCEDURE GuiLabel ( bounds: rl.Rectangle; text: ARRAY OF CHAR ): [BOOLEAN];
 
 (*  Label control, shows text *)
 
-PROCEDURE GuiButton ( bounds: rl.Rectangle; text: ARRAY OF CHAR ): BOOLEAN;
+PROCEDURE GuiButton ( bounds: rl.Rectangle; text: ARRAY OF CHAR ): [BOOLEAN];
 
 (*  Button control, returns true when clicked *)
 
-PROCEDURE GuiLabelButton ( bounds: rl.Rectangle; text: ARRAY OF CHAR ): BOOLEAN;
+PROCEDURE GuiLabelButton ( bounds: rl.Rectangle; text: ARRAY OF CHAR ): [BOOLEAN];
 
 (*  Label button control, show true when clicked *)
 
 TYPE
 
 PROCEDURE GuiToggle ( bounds: rl.Rectangle; text: ARRAY OF CHAR;
-                      VAR active: BOOLEAN ): BOOLEAN;
+                      VAR active: BOOLEAN ): [BOOLEAN];
 
 (*  Toggle Button control, returns true when active *)
 
 PROCEDURE GuiToggleGroup ( bounds: rl.Rectangle; text: ARRAY OF CHAR;
-                           VAR active: rl.int ): BOOLEAN;
+                           VAR active: rl.int ): [BOOLEAN];
 
 (*  Toggle Group control, returns active toggle index *)
 
 PROCEDURE GuiCheckBox ( bounds: rl.Rectangle; text: ARRAY OF CHAR;
-                        VAR checked: BOOLEAN ): BOOLEAN;
+                        VAR checked: BOOLEAN ): [BOOLEAN];
 
 (*  Check Box control, returns true when active *)
 
 PROCEDURE GuiComboBox ( bounds: rl.Rectangle; text: ARRAY OF CHAR;
-                        VAR active: rl.int ): BOOLEAN;
+                        VAR active: rl.int ): [BOOLEAN];
 
 (*  Combo Box control, returns selected item index *)
 
 PROCEDURE GuiDropdownBox ( bounds: rl.Rectangle; text: ARRAY OF CHAR; VAR active: rl.int;
-                           editMode: BOOLEAN): BOOLEAN;
+                           editMode: BOOLEAN): [BOOLEAN];
 
 (*  Dropdown Box control, returns selected item *)
 
 PROCEDURE GuiSpinner ( bounds: rl.Rectangle; text: ARRAY OF CHAR; VAR value: rl.int;
-                       minValue: rl.int; maxValue: rl.int; editMode: BOOLEAN ): BOOLEAN;
+                       minValue: rl.int; maxValue: rl.int; editMode: BOOLEAN ): [BOOLEAN];
 
 (*  Spinner control, returns selected value *)
 
 PROCEDURE GuiValueBox ( bounds: rl.Rectangle; text: ARRAY OF CHAR; VAR value: rl.int;
-                        minValue: rl.int; maxValue: rl.int; editMode: BOOLEAN ): BOOLEAN;
+                        minValue: rl.int; maxValue: rl.int; editMode: BOOLEAN ): [BOOLEAN];
 
 (*  Value Box control, updates input text with numbers *)
 
 PROCEDURE GuiTextBox ( bounds: rl.Rectangle; text: ARRAY OF CHAR; textSize: rl.int;
-                       editMode: BOOLEAN ): BOOLEAN;
+                       editMode: BOOLEAN ): [BOOLEAN];
 
 (*  Text Box control, updates input text *)
 
@@ -723,44 +723,44 @@ TYPE
 
 PROCEDURE GuiSlider ( bounds: rl.Rectangle; textLeft: ARRAY OF CHAR;
                       textRight: ARRAY OF CHAR; VAR value: rl.float;
-                      minValue: rl.float; maxValue: rl.float ): BOOLEAN;
+                      minValue: rl.float; maxValue: rl.float ): [BOOLEAN];
 
 (*  Slider control, returns selected value *)
 
 PROCEDURE GuiSliderBar ( bounds: rl.Rectangle; textLeft: ARRAY OF CHAR;
                          textRight: ARRAY OF CHAR; VAR value: rl.float;
-                         minValue: rl.float; maxValue: rl.float ): BOOLEAN;
+                         minValue: rl.float; maxValue: rl.float ): [BOOLEAN];
 
 (*  Slider Bar control, returns selected value *)
 
 PROCEDURE GuiProgressBar ( bounds: rl.Rectangle; textLeft: ARRAY OF CHAR;
                            textRight: ARRAY OF CHAR; VAR value: rl.float;
-                           minValue: rl.float; maxValue: rl.float ): BOOLEAN;
+                           minValue: rl.float; maxValue: rl.float ): [BOOLEAN];
 
 (*  Progress Bar control, shows current progress value *)
 
-PROCEDURE GuiStatusBar ( bounds: rl.Rectangle; text: ARRAY OF CHAR ): BOOLEAN;
+PROCEDURE GuiStatusBar ( bounds: rl.Rectangle; text: ARRAY OF CHAR ): [BOOLEAN];
 
 (*  Status Bar control, shows info text *)
 
-PROCEDURE GuiDummyRec ( bounds: rl.Rectangle; text: ARRAY OF CHAR ): BOOLEAN;
+PROCEDURE GuiDummyRec ( bounds: rl.Rectangle; text: ARRAY OF CHAR ): [BOOLEAN];
 
 (*  Dummy control for placeholders *)
 
 PROCEDURE GuiGrid ( bounds: rl.Rectangle; text: ARRAY OF CHAR; spacing: rl.float;
-                    subdivs: rl.int; VAR mouseCell: rl.Vector2 ): BOOLEAN;
+                    subdivs: rl.int; VAR mouseCell: rl.Vector2 ): [BOOLEAN];
 
 (*  Grid control, returns mouse cell position *)
 (*  Advance controls set *)
 
 PROCEDURE GuiListView ( bounds: rl.Rectangle; text: ARRAY OF CHAR;
-                        VAR scrollIndex: rl.int; VAR active: rl.int ): BOOLEAN;
+                        VAR scrollIndex: rl.int; VAR active: rl.int ): [BOOLEAN];
 
 (*  List View control, returns selected list item index *)
 
 PROCEDURE GuiListViewEx ( bounds: rl.Rectangle; text: rl.voidptr; count: rl.int;
                           VAR scrollIndex: rl.int; VAR active: rl.int;
-                          VAR focus: rl.int ): BOOLEAN;
+                          VAR focus: rl.int ): [BOOLEAN];
 
 (*  List View with extended parameters *)
 
@@ -772,41 +772,41 @@ PROCEDURE GuiMessageBox ( bounds: rl.Rectangle; title: ARRAY OF CHAR;
 PROCEDURE GuiTextInputBox ( bounds: rl.Rectangle; title: ARRAY OF CHAR;
                             message: ARRAY OF CHAR; buttons: ARRAY OF CHAR;
                             text: ARRAY OF CHAR; textMaxSize: rl.int;
-                            VAR secretViewActive: BOOLEAN ): BOOLEAN;
+                            VAR secretViewActive: BOOLEAN ): [BOOLEAN];
 
 (*  Text Input Box control, ask for text, supports secret *)
 
 TYPE
 
 PROCEDURE GuiColorPicker ( bounds: rl.Rectangle; text: ARRAY OF CHAR;
-                           VAR color: rl.Color ): BOOLEAN;
+                           VAR color: rl.Color ): [BOOLEAN];
 
 (*  Color Picker control (multiple color controls) *)
 
 PROCEDURE GuiColorPanel ( bounds: rl.Rectangle; text: ARRAY OF CHAR;
-                          VAR color: rl.Color ): BOOLEAN;
+                          VAR color: rl.Color ): [BOOLEAN];
 
 (*  Color Panel control *)
 
 PROCEDURE GuiColorBarAlpha ( bounds: rl.Rectangle; text: ARRAY OF CHAR;
-                             VAR alpha: rl.float ): BOOLEAN;
+                             VAR alpha: rl.float ): [BOOLEAN];
 
 (*  Color Bar Alpha control *)
 
 PROCEDURE GuiColorBarHue ( bounds: rl.Rectangle; text: ARRAY OF CHAR;
-                           VAR value: rl.float ): BOOLEAN;
+                           VAR value: rl.float ): [BOOLEAN];
 
 (*  Color Bar Hue control *)
 
 TYPE
 
 PROCEDURE GuiColorPickerHSV ( bounds: rl.Rectangle; text: ARRAY OF CHAR;
-                              VAR colorHsv: rl.Vector3 ): BOOLEAN;
+                              VAR colorHsv: rl.Vector3 ): [BOOLEAN];
 
 (*  Color Picker control that avoids conversion to RGB on each call (multiple color controls) *)
 
 PROCEDURE GuiColorPanelHSV ( bounds: rl.Rectangle; text: ARRAY OF CHAR;
-                             VAR colorHsv: rl.Vector3 ): BOOLEAN;
+                             VAR colorHsv: rl.Vector3 ): [BOOLEAN];
 
 (*  Color Panel control that returns HSV color value, used by GuiColorPickerHSV() *)
 (* ---------------------------------------------------------------------------------------------------------- *)
